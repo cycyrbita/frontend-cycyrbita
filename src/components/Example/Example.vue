@@ -1,6 +1,7 @@
 <template>
 	<h1>Example</h1>
 	<ExampleList></ExampleList>
+	<router-link to="/example/item">Example-item</router-link>
 </template>
 
 <script setup>
