@@ -4,7 +4,7 @@
       <Header></Header>
     </div>
     <div class="page__body">
-      <slot></slot>
+			<RouterView></RouterView>
     </div>
     <div class="page__footer">
 			<Footer></Footer>

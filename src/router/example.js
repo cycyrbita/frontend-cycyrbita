@@ -3,14 +3,14 @@ import {useAuthStore} from "@/stores/auth"
 export default [
     {
         path: '/example',
-        component: () => import('@/views/example/ExampleView.vue'),
+        component: () => import('@/layouts/DefaultLayout.vue'),
         beforeEnter: () => {
             if (!useAuthStore().isAuth) return '/'
         },
         children: [
             {
                 path: '',
-                component: () => import('@/pages/Example/ExamplePage.vue'),
+                component: () => import('@/views/example/ExampleView.vue'),
             },
             {
                 path: 'item',

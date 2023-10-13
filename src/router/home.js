@@ -1,6 +1,12 @@
 export default [
     {
         path: '/',
-        component: () => import('@/views/home/HomeView.vue')
+        component: () => import('@/layouts/DefaultLayout.vue'),
+        children: [
+            {
+                path: '',
+                component: () => import('@/views/home/HomeView.vue'),
+            },
+        ]
     }
 ]

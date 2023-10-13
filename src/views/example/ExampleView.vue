@@ -1,9 +1,7 @@
 <template>
-	<DefaultLayout>
-		<RouterView></RouterView>
-	</DefaultLayout>
+	<Example></Example>
 </template>
 
 <script setup>
-import DefaultLayout from "@/layouts/DefaultLayout.vue"
+import Example from "@/components/Example/Example.vue"
 </script>
