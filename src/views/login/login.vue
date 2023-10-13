@@ -25,7 +25,7 @@ import router from "@/router";
 
 const auth = useAuthStore()
 const login = () => {
-	auth.login()
+	auth.isAuth = true
 	router.push('/')
 }
 </script>

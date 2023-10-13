@@ -8,14 +8,20 @@
 			<li><router-link to="/login">Войти</router-link></li>
 			<li><router-link to="/registration">Регистрация</router-link></li>
 			<li><router-link to="/recovery-password">Восстановить пароль</router-link></li>
-			<li><a @click.prevent="auth.logout()">Выйти</a></li>
+			<li><a @click.prevent="logout">Выйти</a></li>
 		</ul>
   </header>
 </template>
 
 <script setup>
 import {useAuthStore} from "@/stores/auth"
+import router from "@/router";
 const auth = useAuthStore()
+
+const logout = () => {
+	auth.isAuth = false
+	router.push('/')
+}
 </script>
 
 <style>
