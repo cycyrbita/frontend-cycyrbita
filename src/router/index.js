@@ -24,12 +24,10 @@ const router = createRouter({
 
 router.beforeEach((to, ) => {
   const auth = useAuthStore().isAuth
+  const role = useAuthStore().role
 
   // проверка на авторизацию
   if(to.meta?.middleware?.includes('auth') && !auth) return {name: 'login'}
-
-  // проверка на роль
-  if(to.meta?.middleware?.includes(useAuthStore().role)) return
 
   // запрещаем переходить по этим роутам если авторизованы
   if(auth && to.name === 'login') return false
