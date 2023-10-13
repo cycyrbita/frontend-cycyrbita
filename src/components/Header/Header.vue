@@ -3,11 +3,12 @@
 		<ul>
 			<li><router-link to="/">Главная</router-link></li>
 			<li><router-link to="/about">О нас</router-link></li>
-			<li v-if="auth.isAuth"><router-link to="/example">Пример</router-link></li>
-			<li v-if="!auth.isAuth"><router-link to="/login">Войти</router-link></li>
-			<li v-if="!auth.isAuth"><router-link to="/registration">Регистрация</router-link></li>
-			<li v-if="!auth.isAuth"><router-link to="/recovery-password">Восстановить пароль</router-link></li>
-			<li v-if="auth.isAuth"><a @click.prevent="auth.logout()">Выйти</a></li>
+			<li><router-link to="/example">Пример</router-link></li>
+			<li><router-link to="/example/item">Пример-item</router-link></li>
+			<li><router-link to="/login">Войти</router-link></li>
+			<li><router-link to="/registration">Регистрация</router-link></li>
+			<li><router-link to="/recovery-password">Восстановить пароль</router-link></li>
+			<li><a @click.prevent="auth.logout()">Выйти</a></li>
 		</ul>
   </header>
 </template>
