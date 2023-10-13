@@ -23,20 +23,14 @@ const router = createRouter({
 })
 
 router.beforeEach((to, ) => {
-  // если в роуте есть middleware auth
-  if(to.meta?.middleware?.includes('auth')) {
-    // если авторизован
-    if(useAuthStore().isAuth) {
-      return
-    // если не авторизован
-    } else return {name: 'login'}
-  // если в роуте нет middleware auth
-  } else {
-    // если авторизован и путь по которому переходим это login
-    if(useAuthStore().isAuth) {
-      if(to.name === 'login' || to.name === 'registration' || to.name === 'recovery-password') return false
-    } else return
-  }
+  const auth = useAuthStore().isAuth
+  if(to.meta?.middleware?.includes('auth') && !auth) return {name: 'login'}
+
+  if(auth && to.name === 'login') return {name: 'home'}
+  if(auth && to.name === 'registration') return {name: 'home'}
+  if(auth && to.name === 'recovery-password') return {name: 'home'}
+
+  return
 })
 
 export default router
