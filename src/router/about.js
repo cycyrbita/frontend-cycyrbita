@@ -5,7 +5,8 @@ export default [
         meta: {
             middleware: [
                 'auth',
-                'role.cycyrbit'
+                'role.admin',
+                'role.cycyrbit',
             ]
         },
         children: [

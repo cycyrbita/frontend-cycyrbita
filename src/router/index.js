@@ -23,16 +23,20 @@ const router = createRouter({
 })
 
 router.beforeEach((to, ) => {
-  const auth = useAuthStore().isAuth
-  const role = useAuthStore().role
+  if(to.meta.middleware) {
+    if(useAuthStore().isAuth) {
+      // проверка роли
+      if(!to.meta.middleware.includes(useAuthStore().role)) return false
 
-  // проверка на авторизацию
-  if(to.meta?.middleware?.includes('auth') && !auth) return {name: 'login'}
-
-  // запрещаем переходить по этим роутам если авторизованы
-  if(auth && to.name === 'login') return false
-  if(auth && to.name === 'registration') return false
-  if(auth && to.name === 'recovery-password') return false
+      // запрещаем переходить по этим роутам если авторизованы
+      if(to.name === 'login') return false
+      if(to.name === 'registration') return false
+      if(to.name === 'recovery-password') return false
+    } else {
+      // если требует авторизации
+      if(to.meta.middleware.includes('auth')) return {name: 'login'}
+    }
+  }
 
   return
 })

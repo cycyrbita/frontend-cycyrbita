@@ -3,7 +3,10 @@ export default [
         path: '/example',
         component: () => import('@/layouts/DefaultLayout.vue'),
         meta: {
-            middleware: ['auth']
+            middleware: [
+                'auth',
+                'role.admin',
+            ]
         },
         children: [
             {

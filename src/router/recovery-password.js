@@ -2,6 +2,11 @@ export default [
     {
         path: '/recovery-password',
         component: () => import('@/layouts/DefaultLayout.vue'),
+        middleware: [
+            'role.admin',
+            'role.cycyrbit',
+            'role.default',
+        ],
         children: [
             {
                 path: '',
