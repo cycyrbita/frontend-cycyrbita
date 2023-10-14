@@ -4,7 +4,9 @@
       <Header></Header>
     </div>
     <div class="page__body">
-			<RouterView></RouterView>
+      <div class="container">
+			  <RouterView></RouterView>
+      </div>
     </div>
     <div class="page__footer">
 			<Footer></Footer>

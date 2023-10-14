@@ -3,7 +3,9 @@ import { defineStore } from 'pinia'
 
 export const useAuthStore = defineStore('auth', () => {
     const isAuth = ref(false)
-    const role = ref('role.cycyrbit')
+    const user = ref({
+        role: 'role.default',
+    })
 
-    return {isAuth, role}
+    return {isAuth, user}
 })

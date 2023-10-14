@@ -26,7 +26,7 @@ router.beforeEach((to, ) => {
   if(to.meta.middleware) {
     if(useAuthStore().isAuth) {
       // проверка роли
-      if(!to.meta.middleware.includes(useAuthStore().role)) return false
+      if(!to.meta.middleware.includes(useAuthStore().user.role)) return false
 
       // запрещаем переходить по этим роутам если авторизованы
       if(to.name === 'login') return false

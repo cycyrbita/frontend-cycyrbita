@@ -2,11 +2,10 @@
   <header class="header">
 		<ul>
 			<li><router-link to="/">Главная</router-link></li>
-			<li><router-link to="/about">О нас</router-link></li>
-			<li><router-link v-if="auth.isAuth" to="/example">Пример</router-link></li>
+			<li><router-link v-if="auth.user.role === 'role.admin' || auth.user.role === 'role.cycyrbit'" to="/about">О нас</router-link></li>
+			<li><router-link v-if="auth.user.role === 'role.admin' && auth.isAuth" to="/example">Пример</router-link></li>
 			<li><router-link v-if="!auth.isAuth" to="/login">Войти</router-link></li>
 			<li><router-link v-if="!auth.isAuth" to="/registration">Регистрация</router-link></li>
-			<li><router-link v-if="!auth.isAuth" to="/recovery-password">Восстановить пароль</router-link></li>
 			<li><button v-if="auth.isAuth" @click.prevent="logout">Выйти</button></li>
 		</ul>
   </header>
@@ -18,7 +17,7 @@ import router from "@/router";
 const auth = useAuthStore()
 
 const logout = () => {
-	auth.isAuth = false
+  auth.isAuth = false
 	router.push('/login')
 }
 </script>
