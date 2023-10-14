@@ -6,6 +6,7 @@ import about from "@/router/about"
 import home from "@/router/home"
 import login from "@/router/login"
 import recoveryPassword from "@/router/recovery-password"
+import addRecoveryPasswordLink from "@/router/add-recovery-password-link"
 import registration from "@/router/registration"
 
 const routes = [
@@ -15,6 +16,7 @@ const routes = [
   ...login,
   ...recoveryPassword,
   ...registration,
+  ...addRecoveryPasswordLink,
 ]
 
 const router = createRouter({
