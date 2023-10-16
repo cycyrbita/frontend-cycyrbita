@@ -4,12 +4,12 @@
 </template>
 
 <script setup>
-import axios from 'axios';
+const refresh = async () => {
+  try {
+    const res = await fetch('http://localhost:5000/api/refresh', { credentials: 'include' })
+    const json = await res.json()
+  } catch (e) {
 
-const refresh = () => {
-axios.get('http://localhost:5000/api/refresh', { withCredentials: true })
-	.then((res) => {
-		console.log(res)
-	})
+  }
 }
 </script>

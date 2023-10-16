@@ -41,8 +41,6 @@ import router from "@/router";
 import {ref} from "vue";
 import useFetch from "@/composables/useFetch";
 import {useAuthStore} from "@/stores/auth";
-import axios from 'axios';
-
 
 const isLoading = ref(false)
 const email = ref('')
@@ -50,35 +48,22 @@ const password = ref('')
 const message = ref('')
 
 const login = async () => {
-	axios.post('http://localhost:5000/api/login', {
-		email: email.value,
-		password: password.value
-	}, { withCredentials: true })
-		.then((res) => {
-			if(res.status === 200){
-				localStorage.setItem('accessToken', res.data.accessToken)
-				useAuthStore().isAuth = true
-				useAuthStore().user = res.data.user
-				router.push('/')
-			}
-		})
-
-  // try {
-  //   isLoading.value = true
-  //   const res = await useFetch.post('login', {email: email.value, password: password.value})
-  //   const json = await res.json()
-  //   if(res.status === 200) {
-  //     localStorage.setItem('accessToken', json.accessToken)
-  //     useAuthStore().isAuth = true
-  //     useAuthStore().user = json.user
-  //     router.push('/')
-  //   }
-  //   message.value = json.message
-  // } catch (e) {
-  //   throw e
-  // } finally {
-  //   isLoading.value = false
-  // }
+  try {
+    isLoading.value = true
+    const res = await useFetch.post('login', {email: email.value, password: password.value})
+    const json = await res.json()
+    if(res.status === 200) {
+      localStorage.setItem('accessToken', json.accessToken)
+      useAuthStore().isAuth = true
+      useAuthStore().user = json.user
+      router.push('/')
+    }
+    message.value = json.message
+  } catch (e) {
+    throw e
+  } finally {
+    isLoading.value = false
+  }
 }
 </script>
 
