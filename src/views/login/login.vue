@@ -41,6 +41,10 @@ import router from "@/router";
 import {ref} from "vue";
 import useFetch from "@/composables/useFetch";
 import {useAuthStore} from "@/stores/auth";
+import {useUserStore} from "@/stores/user";
+
+const storeAuth = useAuthStore()
+const storeUser = useUserStore()
 
 const isLoading = ref(false)
 const email = ref('')
@@ -53,9 +57,9 @@ const login = async () => {
     const res = await useFetch.post('login', {email: email.value, password: password.value})
     const json = await res.json()
     if(res.status === 200) {
-      localStorage.setItem('accessToken', json.accessToken)
-      useAuthStore().isAuth = true
-      useAuthStore().user = json.user
+      localStorage.setItem('accessTokenCycyrbita', json.accessToken)
+			storeAuth.auth = true
+			storeUser.user = json.user
       router.push('/')
     }
     message.value = json.message

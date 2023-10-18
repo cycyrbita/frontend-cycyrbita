@@ -2,23 +2,35 @@
   <header class="header">
 		<ul>
 			<li><router-link to="/">Главная</router-link></li>
-			<li><router-link v-if="auth.user.role === 'role.admin' || auth.user.role === 'role.cycyrbit'" to="/about">О нас</router-link></li>
-			<li><router-link v-if="auth.user.role === 'role.admin' && auth.isAuth" to="/example">Пример</router-link></li>
-			<li><router-link v-if="!auth.isAuth" to="/login">Войти</router-link></li>
-			<li><router-link v-if="!auth.isAuth" to="/registration">Регистрация</router-link></li>
-			<li><button v-if="auth.isAuth" @click.prevent="logout">Выйти</button></li>
+			<li><router-link v-if="storeUser.user.role === 'role.admin' || storeUser.user.role === 'role.cycyrbit'" to="/about">О нас</router-link></li>
+			<li><router-link v-if="storeUser.user.role === 'role.admin' && storeAuth.auth" to="/example">Пример</router-link></li>
+			<li><router-link v-if="!storeAuth.auth" to="/login">Войти</router-link></li>
+			<li><router-link v-if="!storeAuth.auth" to="/registration">Регистрация</router-link></li>
+			<li><button v-if="storeAuth.auth" @click.prevent="logout">Выйти</button></li>
 		</ul>
   </header>
 </template>
 
 <script setup>
-import {useAuthStore} from "@/stores/auth"
+import {useAuthStore} from "@/stores/auth";
+import {useUserStore} from "@/stores/user";
 import router from "@/router";
-const auth = useAuthStore()
+import useFetch from "@/composables/useFetch";
 
-const logout = () => {
-  auth.isAuth = false
-	router.push('/login')
+const storeAuth = useAuthStore()
+const storeUser = useUserStore()
+
+const logout = async () => {
+	try {
+		const res = await useFetch.post('logout')
+		if(res.status === 200) {
+			localStorage.removeItem('accessTokenCycyrbita')
+			storeAuth.auth = false
+			router.push('/login')
+		}
+	} catch (e) {
+		throw e
+	}
 }
 </script>
 

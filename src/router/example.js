@@ -16,7 +16,7 @@ export default [
             },
             {
                 path: 'item',
-                component: () => import('@/components/Footer/Footer.vue'),
+                component: () => import('@/views/users/UsersView.vue'),
             },
         ]
     }

@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import {useAuthStore} from '@/stores/auth'
+import {useUserStore} from '@/stores/user'
 
 import example from "@/router/example"
 import about from "@/router/about"
@@ -25,10 +26,13 @@ const router = createRouter({
 })
 
 router.beforeEach((to, ) => {
+  const storeAuth = useAuthStore()
+  const storeUser = useUserStore()
+
   if(to.meta.middleware) {
-    if(useAuthStore().isAuth) {
+    if(storeAuth.auth) {
       // проверка роли
-      if(!to.meta.middleware.includes(useAuthStore().user.role)) return false
+      if(!to.meta.middleware.includes(storeUser.user.role)) return false
 
       // запрещаем переходить по этим роутам если авторизованы
       if(to.name === 'login') return false
