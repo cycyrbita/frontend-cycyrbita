@@ -52,6 +52,7 @@
 <script setup>
 import {ref} from "vue";
 import useFetch from "@/composables/useFetch";
+import router from "@/router";
 
 const isLoading = ref(false)
 const email = ref('')
@@ -60,10 +61,12 @@ const passwordRepeat = ref('')
 const message = ref('')
 
 const recoveryPassword = async () => {
+	if(password.value !== passwordRepeat.value) return message.value = 'Пароли не совпадают'
   try {
     isLoading.value = true
     const res = await useFetch.post('recovery-password', {email: email.value, password: password.value})
     const json = await res.json()
+		if(res.status === 200) router.push('/login')
     message.value = json.message
   } catch (e) {
     throw e

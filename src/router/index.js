@@ -25,7 +25,7 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, ) => {
+router.beforeResolve((to, ) => {
   const storeAuth = useAuthStore()
   const storeUser = useUserStore()
 
