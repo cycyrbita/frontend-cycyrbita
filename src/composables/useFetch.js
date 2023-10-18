@@ -1,4 +1,12 @@
+import
+
+import {useAuthStore} from "@/stores/auth";
+import {useUserStore} from "@/stores/user";
+
 const VITE_API_URL = import.meta.env.VITE_API_URL
+
+const storeAuth = useAuthStore()
+// const storeUser = useUserStore()
 
 class useFetch {
     async post(url, data, headers) {
@@ -15,7 +23,19 @@ class useFetch {
                     body: JSON.stringify(data),
                 }
             }
-            return await fetch(`${VITE_API_URL}api/${url}`, headers)
+            const res = await fetch(`${VITE_API_URL}api/${url}`, headers)
+            if(res.status === 401) {
+                const res = await this.get('refresh')
+                const json = await res.json()
+
+                if(res.status === 200) {
+                    localStorage.setItem('accessTokenCycyrbita', json.accessToken)
+                    // storeAuth.auth = true
+                    // storeUser.user = json.user
+                    this.post(url, data, headers)
+                }
+            }
+            return res
         } catch (e) {
             throw e
         }
