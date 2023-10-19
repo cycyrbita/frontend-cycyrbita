@@ -25,7 +25,11 @@ const logout = async () => {
 		const res = await useFetch.post('logout')
 		if(res.status === 200) {
 			localStorage.removeItem('accessTokenCycyrbita')
+			// переключаем флаг авторизации
 			storeAuth.auth = false
+			// передаем дефолтного пользователя
+			storeUser.user = {role: 'role.default'}
+			// редиректим
 			router.push('/login')
 		}
 	} catch (e) {
