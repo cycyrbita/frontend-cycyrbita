@@ -49,11 +49,15 @@ class useFetch {
                         storeAuth.auth = true
                         // передаем пользователя
                         storeUser.user = json.user
+                        // обновляем дату последней активности
+                        await this.post('last-activity-at', storeUser.user)
                         // запускаем повторный вызов который был изначально
                         return await this.post(url, data)
                     }
                     router.push('/login')
                 }
+                // обновляем дату последней активности
+                await this.post('last-activity-at', storeUser.user)
             }
             return res
         } catch (e) {
@@ -100,11 +104,15 @@ class useFetch {
                         storeAuth.auth = true
                         // передаем пользователя
                         storeUser.user = json.user
+                        // обновляем дату последней активности
+                        await this.post('last-activity-at', storeUser.user)
                         // запускаем повторный вызов который был изначально
                         return await this.get(url, data)
                     }
                     router.push('/login')
                 }
+                // обновляем дату последней активности
+                await this.post('last-activity-at', storeUser.user)
             }
             return res
         } catch (e) {

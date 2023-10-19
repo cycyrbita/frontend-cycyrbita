@@ -2,22 +2,22 @@ import { createRouter, createWebHistory } from 'vue-router'
 import {useAuthStore} from '@/stores/auth'
 import {useUserStore} from '@/stores/user'
 
-import example from "@/router/example"
 import about from "@/router/about"
 import home from "@/router/home"
 import login from "@/router/login"
 import recoveryPassword from "@/router/recovery-password"
 import addRecoveryPasswordLink from "@/router/add-recovery-password-link"
 import registration from "@/router/registration"
+import users from "@/router/users"
 
 const routes = [
   ...home,
-  ...example,
   ...about,
   ...login,
   ...recoveryPassword,
   ...registration,
   ...addRecoveryPasswordLink,
+  ...users,
 ]
 
 const router = createRouter({

@@ -1,6 +1,6 @@
 <template>
 	<div class="users">
-		<p>{{users}}</p>
+		<pre>{{users}}</pre>
 		<button @click="getUsers">Click</button>
 	</div>
 </template>
