@@ -15,7 +15,7 @@
 
   const getUsers = async () => {
     try {
-      const res = await useFetch.post('users', {role: storeUser.user.role})
+      const res = await useFetch.post('users', {role: storeUser.user.role}, false, true)
       const json = await res.json()
       if(res.status === 200) users.value = json
     } catch (e) {

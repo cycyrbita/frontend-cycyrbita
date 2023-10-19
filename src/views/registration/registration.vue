@@ -49,11 +49,16 @@
 
   const registration = async () => {
     try {
+			// индикатор загрузки
       isLoading.value = true
+			// запрос
       const res = await useFetch.post('registration', {email: email.value, password: password.value})
-      const json = await res.json()
-      if(res.status === 200) router.push('/login')
-      message.value = json.message
+			// ковертируем данные
+			const json = await res.json()
+			// если все успешно
+      if(res.status === 200) return router.push('/login')
+			// текст ошибки
+			message.value = json.message
     } catch (e) {
       throw e
     } finally {

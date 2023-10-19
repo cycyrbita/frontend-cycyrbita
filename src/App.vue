@@ -18,10 +18,19 @@ const authorisation = async () => {
 		const res = await useFetch.get('refresh')
 		const json = await res.json()
 
+		// если токен обновился
 		if(res.status === 200) {
+			// устанавливаем token
 			localStorage.setItem('accessTokenCycyrbita', json.accessToken)
+			// переключаем флаг авторизации
 			storeAuth.auth = true
+			// передаем пользователя
 			storeUser.user = json.user
+		} else {
+			// переключаем флаг авторизации
+			storeAuth.auth = false
+			// передаем дефолтного пользователя
+			storeUser.user = {role: 'role.default'}
 		}
 	} catch (e) {
 		console.log(e)

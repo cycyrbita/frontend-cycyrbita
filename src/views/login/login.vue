@@ -54,14 +54,22 @@ const message = ref('')
 const login = async () => {
   try {
     isLoading.value = true
+		// запрос
     const res = await useFetch.post('login', {email: email.value, password: password.value})
+		// ковертируем данные
     const json = await res.json()
+		// если все успешно
     if(res.status === 200) {
+			// записываем в localstorage
       localStorage.setItem('accessTokenCycyrbita', json.accessToken)
+			// меняем флаг авторизации
 			storeAuth.auth = true
+			// получаем пользователя
 			storeUser.user = json.user
+			// редирект
       router.push('/')
     }
+		// текст ошибки
     message.value = json.message
   } catch (e) {
     throw e
