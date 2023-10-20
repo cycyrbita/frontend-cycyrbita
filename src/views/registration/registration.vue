@@ -56,7 +56,8 @@
 			// ковертируем данные
 			const json = await res.json()
 			// если все успешно
-      if(res.status === 200) return router.push('/login')
+			console.log(res.status)
+      if(res.status === 200) router.push('/login')
 			// текст ошибки
 			message.value = json.message
     } catch (e) {
