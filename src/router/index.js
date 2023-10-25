@@ -36,10 +36,9 @@ router.beforeResolve((to, ) => {
 
       // запрещаем переходить по этим роутам если авторизованы
       if(to.name === 'login' || to.name === 'registration' || to.name === 'recovery-password') return {name: 'home'}
-    } else {
-      // если требует авторизации
-      if(to.meta.middleware.includes('auth')) return {name: 'login'}
     }
+    // если требует авторизации
+    if(to.meta.middleware.includes('auth')) return {name: 'login'}
   }
 
   return
