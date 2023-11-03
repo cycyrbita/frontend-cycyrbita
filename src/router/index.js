@@ -9,6 +9,7 @@ import recoveryPassword from "@/router/recovery-password"
 import addRecoveryPasswordLink from "@/router/add-recovery-password-link"
 import registration from "@/router/registration"
 import users from "@/router/users"
+import ingredients from "@/router/ingredients"
 
 const routes = [
   ...home,
@@ -18,6 +19,7 @@ const routes = [
   ...registration,
   ...addRecoveryPasswordLink,
   ...users,
+  ...ingredients,
 ]
 
 const router = createRouter({
