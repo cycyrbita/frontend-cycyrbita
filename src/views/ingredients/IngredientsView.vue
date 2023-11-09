@@ -1,10 +1,11 @@
 <template>
 	<div>
-		<label v-for="(country, index) in countrys">
-			<input v-model="country.country" type="text" placeholder="Язык">
-			<button @click="countrys.splice(index, 1)">x</button>
-		</label>
-		<button @click="addCountry">Добавить язык</button>
+		<AutoComplete
+			v-model="listCountry"
+			multiple
+			:suggestions="thisCountry"
+			@complete="addCountry"
+		/>
 		<hr>
 
 		<label v-for="(title, index) in titles">
@@ -60,17 +61,24 @@
 
 <script setup>
 import useFetch from '@/composables/useFetch'
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
+
+import AutoComplete from 'primevue/autocomplete'
+
 let formData = new FormData()
+
+// язык ингредиента
+const thisCountry = ref([])
+const listCountry = ref([])
+const addCountry = (event) => thisCountry.value = [...Array(1)].map(() => event.query)
+const dbCountry = computed(() => listCountry.value.map(item => ({country: item})))
 
 const addTitle = () => titles.value.push({title: '', country: ''})
 const addDescription = () => descriptions.value.push({description: '', country: '', themes: []})
 const addTag = () => tags.value.push({tag: '', themes: []})
 const addTheme = () => themes.value.push({theme: ''})
-const addCountry = () => countrys.value.push({country: ''})
 
 const titles = ref([])
-const countrys = ref([])
 const descriptions = ref([])
 const tags = ref([])
 const themes = ref([])
@@ -95,7 +103,7 @@ const send = async () => {
 
 		ingredients.value = {
 			titles: titles.value,
-			countrys: countrys.value,
+			countrys: dbCountry.value,
 			descriptions: descriptions.value,
 			tags: tags.value,
 			themes: themes.value
