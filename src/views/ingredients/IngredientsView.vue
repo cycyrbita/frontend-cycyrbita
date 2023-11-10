@@ -4,13 +4,56 @@
 			<div class="form__col">
 				<div class="form__box">
 					<div>Введите язык</div>
-					<AutoComplete
-						v-model="listCountrys"
-						multiple
-						:suggestions="thisCountry"
-						@complete="addCountry"
-						optionLabel="country"
-					/>
+					<Dropdown
+							v-model="thisCountry"
+							:options="countries"
+							filter
+							optionLabel="name"
+							placeholder="Язык"
+							class="w-full md:w-14rem"
+							@change="addCountry"
+					>
+						<template #value="slotProps">
+							<div
+									v-if="slotProps.value"
+									class="flex align-items-center">
+								<img
+									:alt="slotProps.value.label"
+									src="@/assets/img/flag_placeholder.png"
+									:class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`"
+									style="width: 18px"
+								/>
+								<div>{{ slotProps.value.name }}</div>
+							</div>
+							<span v-else>
+								{{ slotProps.placeholder }}
+							</span>
+						</template>
+						<template #option="slotProps">
+							<div class="flex align-items-center">
+								<img
+									:alt="slotProps.option.label"
+									src="@/assets/img/flag_placeholder.png"
+									:class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`"
+									style="width: 18px"
+								/>
+								<div>{{ slotProps.option.name }}</div>
+							</div>
+						</template>
+					</Dropdown>
+					<div
+							v-if="listCountrys.length"
+							class="card flex flex-wrap gap-2 mt-3"
+					>
+						<Chip
+								v-for="(country, index) in listCountrys"
+								label="Thriller"
+								removable
+								@remove="removeCountry(index)"
+						>
+							{{country.country}}
+						</Chip>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -25,6 +68,7 @@
 						:suggestions="thisTheme"
 						@complete="addTheme"
 						optionLabel="theme"
+						placeholder="Тема"
 					/>
 				</div>
 			</div>
@@ -37,16 +81,49 @@
 			>
 				<div class="form__box">
 					<div>Введите название</div>
-					<InputText v-model="title.title" />
+					<InputText
+							v-model="title.title"
+							placeholder="Название"
+					/>
 				</div>
 				<div class="form__box">
 					<div>Выберите язык</div>
 					<Dropdown
-						v-model="title.country"
-						:options="listCountrys"
-						placeholder="Язык"
-						optionLabel="country"
-					/>
+							v-model="title.country"
+							:options="listCountrys"
+							optionLabel="country"
+							placeholder="Язык"
+							class="w-full md:w-14rem"
+							emptyMessage="Нет доступных вариантов"
+					>
+						<template #value="slotProps">
+							<div
+									v-if="slotProps.value"
+									class="flex align-items-center">
+								<img
+										:alt="slotProps.value.label"
+										src="@/assets/img/flag_placeholder.png"
+										:class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`"
+										style="width: 18px"
+								/>
+								<div>{{ slotProps.value.country }}</div>
+							</div>
+							<span v-else>
+								{{ slotProps.placeholder }}
+							</span>
+						</template>
+						<template #option="slotProps">
+							<div class="flex align-items-center">
+								<img
+										:alt="slotProps.option.label"
+										src="@/assets/img/flag_placeholder.png"
+										:class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`"
+										style="width: 18px"
+								/>
+								<div>{{ slotProps.option.country }}</div>
+							</div>
+						</template>
+					</Dropdown>
 				</div>
 				<div class="form__box">
 					<Button
@@ -79,16 +156,47 @@
 						v-model="description.description"
 						autoResize rows="5"
 						cols="30"
+						placeholder="Описание"
 					/>
 				</div>
 				<div class="form__box">
 					<div>Выберите язык</div>
 					<Dropdown
-						v-model="description.country"
-						:options="listCountrys"
-						placeholder="Язык"
-						optionLabel="country"
-					/>
+							v-model="description.country"
+							:options="listCountrys"
+							optionLabel="country"
+							placeholder="Язык"
+							class="w-full md:w-14rem"
+							emptyMessage="Нет доступных вариантов"
+					>
+						<template #value="slotProps">
+							<div
+									v-if="slotProps.value"
+									class="flex align-items-center">
+								<img
+										:alt="slotProps.value.label"
+										src="@/assets/img/flag_placeholder.png"
+										:class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`"
+										style="width: 18px"
+								/>
+								<div>{{ slotProps.value.country }}</div>
+							</div>
+							<span v-else>
+								{{ slotProps.placeholder }}
+							</span>
+						</template>
+						<template #option="slotProps">
+							<div class="flex align-items-center">
+								<img
+										:alt="slotProps.option.label"
+										src="@/assets/img/flag_placeholder.png"
+										:class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`"
+										style="width: 18px"
+								/>
+								<div>{{ slotProps.option.country }}</div>
+							</div>
+						</template>
+					</Dropdown>
 				</div>
 				<div class="form__box">
 					<div>Выберите темы</div>
@@ -96,10 +204,12 @@
 						v-model="description.themes"
 						display="chip"
 						:options="listThemes"
-						placeholder="Select Cities"
+						placeholder="Темы"
+						filter
 						:maxSelectedLabels="3"
 						class="w-full md:w-20rem"
 						optionLabel="theme"
+						emptyMessage="Нет доступных вариантов"
 					/>
 				</div>
 				<div class="form__box">
@@ -130,6 +240,7 @@
 							type="text"
 							v-model="thisTag"
 							@keyup.enter="addTag"
+							placeholder="Тег"
 						/>
 				</div>
 				<div class="form__box">
@@ -138,10 +249,11 @@
 						v-model="listTagsTheme"
 						display="chip"
 						:options="listThemes"
-						placeholder="Select Cities"
+						placeholder="Темы"
 						:maxSelectedLabels="3"
 						class="w-full md:w-20rem"
 						optionLabel="theme"
+						emptyMessage="Нет доступных вариантов"
 					/>
 				</div>
 				<div class="form__box">
@@ -155,15 +267,14 @@
 			</div>
 			<div class="form__col">
 				<div class="form__tags">
-					<Tag
-						icon="pi pi-times"
-						severity="danger"
-						value="Primary"
-						v-for="(tag, index) in dbTags"
-						@click="removeTag(index)"
+					<Chip
+							v-for="(tag, index) in dbTags"
+							label="Thriller"
+							removable
+							@remove="removeTag(index)"
 					>
 						{{tag.tag}}
-					</Tag>
+					</Chip>
 				</div>
 			</div>
 		</div>
@@ -205,17 +316,21 @@ import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import Textarea from 'primevue/textarea'
 import MultiSelect from 'primevue/multiselect'
-import Tag from 'primevue/tag'
 import FileUpload from 'primevue/fileupload'
+import Chip from 'primevue/chip'
+
+import { useContry } from '@/composables/useContry'
 
 let formData = new FormData()
 // Ингредиент
 const ingredients = ref()
 
 // язык ингредиента
+const countries = ref(useContry())
 const listCountrys = ref([])
-const thisCountry = ref([])
-const addCountry = (event) => thisCountry.value = [...Array(1)].map(() => ({country: event.query}))
+const thisCountry = ref()
+const addCountry = () => listCountrys.value.push({country: thisCountry.value.name, code: thisCountry.value.code})
+const removeCountry = (index) => listCountrys.value.splice(index, 1)
 
 // Название темы
 const listThemes = ref([])
@@ -223,9 +338,9 @@ const thisTheme = ref([])
 const addTheme = (event) => thisTheme.value = [...Array(1)].map(() => ({theme: event.query}))
 
 // Название ингредиента
-const addTitle = () => listTitles.value.push({title: '', country: ''})
-const listTitles = ref([{title: '', country: ''}])
-const dbTitles = computed(() => listTitles.value.map((item) => ({title: item.title, country: item.country.country})))
+const addTitle = () => listTitles.value.push({title: '', country: '', code: ''})
+const listTitles = ref([{title: '', country: '', code: ''}])
+const dbTitles = computed(() => listTitles.value.map((item) => ({title: item.title, country: item.country.country, code: item.country.code})))
 
 // Описание ингредиента
 const addDescription = () => listDescriptions.value.push({description: '', country: '', themes: []})
