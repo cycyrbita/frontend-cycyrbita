@@ -1,62 +1,198 @@
 <template>
-	<div>
-		<AutoComplete
-			v-model="listCountry"
-			multiple
-			:suggestions="thisCountry"
-			@complete="addCountry"
-		/>
-		<hr>
+	<div class="form">
+		<div class="form__row">
+			<div class="form__col">
+				<div class="form__box">
+					<div>Введите язык</div>
+					<AutoComplete
+						v-model="listCountrys"
+						multiple
+						:suggestions="thisCountry"
+						@complete="addCountry"
+						optionLabel="country"
+					/>
+				</div>
+			</div>
+		</div>
 
-		<label v-for="(title, index) in titles">
-			<input v-model="title.title" type="text" placeholder="Название ингредиента">
-			<select v-model="title.country">
-				<option selected value="">Выберите язык</option>
-				<option v-for="country in countrys" :value="country.country">{{country.country}}</option>
-			</select>
-			<button @click="titles.splice(index, 1)">x</button>
-		</label>
-		<button @click="addTitle">Добавить название</button>
-		<hr>
+		<div class="form__row">
+			<div class="form__col">
+				<div class="form__box">
+					<div>Введите тему</div>
+					<AutoComplete
+						v-model="listThemes"
+						multiple
+						:suggestions="thisTheme"
+						@complete="addTheme"
+						optionLabel="theme"
+					/>
+				</div>
+			</div>
+		</div>
 
-		<label v-for="(theme, index) in themes">
-			<input v-model="theme.theme" type="text" placeholder="Название темы">
-			<button @click="themes.splice(index, 1)">x</button>
-		</label>
-		<button @click="addTheme">Добавить тему</button>
-		<hr>
+		<div class="form__row">
+			<div
+				class="form__col"
+				v-for="(title, index) in listTitles"
+			>
+				<div class="form__box">
+					<div>Введите название</div>
+					<InputText v-model="title.title" />
+				</div>
+				<div class="form__box">
+					<div>Выберите язык</div>
+					<Dropdown
+						v-model="title.country"
+						:options="listCountrys"
+						placeholder="Язык"
+						optionLabel="country"
+					/>
+				</div>
+				<div class="form__box">
+					<Button
+						@click="listTitles.splice(index, 1)"
+						icon="pi pi-times"
+						severity="danger"
+						aria-label="Cancel"
+						class="form__box-button"
+					/>
+				</div>
+			</div>
+			<Button
+				@click="addTitle"
+				label="Primary"
+				outlined
+				class="form__row-button"
+			>
+				Добавить название
+			</Button>
+		</div>
 
-		<label v-for="(description, index) in descriptions">
-			<textarea v-model="description.description" type="text" placeholder="Описание"></textarea>
-			<select v-model="description.country">
-				<option selected value="">Выберите язык</option>
-				<option v-for="country in countrys" :value="country.country">{{country.country}}</option>
-			</select>
-			<select v-model="description.themes" multiple="multiple">
-				<option selected value="">Выберите тему</option>
-				<option v-for="theme in themes" :value="theme.theme">{{theme.theme}}</option>
-			</select>
-			<button @click="descriptions.splice(index, 1)">x</button>
-		</label>
-		<button @click="addDescription">Добавить описание</button>
-		<hr>
+		<div class="form__row">
+			<div
+				class="form__col"
+				v-for="(description, index) in listDescriptions"
+			>
+				<div class="form__box">
+					<div>Введите описание</div>
+					<Textarea
+						v-model="description.description"
+						autoResize rows="5"
+						cols="30"
+					/>
+				</div>
+				<div class="form__box">
+					<div>Выберите язык</div>
+					<Dropdown
+						v-model="description.country"
+						:options="listCountrys"
+						placeholder="Язык"
+						optionLabel="country"
+					/>
+				</div>
+				<div class="form__box">
+					<div>Выберите темы</div>
+					<MultiSelect
+						v-model="description.themes"
+						display="chip"
+						:options="listThemes"
+						placeholder="Select Cities"
+						:maxSelectedLabels="3"
+						class="w-full md:w-20rem"
+						optionLabel="theme"
+					/>
+				</div>
+				<div class="form__box">
+					<Button
+						@click="listDescriptions.splice(index, 1)"
+						icon="pi pi-times"
+						severity="danger"
+						aria-label="Cancel"
+						class="form__box-button"
+					/>
+				</div>
+			</div>
+			<Button
+				@click="addDescription"
+				label="Primary"
+				outlined
+				class="form__row-button"
+			>
+				Добавить описание
+			</Button>
+		</div>
 
-		<label v-for="(tag, index) in tags">
-			<input v-model="tag.tag" type="text" placeholder="Название тега">
-			<select v-model="tag.themes" multiple="multiple">
-				<option selected value="">Выберите тему</option>
-				<option v-for="theme in themes" :value="theme.theme">{{theme.theme}}</option>
-			</select>
-			<button @click="tags.splice(index, 1)">x</button>
-		</label>
-		<button @click="addTag">Добавить тег</button>
-		<hr>
-
+		<div class="form__row">
+			<div class="form__col">
+				<div class="form__box">
+						<div>Введите название тега</div>
+						<InputText
+							type="text"
+							v-model="thisTag"
+							@keyup.enter="addTag"
+						/>
+				</div>
+				<div class="form__box">
+					<div>Выберите темы</div>
+					<MultiSelect
+						v-model="listTagsTheme"
+						display="chip"
+						:options="listThemes"
+						placeholder="Select Cities"
+						:maxSelectedLabels="3"
+						class="w-full md:w-20rem"
+						optionLabel="theme"
+					/>
+				</div>
+				<div class="form__box">
+					<Button
+						@click="addTag"
+						icon="pi pi-check"
+						aria-label="Filter"
+						class="form__box-button"
+					/>
+				</div>
+			</div>
+			<div class="form__col">
+				<div class="form__tags">
+					<Tag
+						icon="pi pi-times"
+						severity="danger"
+						value="Primary"
+						v-for="(tag, index) in dbTags"
+						@click="removeTag(index)"
+					>
+						{{tag.tag}}
+					</Tag>
+				</div>
+			</div>
+		</div>
+		<div class="form__row">
+			<div class="form__col">
+				<div class="form__box">
+					<div>Загрузите изображения</div>
+					<FileUpload
+						name="demo[]"
+						:multiple="true"
+						accept="image/*"
+						@select="handleFileUpload($event)"
+						:showUploadButton="false"
+					>
+						<template #empty>
+							<p>Перетащите сюда файлы для загрузки.</p>
+						</template>
+					</FileUpload>
+				</div>
+			</div>
+		</div>
+		<div class="form__row">
+			<div class="form__col">
+				<div class="form__box">
+					<Button @click="send" label="Primary">Отправить</Button>
+				</div>
+			</div>
+		</div>
 	</div>
-	<label>
-		<input type="file" multiple @change="handleFileUpload" ref="uploadImages">
-	</label>
-	<button @click="send" type="submit">Отправить</button>
 </template>
 
 <script setup>
@@ -64,32 +200,54 @@ import useFetch from '@/composables/useFetch'
 import {computed, ref} from 'vue'
 
 import AutoComplete from 'primevue/autocomplete'
+import InputText from 'primevue/inputtext'
+import Dropdown from 'primevue/dropdown'
+import Button from 'primevue/button'
+import Textarea from 'primevue/textarea'
+import MultiSelect from 'primevue/multiselect'
+import Tag from 'primevue/tag'
+import FileUpload from 'primevue/fileupload'
 
 let formData = new FormData()
-
-// язык ингредиента
-const thisCountry = ref([])
-const listCountry = ref([])
-const addCountry = (event) => thisCountry.value = [...Array(1)].map(() => event.query)
-const dbCountry = computed(() => listCountry.value.map(item => ({country: item})))
-
-const addTitle = () => titles.value.push({title: '', country: ''})
-const addDescription = () => descriptions.value.push({description: '', country: '', themes: []})
-const addTag = () => tags.value.push({tag: '', themes: []})
-const addTheme = () => themes.value.push({theme: ''})
-
-const titles = ref([])
-const descriptions = ref([])
-const tags = ref([])
-const themes = ref([])
-
+// Ингредиент
 const ingredients = ref()
 
-const uploadImages = ref(null)
+// язык ингредиента
+const listCountrys = ref([])
+const thisCountry = ref([])
+const addCountry = (event) => thisCountry.value = [...Array(1)].map(() => ({country: event.query}))
+
+// Название темы
+const listThemes = ref([])
+const thisTheme = ref([])
+const addTheme = (event) => thisTheme.value = [...Array(1)].map(() => ({theme: event.query}))
+
+// Название ингредиента
+const addTitle = () => listTitles.value.push({title: '', country: ''})
+const listTitles = ref([{title: '', country: ''}])
+const dbTitles = computed(() => listTitles.value.map((item) => ({title: item.title, country: item.country.country})))
+
+// Описание ингредиента
+const addDescription = () => listDescriptions.value.push({description: '', country: '', themes: []})
+const listDescriptions = ref([{description: '', country: '', themes: []}])
+const dbDescriptions = computed(() => listDescriptions.value.map((item) => ({description: item.description, country: item.country.country, themes: item.themes})))
+
+// Теги ингредиента
+const listTagsTheme = ref([])
+const thisTag = ref('')
+const dbTags = ref([])
+const addTag = () => {
+	if(thisTag.value.trim() !== '') {
+		dbTags.value.push({tag: thisTag.value, themes: listTagsTheme.value})
+		thisTag.value = ''
+		listTagsTheme.value = []
+	}
+}
+const removeTag = (index) => dbTags.value.splice(index, 1)
 
 // запихиваем картинки в массив и добавляем в formData
-const handleFileUpload = () => {
-	for (let key in uploadImages.value.files) formData.append('ingredientsImages', uploadImages.value.files[key])
+const handleFileUpload = (e) => {
+	for (let key in e.files) formData.append('ingredientsImages', e.files[key])
 }
 
 // метод отправки
@@ -102,11 +260,11 @@ const send = async () => {
 		}
 
 		ingredients.value = {
-			titles: titles.value,
-			countrys: dbCountry.value,
-			descriptions: descriptions.value,
-			tags: tags.value,
-			themes: themes.value
+			titles: dbTitles.value,
+			countrys: listCountrys.value,
+			descriptions: dbDescriptions.value,
+			tags: dbTags.value,
+			themes: listThemes.value
 		}
 
 		formData.append('ingredients', JSON.stringify(ingredients.value))
@@ -124,22 +282,45 @@ const send = async () => {
 </script>
 
 <style scoped lang="scss">
-input {
-	display: block;
-}
-
-label {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: flex-start;
-
-	p {
-		width: 100%;
+.form {
+	&__row {
+		& + & {
+			margin-top: 30px;
+		}
 	}
-}
 
-hr {
-	margin-top: 10px;
-	margin-bottom: 10px;
+	&__tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 5px;
+		margin-top: 15px;
+
+		& > .p-tag {
+			cursor: pointer;
+		}
+	}
+
+	&__col {
+		display: flex;
+		gap: 15px;
+
+		& + .form__row-button {
+			margin-top: 15px;
+		}
+	}
+
+	&__box {
+		display: flex;
+		flex-direction: column;
+
+		&-button {
+			margin-top: 1.5rem;
+		}
+	}
+
+	.p-dropdown,
+	.p-multiselect {
+		line-height: normal;
+	}
 }
 </style>
