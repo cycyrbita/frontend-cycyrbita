@@ -1,999 +1,999 @@
 export const useContry = () => {
     return [
         {
-            name: "Россия",
+            country: "Россия",
             code: "RU"
         },
         {
-            name: "Австралия",
+            country: "Австралия",
             code: "AU"
         },
         {
-            name: "Австрия",
+            country: "Австрия",
             code: "AT"
         },
         {
-            name: "Азербайджан",
+            country: "Азербайджан",
             code: "AZ"
         },
         {
-            name: "Аландские о-ва",
+            country: "Аландские о-ва",
             code: "AX"
         },
         {
-            name: "Албания",
+            country: "Албания",
             code: "AL"
         },
         {
-            name: "Алжир",
+            country: "Алжир",
             code: "DZ"
         },
         {
-            name: "Американское Самоа",
+            country: "Американское Самоа",
             code: "AS"
         },
         {
-            name: "Ангилья",
+            country: "Ангилья",
             code: "AI"
         },
         {
-            name: "Ангола",
+            country: "Ангола",
             code: "AO"
         },
         {
-            name: "Андорра",
+            country: "Андорра",
             code: "AD"
         },
         {
-            name: "Антарктида",
+            country: "Антарктида",
             code: "AQ"
         },
         {
-            name: "Антигуа и Барбуда",
+            country: "Антигуа и Барбуда",
             code: "AG"
         },
         {
-            name: "Аргентина",
+            country: "Аргентина",
             code: "AR"
         },
         {
-            name: "Армения",
+            country: "Армения",
             code: "AM"
         },
         {
-            name: "Аруба",
+            country: "Аруба",
             code: "AW"
         },
         {
-            name: "Афганистан",
+            country: "Афганистан",
             code: "AF"
         },
         {
-            name: "Багамы",
+            country: "Багамы",
             code: "BS"
         },
         {
-            name: "Бангладеш",
+            country: "Бангладеш",
             code: "BD"
         },
         {
-            name: "Барбадос",
+            country: "Барбадос",
             code: "BB"
         },
         {
-            name: "Бахрейн",
+            country: "Бахрейн",
             code: "BH"
         },
         {
-            name: "Беларусь",
+            country: "Беларусь",
             code: "BY"
         },
         {
-            name: "Белиз",
+            country: "Белиз",
             code: "BZ"
         },
         {
-            name: "Бельгия",
+            country: "Бельгия",
             code: "BE"
         },
         {
-            name: "Бенин",
+            country: "Бенин",
             code: "BJ"
         },
         {
-            name: "Бермудские о-ва",
+            country: "Бермудские о-ва",
             code: "BM"
         },
         {
-            name: "Болгария",
+            country: "Болгария",
             code: "BG"
         },
         {
-            name: "Боливия",
+            country: "Боливия",
             code: "BO"
         },
         {
-            name: "Бонэйр, Синт-Эстатиус и Саба",
+            country: "Бонэйр, Синт-Эстатиус и Саба",
             code: "BQ"
         },
         {
-            name: "Босния и Герцеговина",
+            country: "Босния и Герцеговина",
             code: "BA"
         },
         {
-            name: "Ботсвана",
+            country: "Ботсвана",
             code: "BW"
         },
         {
-            name: "Бразилия",
+            country: "Бразилия",
             code: "BR"
         },
         {
-            name: "Британская территория в Индийском океане",
+            country: "Британская территория в Индийском океане",
             code: "IO"
         },
         {
-            name: "Бруней-Даруссалам",
+            country: "Бруней-Даруссалам",
             code: "BN"
         },
         {
-            name: "Буркина-Фасо",
+            country: "Буркина-Фасо",
             code: "BF"
         },
         {
-            name: "Бурунди",
+            country: "Бурунди",
             code: "BI"
         },
         {
-            name: "Бутан",
+            country: "Бутан",
             code: "BT"
         },
         {
-            name: "Вануату",
+            country: "Вануату",
             code: "VU"
         },
         {
-            name: "Ватикан",
+            country: "Ватикан",
             code: "VA"
         },
         {
-            name: "Великобритания",
+            country: "Великобритания",
             code: "GB"
         },
         {
-            name: "Венгрия",
+            country: "Венгрия",
             code: "HU"
         },
         {
-            name: "Венесуэла",
+            country: "Венесуэла",
             code: "VE"
         },
         {
-            name: "Виргинские о-ва (Великобритания)",
+            country: "Виргинские о-ва (Великобритания)",
             code: "VG"
         },
         {
-            name: "Виргинские о-ва (США)",
+            country: "Виргинские о-ва (США)",
             code: "VI"
         },
         {
-            name: "Внешние малые о-ва (США)",
+            country: "Внешние малые о-ва (США)",
             code: "UM"
         },
         {
-            name: "Восточный Тимор",
+            country: "Восточный Тимор",
             code: "TL"
         },
         {
-            name: "Вьетнам",
+            country: "Вьетнам",
             code: "VN"
         },
         {
-            name: "Габон",
+            country: "Габон",
             code: "GA"
         },
         {
-            name: "Гаити",
+            country: "Гаити",
             code: "HT"
         },
         {
-            name: "Гайана",
+            country: "Гайана",
             code: "GY"
         },
         {
-            name: "Гамбия",
+            country: "Гамбия",
             code: "GM"
         },
         {
-            name: "Гана",
+            country: "Гана",
             code: "GH"
         },
         {
-            name: "Гваделупа",
+            country: "Гваделупа",
             code: "GP"
         },
         {
-            name: "Гватемала",
+            country: "Гватемала",
             code: "GT"
         },
         {
-            name: "Гвинея",
+            country: "Гвинея",
             code: "GN"
         },
         {
-            name: "Гвинея-Бисау",
+            country: "Гвинея-Бисау",
             code: "GW"
         },
         {
-            name: "Германия",
+            country: "Германия",
             code: "DE"
         },
         {
-            name: "Гернси",
+            country: "Гернси",
             code: "GG"
         },
         {
-            name: "Гибралтар",
+            country: "Гибралтар",
             code: "GI"
         },
         {
-            name: "Гондурас",
+            country: "Гондурас",
             code: "HN"
         },
         {
-            name: "Гонконг (САР)",
+            country: "Гонконг (САР)",
             code: "HK"
         },
         {
-            name: "Гренада",
+            country: "Гренада",
             code: "GD"
         },
         {
-            name: "Гренландия",
+            country: "Гренландия",
             code: "GL"
         },
         {
-            name: "Греция",
+            country: "Греция",
             code: "GR"
         },
         {
-            name: "Грузия",
+            country: "Грузия",
             code: "GE"
         },
         {
-            name: "Гуам",
+            country: "Гуам",
             code: "GU"
         },
         {
-            name: "Дания",
+            country: "Дания",
             code: "DK"
         },
         {
-            name: "Джерси",
+            country: "Джерси",
             code: "JE"
         },
         {
-            name: "Джибути",
+            country: "Джибути",
             code: "DJ"
         },
         {
-            name: "Доминика",
+            country: "Доминика",
             code: "DM"
         },
         {
-            name: "Доминиканская Республика",
+            country: "Доминиканская Республика",
             code: "DO"
         },
         {
-            name: "Египет",
+            country: "Египет",
             code: "EG"
         },
         {
-            name: "Замбия",
+            country: "Замбия",
             code: "ZM"
         },
         {
-            name: "Западная Сахара",
+            country: "Западная Сахара",
             code: "EH"
         },
         {
-            name: "Зимбабве",
+            country: "Зимбабве",
             code: "ZW"
         },
         {
-            name: "Израиль",
+            country: "Израиль",
             code: "IL"
         },
         {
-            name: "Индия",
+            country: "Индия",
             code: "IN"
         },
         {
-            name: "Индонезия",
+            country: "Индонезия",
             code: "ID"
         },
         {
-            name: "Иордания",
+            country: "Иордания",
             code: "JO"
         },
         {
-            name: "Ирак",
+            country: "Ирак",
             code: "IQ"
         },
         {
-            name: "Иран",
+            country: "Иран",
             code: "IR"
         },
         {
-            name: "Ирландия",
+            country: "Ирландия",
             code: "IE"
         },
         {
-            name: "Исландия",
+            country: "Исландия",
             code: "IS"
         },
         {
-            name: "Испания",
+            country: "Испания",
             code: "ES"
         },
         {
-            name: "Италия",
+            country: "Италия",
             code: "IT"
         },
         {
-            name: "Йемен",
+            country: "Йемен",
             code: "YE"
         },
         {
-            name: "Кабо-Верде",
+            country: "Кабо-Верде",
             code: "CV"
         },
         {
-            name: "Казахстан",
+            country: "Казахстан",
             code: "KZ"
         },
         {
-            name: "Камбоджа",
+            country: "Камбоджа",
             code: "KH"
         },
         {
-            name: "Камерун",
+            country: "Камерун",
             code: "CM"
         },
         {
-            name: "Канада",
+            country: "Канада",
             code: "CA"
         },
         {
-            name: "Катар",
+            country: "Катар",
             code: "QA"
         },
         {
-            name: "Кения",
+            country: "Кения",
             code: "KE"
         },
         {
-            name: "Кипр",
+            country: "Кипр",
             code: "CY"
         },
         {
-            name: "Киргизия",
+            country: "Киргизия",
             code: "KG"
         },
         {
-            name: "Кирибати",
+            country: "Кирибати",
             code: "KI"
         },
         {
-            name: "Китай",
+            country: "Китай",
             code: "CN"
         },
         {
-            name: "КНДР",
+            country: "КНДР",
             code: "KP"
         },
         {
-            name: "Кокосовые о-ва",
+            country: "Кокосовые о-ва",
             code: "CC"
         },
         {
-            name: "Колумбия",
+            country: "Колумбия",
             code: "CO"
         },
         {
-            name: "Коморы",
+            country: "Коморы",
             code: "KM"
         },
         {
-            name: "Конго - Браззавиль",
+            country: "Конго - Браззавиль",
             code: "CG"
         },
         {
-            name: "Конго - Киншаса",
+            country: "Конго - Киншаса",
             code: "CD"
         },
         {
-            name: "Коста-Рика",
+            country: "Коста-Рика",
             code: "CR"
         },
         {
-            name: "Кот-д’Ивуар",
+            country: "Кот-д’Ивуар",
             code: "CI"
         },
         {
-            name: "Куба",
+            country: "Куба",
             code: "CU"
         },
         {
-            name: "Кувейт",
+            country: "Кувейт",
             code: "KW"
         },
         {
-            name: "Кюрасао",
+            country: "Кюрасао",
             code: "CW"
         },
         {
-            name: "Лаос",
+            country: "Лаос",
             code: "LA"
         },
         {
-            name: "Латвия",
+            country: "Латвия",
             code: "LV"
         },
         {
-            name: "Лесото",
+            country: "Лесото",
             code: "LS"
         },
         {
-            name: "Либерия",
+            country: "Либерия",
             code: "LR"
         },
         {
-            name: "Ливан",
+            country: "Ливан",
             code: "LB"
         },
         {
-            name: "Ливия",
+            country: "Ливия",
             code: "LY"
         },
         {
-            name: "Литва",
+            country: "Литва",
             code: "LT"
         },
         {
-            name: "Лихтенштейн",
+            country: "Лихтенштейн",
             code: "LI"
         },
         {
-            name: "Люксембург",
+            country: "Люксембург",
             code: "LU"
         },
         {
-            name: "Маврикий",
+            country: "Маврикий",
             code: "MU"
         },
         {
-            name: "Мавритания",
+            country: "Мавритания",
             code: "MR"
         },
         {
-            name: "Мадагаскар",
+            country: "Мадагаскар",
             code: "MG"
         },
         {
-            name: "Майотта",
+            country: "Майотта",
             code: "YT"
         },
         {
-            name: "Макао (САР)",
+            country: "Макао (САР)",
             code: "MO"
         },
         {
-            name: "Малави",
+            country: "Малави",
             code: "MW"
         },
         {
-            name: "Малайзия",
+            country: "Малайзия",
             code: "MY"
         },
         {
-            name: "Мали",
+            country: "Мали",
             code: "ML"
         },
         {
-            name: "Мальдивы",
+            country: "Мальдивы",
             code: "MV"
         },
         {
-            name: "Мальта",
+            country: "Мальта",
             code: "MT"
         },
         {
-            name: "Марокко",
+            country: "Марокко",
             code: "MA"
         },
         {
-            name: "Мартиника",
+            country: "Мартиника",
             code: "MQ"
         },
         {
-            name: "Маршалловы Острова",
+            country: "Маршалловы Острова",
             code: "MH"
         },
         {
-            name: "Мексика",
+            country: "Мексика",
             code: "MX"
         },
         {
-            name: "Мозамбик",
+            country: "Мозамбик",
             code: "MZ"
         },
         {
-            name: "Молдова",
+            country: "Молдова",
             code: "MD"
         },
         {
-            name: "Монако",
+            country: "Монако",
             code: "MC"
         },
         {
-            name: "Монголия",
+            country: "Монголия",
             code: "MN"
         },
         {
-            name: "Монтсеррат",
+            country: "Монтсеррат",
             code: "MS"
         },
         {
-            name: "Мьянма (Бирма)",
+            country: "Мьянма (Бирма)",
             code: "MM"
         },
         {
-            name: "Намибия",
+            country: "Намибия",
             code: "NA"
         },
         {
-            name: "Науру",
+            country: "Науру",
             code: "NR"
         },
         {
-            name: "Непал",
+            country: "Непал",
             code: "NP"
         },
         {
-            name: "Нигер",
+            country: "Нигер",
             code: "NE"
         },
         {
-            name: "Нигерия",
+            country: "Нигерия",
             code: "NG"
         },
         {
-            name: "Нидерланды",
+            country: "Нидерланды",
             code: "NL"
         },
         {
-            name: "Никарагуа",
+            country: "Никарагуа",
             code: "NI"
         },
         {
-            name: "Ниуэ",
+            country: "Ниуэ",
             code: "NU"
         },
         {
-            name: "Новая Зеландия",
+            country: "Новая Зеландия",
             code: "NZ"
         },
         {
-            name: "Новая Каледония",
+            country: "Новая Каледония",
             code: "NC"
         },
         {
-            name: "Норвегия",
+            country: "Норвегия",
             code: "NO"
         },
         {
-            name: "о-в Буве",
+            country: "о-в Буве",
             code: "BV"
         },
         {
-            name: "о-в Мэн",
+            country: "о-в Мэн",
             code: "IM"
         },
         {
-            name: "о-в Норфолк",
+            country: "о-в Норфолк",
             code: "NF"
         },
         {
-            name: "о-в Рождества",
+            country: "о-в Рождества",
             code: "CX"
         },
         {
-            name: "о-в Св. Елены",
+            country: "о-в Св. Елены",
             code: "SH"
         },
         {
-            name: "о-ва Питкэрн",
+            country: "о-ва Питкэрн",
             code: "PN"
         },
         {
-            name: "о-ва Тёркс и Кайкос",
+            country: "о-ва Тёркс и Кайкос",
             code: "TC"
         },
         {
-            name: "о-ва Херд и Макдональд",
+            country: "о-ва Херд и Макдональд",
             code: "HM"
         },
         {
-            name: "ОАЭ",
+            country: "ОАЭ",
             code: "AE"
         },
         {
-            name: "Оман",
+            country: "Оман",
             code: "OM"
         },
         {
-            name: "Острова Кайман",
+            country: "Острова Кайман",
             code: "KY"
         },
         {
-            name: "Острова Кука",
+            country: "Острова Кука",
             code: "CK"
         },
         {
-            name: "Пакистан",
+            country: "Пакистан",
             code: "PK"
         },
         {
-            name: "Палау",
+            country: "Палау",
             code: "PW"
         },
         {
-            name: "Палестинские территории",
+            country: "Палестинские территории",
             code: "PS"
         },
         {
-            name: "Панама",
+            country: "Панама",
             code: "PA"
         },
         {
-            name: "Папуа — Новая Гвинея",
+            country: "Папуа — Новая Гвинея",
             code: "PG"
         },
         {
-            name: "Парагвай",
+            country: "Парагвай",
             code: "PY"
         },
         {
-            name: "Перу",
+            country: "Перу",
             code: "PE"
         },
         {
-            name: "Польша",
+            country: "Польша",
             code: "PL"
         },
         {
-            name: "Португалия",
+            country: "Португалия",
             code: "PT"
         },
         {
-            name: "Пуэрто-Рико",
+            country: "Пуэрто-Рико",
             code: "PR"
         },
         {
-            name: "Республика Корея",
+            country: "Республика Корея",
             code: "KR"
         },
         {
-            name: "Реюньон",
+            country: "Реюньон",
             code: "RE"
         },
         {
-            name: "Руанда",
+            country: "Руанда",
             code: "RW"
         },
         {
-            name: "Румыния",
+            country: "Румыния",
             code: "RO"
         },
         {
-            name: "Сальвадор",
+            country: "Сальвадор",
             code: "SV"
         },
         {
-            name: "Самоа",
+            country: "Самоа",
             code: "WS"
         },
         {
-            name: "Сан-Марино",
+            country: "Сан-Марино",
             code: "SM"
         },
         {
-            name: "Сан-Томе и Принсипи",
+            country: "Сан-Томе и Принсипи",
             code: "ST"
         },
         {
-            name: "Саудовская Аравия",
+            country: "Саудовская Аравия",
             code: "SA"
         },
         {
-            name: "Северная Македония",
+            country: "Северная Македония",
             code: "MK"
         },
         {
-            name: "Северные Марианские о-ва",
+            country: "Северные Марианские о-ва",
             code: "MP"
         },
         {
-            name: "Сейшельские Острова",
+            country: "Сейшельские Острова",
             code: "SC"
         },
         {
-            name: "Сен-Бартелеми",
+            country: "Сен-Бартелеми",
             code: "BL"
         },
         {
-            name: "Сен-Мартен",
+            country: "Сен-Мартен",
             code: "MF"
         },
         {
-            name: "Сен-Пьер и Микелон",
+            country: "Сен-Пьер и Микелон",
             code: "PM"
         },
         {
-            name: "Сенегал",
+            country: "Сенегал",
             code: "SN"
         },
         {
-            name: "Сент-Винсент и Гренадины",
+            country: "Сент-Винсент и Гренадины",
             code: "VC"
         },
         {
-            name: "Сент-Китс и Невис",
+            country: "Сент-Китс и Невис",
             code: "KN"
         },
         {
-            name: "Сент-Люсия",
+            country: "Сент-Люсия",
             code: "LC"
         },
         {
-            name: "Сербия",
+            country: "Сербия",
             code: "RS"
         },
         {
-            name: "Сингапур",
+            country: "Сингапур",
             code: "SG"
         },
         {
-            name: "Синт-Мартен",
+            country: "Синт-Мартен",
             code: "SX"
         },
         {
-            name: "Сирия",
+            country: "Сирия",
             code: "SY"
         },
         {
-            name: "Словакия",
+            country: "Словакия",
             code: "SK"
         },
         {
-            name: "Словения",
+            country: "Словения",
             code: "SI"
         },
         {
-            name: "Соединенные Штаты",
+            country: "Соединенные Штаты",
             code: "US"
         },
         {
-            name: "Соломоновы Острова",
+            country: "Соломоновы Острова",
             code: "SB"
         },
         {
-            name: "Сомали",
+            country: "Сомали",
             code: "SO"
         },
         {
-            name: "Судан",
+            country: "Судан",
             code: "SD"
         },
         {
-            name: "Суринам",
+            country: "Суринам",
             code: "SR"
         },
         {
-            name: "Сьерра-Леоне",
+            country: "Сьерра-Леоне",
             code: "SL"
         },
         {
-            name: "Таджикистан",
+            country: "Таджикистан",
             code: "TJ"
         },
         {
-            name: "Таиланд",
+            country: "Таиланд",
             code: "TH"
         },
         {
-            name: "Тайвань",
+            country: "Тайвань",
             code: "TW"
         },
         {
-            name: "Танзания",
+            country: "Танзания",
             code: "TZ"
         },
         {
-            name: "Того",
+            country: "Того",
             code: "TG"
         },
         {
-            name: "Токелау",
+            country: "Токелау",
             code: "TK"
         },
         {
-            name: "Тонга",
+            country: "Тонга",
             code: "TO"
         },
         {
-            name: "Тринидад и Тобаго",
+            country: "Тринидад и Тобаго",
             code: "TT"
         },
         {
-            name: "Тувалу",
+            country: "Тувалу",
             code: "TV"
         },
         {
-            name: "Тунис",
+            country: "Тунис",
             code: "TN"
         },
         {
-            name: "Туркменистан",
+            country: "Туркменистан",
             code: "TM"
         },
         {
-            name: "Турция",
+            country: "Турция",
             code: "TR"
         },
         {
-            name: "Уганда",
+            country: "Уганда",
             code: "UG"
         },
         {
-            name: "Узбекистан",
+            country: "Узбекистан",
             code: "UZ"
         },
         {
-            name: "Украина",
+            country: "Украина",
             code: "UA"
         },
         {
-            name: "Уоллис и Футуна",
+            country: "Уоллис и Футуна",
             code: "WF"
         },
         {
-            name: "Уругвай",
+            country: "Уругвай",
             code: "UY"
         },
         {
-            name: "Фарерские о-ва",
+            country: "Фарерские о-ва",
             code: "FO"
         },
         {
-            name: "Федеративные Штаты Микронезии",
+            country: "Федеративные Штаты Микронезии",
             code: "FM"
         },
         {
-            name: "Фиджи",
+            country: "Фиджи",
             code: "FJ"
         },
         {
-            name: "Филиппины",
+            country: "Филиппины",
             code: "PH"
         },
         {
-            name: "Финляндия",
+            country: "Финляндия",
             code: "FI"
         },
         {
-            name: "Фолклендские о-ва",
+            country: "Фолклендские о-ва",
             code: "FK"
         },
         {
-            name: "Франция",
+            country: "Франция",
             code: "FR"
         },
         {
-            name: "Французская Гвиана",
+            country: "Французская Гвиана",
             code: "GF"
         },
         {
-            name: "Французская Полинезия",
+            country: "Французская Полинезия",
             code: "PF"
         },
         {
-            name: "Французские Южные территории",
+            country: "Французские Южные территории",
             code: "TF"
         },
         {
-            name: "Хорватия",
+            country: "Хорватия",
             code: "HR"
         },
         {
-            name: "Центрально-Африканская Республика",
+            country: "Центрально-Африканская Республика",
             code: "CF"
         },
         {
-            name: "Чад",
+            country: "Чад",
             code: "TD"
         },
         {
-            name: "Черногория",
+            country: "Черногория",
             code: "ME"
         },
         {
-            name: "Чехия",
+            country: "Чехия",
             code: "CZ"
         },
         {
-            name: "Чили",
+            country: "Чили",
             code: "CL"
         },
         {
-            name: "Швейцария",
+            country: "Швейцария",
             code: "CH"
         },
         {
-            name: "Швеция",
+            country: "Швеция",
             code: "SE"
         },
         {
-            name: "Шпицберген и Ян-Майен",
+            country: "Шпицберген и Ян-Майен",
             code: "SJ"
         },
         {
-            name: "Шри-Ланка",
+            country: "Шри-Ланка",
             code: "LK"
         },
         {
-            name: "Эквадор",
+            country: "Эквадор",
             code: "EC"
         },
         {
-            name: "Экваториальная Гвинея",
+            country: "Экваториальная Гвинея",
             code: "GQ"
         },
         {
-            name: "Эритрея",
+            country: "Эритрея",
             code: "ER"
         },
         {
-            name: "Эсватини",
+            country: "Эсватини",
             code: "SZ"
         },
         {
-            name: "Эстония",
+            country: "Эстония",
             code: "EE"
         },
         {
-            name: "Эфиопия",
+            country: "Эфиопия",
             code: "ET"
         },
         {
-            name: "Южная Георгия и Южные Сандвичевы о-ва",
+            country: "Южная Георгия и Южные Сандвичевы о-ва",
             code: "GS"
         },
         {
-            name: "Южно-Африканская Республика",
+            country: "Южно-Африканская Республика",
             code: "ZA"
         },
         {
-            name: "Южный Судан",
+            country: "Южный Судан",
             code: "SS"
         },
         {
-            name: "Ямайка",
+            country: "Ямайка",
             code: "JM"
         },
         {
-            name: "Япония",
+            country: "Япония",
             code: "JP"
         }
     ]

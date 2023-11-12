@@ -8,7 +8,7 @@
 							v-model="thisCountry"
 							:options="countries"
 							filter
-							optionLabel="name"
+							optionLabel="country"
 							placeholder="Язык"
 							class="w-full md:w-14rem"
 							@change="addCountry"
@@ -23,7 +23,7 @@
 									:class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`"
 									style="width: 18px"
 								/>
-								<div>{{ slotProps.value.name }}</div>
+								<div>{{ slotProps.value.country }}</div>
 							</div>
 							<span v-else>
 								{{ slotProps.placeholder }}
@@ -37,7 +37,7 @@
 									:class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`"
 									style="width: 18px"
 								/>
-								<div>{{ slotProps.option.name }}</div>
+								<div>{{ slotProps.option.country }}</div>
 							</div>
 						</template>
 					</Dropdown>
@@ -47,11 +47,14 @@
 					>
 						<Chip
 								v-for="(country, index) in listCountrys"
-								label="Thriller"
-								removable
-								@remove="removeCountry(index)"
+								icon="pi pi-times"
 						>
 							{{country.country}}
+							<i
+									class="pi pi-times-circle"
+									style="font-size: 0.9rem; margin-left: 0.3rem; cursor: pointer; padding: 5px 0;"
+									@click="removeCountry(index)"
+							></i>
 						</Chip>
 					</div>
 				</div>
@@ -60,16 +63,52 @@
 
 		<div class="form__row">
 			<div class="form__col">
+<!--				<div class="form__box">-->
+<!--					<div>Введите тему</div>-->
+<!--					<AutoComplete-->
+<!--							v-model="listThemes"-->
+<!--							multiple-->
+<!--							:suggestions="thisTheme"-->
+<!--							@complete="addTheme"-->
+<!--							optionLabel="theme"-->
+<!--							placeholder="Тема"-->
+<!--					/>-->
+<!--				</div>-->
 				<div class="form__box">
-					<div>Введите тему</div>
-					<AutoComplete
-						v-model="listThemes"
-						multiple
-						:suggestions="thisTheme"
-						@complete="addTheme"
-						optionLabel="theme"
-						placeholder="Тема"
+					<div>Придумайте свою тему</div>
+					<InputText
+							type="text"
+							v-model="thisTheme"
+							@keyup.enter="addTheme"
+							placeholder="Тема"
 					/>
+				</div>
+				<div class="form__box">
+					<div>Выберите из уже имеющихся тем</div>
+					<MultiSelect
+							v-model="listDbSelectThemes"
+							:options="listDbThemes"
+							placeholder="Темы"
+							optionLabel="theme"
+							emptyMessage="Нет доступных вариантов"
+							:maxSelectedLabels="2"
+							@change="addSelectTheme"
+					/>
+				</div>
+			</div>
+			<div class="form__col">
+				<div class="form__tags">
+					<Chip
+							v-for="(theme, index) in listThemes"
+							icon="pi pi-times"
+					>
+						{{theme.theme}}
+						<i
+								class="pi pi-times-circle"
+								style="font-size: 0.9rem; margin-left: 0.3rem; cursor: pointer; padding: 5px 0;"
+								@click="removeTheme(index)"
+						></i>
+					</Chip>
 				</div>
 			</div>
 		</div>
@@ -329,13 +368,48 @@ const ingredients = ref()
 const countries = ref(useContry())
 const listCountrys = ref([])
 const thisCountry = ref()
-const addCountry = () => listCountrys.value.push({country: thisCountry.value.name, code: thisCountry.value.code})
-const removeCountry = (index) => listCountrys.value.splice(index, 1)
+const addCountry = () => {
+	// добавляем тег
+	listCountrys.value.push({country: thisCountry.value.country, code: thisCountry.value.code})
+	// удаляем страну из списка
+	countries.value.splice(0, countries.value.length, ...countries.value.filter(n => n.country !== thisCountry.value.country))
+}
+const removeCountry = (index) => {
+	countries.value.unshift(listCountrys.value[index])
+	listCountrys.value.splice(index, 1)
+}
 
-// Название темы
-const listThemes = ref([])
-const thisTheme = ref([])
-const addTheme = (event) => thisTheme.value = [...Array(1)].map(() => ({theme: event.query}))
+// // Название темы
+// const listThemes = ref([])
+// const thisTheme = ref([])
+// const addTheme = (event) => thisTheme.value = [...Array(1)].map(() => ({theme: event.query}))
+
+const thisTheme = ref('')
+const listThemes = ref([
+	{theme: 'dfgfdg34534'}
+])
+
+const listDbSelectThemes = ref([])
+const listDbThemes = ref([
+	{theme: 'dfgfdg1'},
+	{theme: 'dfgfdg2'},
+	{theme: 'dfgfdg3'},
+])
+
+const addSelectTheme = (e) => {
+	listThemes.value.forEach(elem => listThemes.value.push(e.value.find(el => elem.theme !== el.theme)))
+
+	console.log(listThemes.value)
+	// console.log(listThemes.value)
+}
+
+const addTheme = () => {
+	listThemes.value.push({theme: thisTheme.value})
+}
+const removeTheme = (index) => {
+	listThemes.value.splice(index, 1)
+	thisTheme.value = ''
+}
 
 // Название ингредиента
 const addTitle = () => listTitles.value.push({title: '', country: '', code: ''})
