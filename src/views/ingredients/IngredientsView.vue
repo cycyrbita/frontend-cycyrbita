@@ -63,17 +63,6 @@
 
 		<div class="form__row">
 			<div class="form__col">
-<!--				<div class="form__box">-->
-<!--					<div>Введите тему</div>-->
-<!--					<AutoComplete-->
-<!--							v-model="listThemes"-->
-<!--							multiple-->
-<!--							:suggestions="thisTheme"-->
-<!--							@complete="addTheme"-->
-<!--							optionLabel="theme"-->
-<!--							placeholder="Тема"-->
-<!--					/>-->
-<!--				</div>-->
 				<div class="form__box">
 					<div>Придумайте свою тему</div>
 					<InputText
@@ -379,23 +368,18 @@ const removeCountry = (index) => {
 	listCountrys.value.splice(index, 1)
 }
 
-// // Название темы
-// const listThemes = ref([])
-// const thisTheme = ref([])
-// const addTheme = (event) => thisTheme.value = [...Array(1)].map(() => ({theme: event.query}))
-
 const thisTheme = ref('')
 const listThemes = ref([])
 
 const listDbSelectThemes = ref([])
-const listDbThemes = ref([
-	{theme: 'dfgfdg1'},
-	{theme: 'dfgfdg2'},
-	{theme: 'dfgfdg3'},
-])
+const listDbThemes = ref([])
 
+// фильтрация удаления и добавления тем сложно но работает
 const addSelectTheme = (e) => {
 	e.value.filter(el1 => !listThemes.value.find(el2 => el1.theme === el2.theme)).forEach(el => listThemes.value.push(el))
+	listDbThemes.value.filter(el1 => !listDbSelectThemes.value.some(el2 => el1.theme === el2.theme)).forEach(el1 => listThemes.value.forEach((el2, index) => {
+		if(el1.theme === el2.theme) listThemes.value.splice(index, 1)
+	}))
 }
 
 const addTheme = () => {
