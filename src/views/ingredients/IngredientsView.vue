@@ -385,9 +385,7 @@ const removeCountry = (index) => {
 // const addTheme = (event) => thisTheme.value = [...Array(1)].map(() => ({theme: event.query}))
 
 const thisTheme = ref('')
-const listThemes = ref([
-	{theme: 'dfgfdg34534'}
-])
+const listThemes = ref([])
 
 const listDbSelectThemes = ref([])
 const listDbThemes = ref([
@@ -397,17 +395,17 @@ const listDbThemes = ref([
 ])
 
 const addSelectTheme = (e) => {
-	listThemes.value.forEach(elem => listThemes.value.push(e.value.find(el => elem.theme !== el.theme)))
-
-	console.log(listThemes.value)
-	// console.log(listThemes.value)
+	e.value.filter(el1 => !listThemes.value.find(el2 => el1.theme === el2.theme)).forEach(el => listThemes.value.push(el))
 }
 
 const addTheme = () => {
+	if(listThemes.value.find(el => el.theme === thisTheme.value)) return
 	listThemes.value.push({theme: thisTheme.value})
 }
+
 const removeTheme = (index) => {
 	listThemes.value.splice(index, 1)
+	listDbSelectThemes.value = listDbSelectThemes.value.filter(el1 => listThemes.value.find(el2 => el1.theme === el2.theme))
 	thisTheme.value = ''
 }
 
