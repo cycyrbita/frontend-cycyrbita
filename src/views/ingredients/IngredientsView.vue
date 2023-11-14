@@ -3,7 +3,7 @@
 		<div class="form__row">
 			<div class="form__col">
 				<div class="form__box">
-					<div>Введите язык</div>
+					<div>Выберите язык</div>
 					<Dropdown
 							v-model="thisCountry"
 							:options="countries"
@@ -73,6 +73,16 @@
 					/>
 				</div>
 				<div class="form__box">
+					<Button
+							@click="addTheme"
+							icon="pi pi-check"
+							aria-label="Filter"
+							class="form__box-button"
+					/>
+				</div>
+			</div>
+			<div class="form__col">
+				<div class="form__box">
 					<div>Выберите из уже имеющихся тем</div>
 					<MultiSelect
 							v-model="listSelectThemes"
@@ -85,16 +95,11 @@
 							filter
 					/>
 				</div>
-				<div class="form__box">
-					<Button
-						@click="addTheme"
-						icon="pi pi-check"
-						aria-label="Filter"
-						class="form__box-button"
-					/>
-				</div>
 			</div>
-			<div class="form__col">
+			<div
+					class="form__col"
+					v-if="listThemes.length"
+			>
 				<div class="form__tags">
 					<Chip
 							v-for="(theme, index) in listThemes"
@@ -180,6 +185,7 @@
 				label="Primary"
 				outlined
 				class="form__row-button"
+				size="small"
 			>
 				Добавить название
 			</Button>
@@ -270,6 +276,7 @@
 				label="Primary"
 				outlined
 				class="form__row-button"
+				size="small"
 			>
 				Добавить описание
 			</Button>
@@ -287,20 +294,6 @@
 						/>
 				</div>
 				<div class="form__box">
-					<div>Выберите темы</div>
-					<MultiSelect
-						v-model="listTagsTheme"
-						display="chip"
-						:options="listThemes"
-						placeholder="Темы"
-						:maxSelectedLabels="3"
-						class="w-full md:w-20rem"
-						optionLabel="theme"
-						filter
-						emptyMessage="Нет доступных вариантов"
-					/>
-				</div>
-				<div class="form__box">
 					<Button
 						@click="addTag"
 						icon="pi pi-check"
@@ -310,6 +303,25 @@
 				</div>
 			</div>
 			<div class="form__col">
+				<div class="form__box">
+					<div>Выберите темы</div>
+					<MultiSelect
+							v-model="listTagsTheme"
+							display="chip"
+							:options="listThemes"
+							placeholder="Темы"
+							:maxSelectedLabels="3"
+							class="w-full md:w-20rem"
+							optionLabel="theme"
+							filter
+							emptyMessage="Нет доступных вариантов"
+					/>
+				</div>
+			</div>
+			<div
+					class="form__col"
+					v-if="dbTags.length"
+			>
 				<div class="form__tags">
 					<Chip
 							v-for="(tag, index) in dbTags"
@@ -474,11 +486,13 @@ const listTitles = ref([{title: '', country: '', code: ''}])
 const dbTitles = computed(() => {
 	let array = []
 	for(const item of listTitles.value) {
-		// проверяем что бы все поля юыли заполнены
+		// проверяем что бы все поля были заполнены
 		if((item.title !== '' && item.country.country && item.country.code)) array.push({title: item.title, country: item.country.country, code: item.country.code})
 	}
 	return array
 })
+
+// Описания =====================================================
 
 // добавление нового описания
 const addDescription = () => listDescriptions.value.push({description: '', country: '', themes: []})
@@ -584,6 +598,10 @@ const send = async () => {
 
 		& + .form__row-button {
 			margin-top: 15px;
+		}
+
+		& + & {
+			margin-top: 10px;
 		}
 	}
 
