@@ -42,11 +42,11 @@
 						</template>
 					</Dropdown>
 					<div
-							v-if="listCountrys.length"
+							v-if="listCountries.length"
 							class="card flex flex-wrap gap-2 mt-3"
 					>
 						<Chip
-								v-for="(country, index) in listCountrys"
+								v-for="(country, index) in listCountries"
 								icon="pi pi-times"
 						>
 							{{country.country}}
@@ -75,13 +75,22 @@
 				<div class="form__box">
 					<div>Выберите из уже имеющихся тем</div>
 					<MultiSelect
-							v-model="listDbSelectThemes"
+							v-model="listSelectThemes"
 							:options="listDbThemes"
 							placeholder="Темы"
 							optionLabel="theme"
 							emptyMessage="Нет доступных вариантов"
 							:maxSelectedLabels="2"
 							@change="addSelectTheme"
+							filter
+					/>
+				</div>
+				<div class="form__box">
+					<Button
+						@click="addTheme"
+						icon="pi pi-check"
+						aria-label="Filter"
+						class="form__box-button"
 					/>
 				</div>
 			</div>
@@ -110,7 +119,7 @@
 				<div class="form__box">
 					<div>Введите название</div>
 					<InputText
-							v-model="title.title"
+							v-model.trim="title.title"
 							placeholder="Название"
 					/>
 				</div>
@@ -118,7 +127,7 @@
 					<div>Выберите язык</div>
 					<Dropdown
 							v-model="title.country"
-							:options="listCountrys"
+							:options="listCountries"
 							optionLabel="country"
 							placeholder="Язык"
 							class="w-full md:w-14rem"
@@ -153,7 +162,10 @@
 						</template>
 					</Dropdown>
 				</div>
-				<div class="form__box">
+				<div
+					class="form__box"
+					v-if="listTitles.length > 1"
+				>
 					<Button
 						@click="listTitles.splice(index, 1)"
 						icon="pi pi-times"
@@ -181,7 +193,7 @@
 				<div class="form__box">
 					<div>Введите описание</div>
 					<Textarea
-						v-model="description.description"
+						v-model.trim="description.description"
 						autoResize rows="5"
 						cols="30"
 						placeholder="Описание"
@@ -191,7 +203,7 @@
 					<div>Выберите язык</div>
 					<Dropdown
 							v-model="description.country"
-							:options="listCountrys"
+							:options="listCountries"
 							optionLabel="country"
 							placeholder="Язык"
 							class="w-full md:w-14rem"
@@ -240,7 +252,10 @@
 						emptyMessage="Нет доступных вариантов"
 					/>
 				</div>
-				<div class="form__box">
+				<div
+					class="form__box"
+					v-if="listDescriptions.length > 1"
+				>
 					<Button
 						@click="listDescriptions.splice(index, 1)"
 						icon="pi pi-times"
@@ -281,6 +296,7 @@
 						:maxSelectedLabels="3"
 						class="w-full md:w-20rem"
 						optionLabel="theme"
+						filter
 						emptyMessage="Нет доступных вариантов"
 					/>
 				</div>
@@ -316,6 +332,8 @@
 						accept="image/*"
 						@select="handleFileUpload($event)"
 						:showUploadButton="false"
+						chooseLabel="Добвить файл"
+						cancelLabel="Удалить все"
 					>
 						<template #empty>
 							<p>Перетащите сюда файлы для загрузки.</p>
@@ -338,7 +356,6 @@
 import useFetch from '@/composables/useFetch'
 import {computed, ref} from 'vue'
 
-import AutoComplete from 'primevue/autocomplete'
 import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
@@ -349,72 +366,160 @@ import Chip from 'primevue/chip'
 
 import { useContry } from '@/composables/useContry'
 
+const errorMessages = ref({
+	country: {
+		success: null,
+		messages: '',
+	},
+	title: {
+		success: null,
+		messages: '',
+	},
+})
+
+const successMessages = () => {
+	let flag = true
+	if(!dbTitles.value.length) {errorMessages.value.succes = false, errorMessages.value.message = 'Заполните все поля', flag = false}
+	if(!listCountries.value.length) {errorMessages.value.succes = false, errorMessages.value.message = 'Выберите хотя бы одну срану', flag = false}
+	return flag
+}
+
 let formData = new FormData()
 // Ингредиент
 const ingredients = ref()
 
-// язык ингредиента
+// Языки =====================================================
+
+// база языков
 const countries = ref(useContry())
-const listCountrys = ref([])
+// список стран которые пойдут в базу
+const listCountries = ref([])
+// текущий язык
 const thisCountry = ref()
+// добавление страны
 const addCountry = () => {
 	// добавляем тег
-	listCountrys.value.push({country: thisCountry.value.country, code: thisCountry.value.code})
+	listCountries.value.push({country: thisCountry.value.country, code: thisCountry.value.code})
 	// удаляем страну из списка
 	countries.value.splice(0, countries.value.length, ...countries.value.filter(n => n.country !== thisCountry.value.country))
 }
+// удаляем тег стран
 const removeCountry = (index) => {
-	countries.value.unshift(listCountrys.value[index])
-	listCountrys.value.splice(index, 1)
+	// добавляем в начало
+	countries.value.unshift(listCountries.value[index])
+	// удаляем тег
+	listCountries.value.splice(index, 1)
+	// присваиваем последний язык селекту из списка языков на добавление
+	thisCountry.value = listCountries.value[listCountries.value.length - 1]
 }
 
+// Темы =====================================================
+
+// текущая тема в поле ввода
 const thisTheme = ref('')
+// список тем на добавление в базу
 const listThemes = ref([])
-
-const listDbSelectThemes = ref([])
-const listDbThemes = ref([])
-
-// фильтрация удаления и добавления тем сложно но работает
+// список выбранных тем из базы
+const listSelectThemes = ref([])
+// список тем которые уже есть в базе
+const listDbThemes = ref([
+	{theme: 'Омоложение'},
+	{theme: 'Похудение'}
+])
+// добавляем тему через селект
 const addSelectTheme = (e) => {
+	// если список на добавление в базу пустой то добавляем туда значение из списка выбранных селектов которые пришли из базы
+	if(!listThemes.value.length) return listThemes.value.push(listSelectThemes.value[0])
+	// если нет совпадений между списком из базы и списком на отправку то пушим элемент в список на отправку
 	e.value.filter(el1 => !listThemes.value.find(el2 => el1.theme === el2.theme)).forEach(el => listThemes.value.push(el))
-	listDbThemes.value.filter(el1 => !listDbSelectThemes.value.some(el2 => el1.theme === el2.theme)).forEach(el1 => listThemes.value.forEach((el2, index) => {
-		if(el1.theme === el2.theme) listThemes.value.splice(index, 1)
+
+	// получаем массив тем которые не выбраны и проверяем есть ли они в списке на добавление в базу и если нет, то удаляем из списка на добавление
+	// это нужно для того что бы при удалении из селекта удалялось и в списке на добавление в базу
+	listDbThemes.value.filter(el1 => !listSelectThemes.value.some(el2 => el1.theme === el2.theme)).forEach(el1 => listThemes.value.forEach((el2, index) => {
+		if(el1.theme !== el2.theme) listThemes.value.splice(index, 1)
 	}))
 }
-
+// добавляем тему через инпут
 const addTheme = () => {
-	if(listThemes.value.find(el => el.theme === thisTheme.value)) return
+	// пустая строка то не добавляем
+	if(thisTheme.value.trim() === '') return
+	// если в списке уже есть похожая тема
+	if(listThemes.value.find(el => el.theme.toLowerCase() === thisTheme.value.toLowerCase())) return
+	// если в списке всех тем из базы есть похожая то мы добавляем в список тем селекта
+	listDbThemes.value.find(el => {
+		if(el.theme.toLowerCase() === thisTheme.value.toLowerCase()) listSelectThemes.value.push({theme: thisTheme.value})
+	})
+	// добавляем тему в список тем на отправку в базу
 	listThemes.value.push({theme: thisTheme.value})
+	// обнуляем поле
+	thisTheme.value = ''
 }
-
+// удаление тегов
 const removeTheme = (index) => {
+	// удаляем тег по индексу
 	listThemes.value.splice(index, 1)
-	listDbSelectThemes.value = listDbSelectThemes.value.filter(el1 => listThemes.value.find(el2 => el1.theme === el2.theme))
+	// удаляем из списка селектов темы
+	listSelectThemes.value = listSelectThemes.value.filter(el1 => listThemes.value.find(el2 => el1.theme === el2.theme))
+	// обнуляем поле ввода темы
 	thisTheme.value = ''
 }
 
-// Название ингредиента
+// Заголовки =====================================================
+
+// добавление нового названия
 const addTitle = () => listTitles.value.push({title: '', country: '', code: ''})
+// список заголовков
 const listTitles = ref([{title: '', country: '', code: ''}])
-const dbTitles = computed(() => listTitles.value.map((item) => ({title: item.title, country: item.country.country, code: item.country.code})))
+// список на отправку в базу заголовков
+const dbTitles = computed(() => {
+	let array = []
+	for(const item of listTitles.value) {
+		// проверяем что бы все поля юыли заполнены
+		if((item.title !== '' && item.country.country && item.country.code)) array.push({title: item.title, country: item.country.country, code: item.country.code})
+	}
+	return array
+})
 
-// Описание ингредиента
+// добавление нового описания
 const addDescription = () => listDescriptions.value.push({description: '', country: '', themes: []})
+// список описаний
 const listDescriptions = ref([{description: '', country: '', themes: []}])
-const dbDescriptions = computed(() => listDescriptions.value.map((item) => ({description: item.description, country: item.country.country, themes: item.themes})))
+// список на добавление в базу описаний
+const dbDescriptions = computed(() => {
+	let array = []
+	for(const item of listDescriptions.value) {
+		// проверяем что бы все поля юыли заполнены
+		if((item.description !== '' && item.country.country && item.themes.length)) array.push({description: item.description, country: item.country.country, themes: item.themes})
+	}
+	return array
+})
 
-// Теги ингредиента
+// Теги =====================================================
+
+// список тем тегов
 const listTagsTheme = ref([])
+// текущий тег на добавление
 const thisTag = ref('')
+// список тегов на добавление в базу
 const dbTags = ref([])
+// добавление тега
 const addTag = () => {
+	// проверка на пустоту
 	if(thisTag.value.trim() !== '') {
+		// проверка на повторение
+		if(dbTags.value.find(el => el.tag === thisTag.value)) return
+		// добавляем тег в список на отправку в базу
 		dbTags.value.push({tag: thisTag.value, themes: listTagsTheme.value})
+		// обнуляем поле с тегом
 		thisTag.value = ''
+		// обнуляем список тем тегов
 		listTagsTheme.value = []
 	}
 }
+// удаление тега
 const removeTag = (index) => dbTags.value.splice(index, 1)
+
+// Картинки =====================================================
 
 // запихиваем картинки в массив и добавляем в formData
 const handleFileUpload = (e) => {
@@ -430,9 +535,11 @@ const send = async () => {
 			credentials: 'include',
 		}
 
+		console.log(successMessages())
+
 		ingredients.value = {
 			titles: dbTitles.value,
-			countrys: listCountrys.value,
+			countries: listCountries.value,
 			descriptions: dbDescriptions.value,
 			tags: dbTags.value,
 			themes: listThemes.value
