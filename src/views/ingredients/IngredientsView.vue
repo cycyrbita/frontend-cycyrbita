@@ -555,6 +555,8 @@ const getOptions = async () => {
 }
 
 const resetForm = () => {
+	ingredients.value = []
+
 	countries.value = useContry()
 	listCountries.value = []
 	thisCountry.value = ''
@@ -569,6 +571,7 @@ const resetForm = () => {
 
 	listTagsTheme.value = []
 	thisTag.value = ''
+	dbTags.value = []
 
 	formData.delete('ingredientsImages')
 	formData.delete('ingredients')
