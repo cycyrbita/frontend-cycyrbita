@@ -1,4 +1,5 @@
 <template>
+	<div class="lds-roller" v-if="!optionsReady"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 	<div class="form">
 		<div class="form__row">
 			<div class="form__col">
@@ -285,6 +286,22 @@
 		<div class="form__row">
 			<div class="form__col">
 				<div class="form__box">
+					<div>Выберите тему для тега</div>
+					<MultiSelect
+						v-model="listTagsTheme"
+						display="chip"
+						:options="listThemes"
+						placeholder="Темы"
+						:maxSelectedLabels="3"
+						class="w-full md:w-20rem"
+						optionLabel="theme"
+						filter
+						emptyMessage="Нет доступных вариантов"
+					/>
+				</div>
+			</div>
+			<div class="form__col">
+				<div class="form__box">
 						<div>Введите название тега</div>
 						<InputText
 							type="text"
@@ -299,22 +316,6 @@
 						icon="pi pi-check"
 						aria-label="Filter"
 						class="form__box-button"
-					/>
-				</div>
-			</div>
-			<div class="form__col">
-				<div class="form__box">
-					<div>Выберите темы</div>
-					<MultiSelect
-							v-model="listTagsTheme"
-							display="chip"
-							:options="listThemes"
-							placeholder="Темы"
-							:maxSelectedLabels="3"
-							class="w-full md:w-20rem"
-							optionLabel="theme"
-							filter
-							emptyMessage="Нет доступных вариантов"
 					/>
 				</div>
 			</div>
@@ -366,7 +367,7 @@
 
 <script setup>
 import useFetch from '@/composables/useFetch'
-import {computed, ref} from 'vue'
+import {computed, onBeforeMount, ref} from 'vue'
 
 import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
@@ -399,6 +400,8 @@ const successMessages = () => {
 let formData = new FormData()
 // Ингредиент
 const ingredients = ref()
+
+const optionsReady = ref()
 
 // Языки =====================================================
 
@@ -434,10 +437,7 @@ const listThemes = ref([])
 // список выбранных тем из базы
 const listSelectThemes = ref([])
 // список тем которые уже есть в базе
-const listDbThemes = ref([
-	{theme: 'Омоложение'},
-	{theme: 'Похудение'}
-])
+const listDbThemes = ref([])
 // добавляем тему через селект
 const addSelectTheme = (e) => {
 	// если список на добавление в базу пустой то добавляем туда значение из списка выбранных селектов которые пришли из базы
@@ -540,6 +540,40 @@ const handleFileUpload = (e) => {
 	for (let key in e.files) formData.append('ingredientsImages', e.files[key])
 }
 
+const getOptions = async () => {
+	optionsReady.value = false
+	try {
+		const res = await useFetch.get('ingredients/options')
+		const json = await res.json()
+		listDbThemes.value = json.themes.map(el => ({theme: el.theme}))
+		optionsReady.value = true
+
+		console.log(json)
+	} catch (e) {
+		console.log(e)
+	}
+}
+
+const resetForm = () => {
+	countries.value = useContry()
+	listCountries.value = []
+	thisCountry.value = ''
+
+	thisTheme.value = ''
+	listThemes.value = []
+	listSelectThemes.value = []
+
+	listTitles.value = [{title: '', country: '', code: ''}]
+
+	listDescriptions.value = [{description: '', country: '', themes: []}]
+
+	listTagsTheme.value = []
+	thisTag.value = ''
+
+	formData.delete('ingredientsImages')
+	formData.delete('ingredients')
+}
+
 // метод отправки
 const send = async () => {
 	try {
@@ -548,8 +582,6 @@ const send = async () => {
 			body: formData,
 			credentials: 'include',
 		}
-
-		console.log(successMessages())
 
 		ingredients.value = {
 			titles: dbTitles.value,
@@ -564,13 +596,18 @@ const send = async () => {
 		const res = await useFetch.post('ingredients/create', null, headers)
 		const json = await res.json()
 
-		formData.delete('ingredients')
+		resetForm()
+		optionsReady.value = false
+		getOptions()
+		setTimeout(() => optionsReady.value = true, 1000)
 
 		console.log(json)
 	} catch (e) {
 		console.log(e)
 	}
 }
+
+onBeforeMount(getOptions)
 </script>
 
 <style scoped lang="scss">
@@ -619,4 +656,99 @@ const send = async () => {
 		line-height: normal;
 	}
 }
+
+
+.lds-roller {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 999;
+	background: fixed #dea478 top center no-repeat;
+}
+.lds-roller div {
+	animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+	transform-origin: 40px 40px;
+}
+.lds-roller div:after {
+	content: " ";
+	display: block;
+	position: absolute;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: #fff;
+	margin: -4px 0 0 -4px;
+}
+.lds-roller div:nth-child(1) {
+	animation-delay: -0.036s;
+}
+.lds-roller div:nth-child(1):after {
+	top: 63px;
+	left: 63px;
+}
+.lds-roller div:nth-child(2) {
+	animation-delay: -0.072s;
+}
+.lds-roller div:nth-child(2):after {
+	top: 68px;
+	left: 56px;
+}
+.lds-roller div:nth-child(3) {
+	animation-delay: -0.108s;
+}
+.lds-roller div:nth-child(3):after {
+	top: 71px;
+	left: 48px;
+}
+.lds-roller div:nth-child(4) {
+	animation-delay: -0.144s;
+}
+.lds-roller div:nth-child(4):after {
+	top: 72px;
+	left: 40px;
+}
+.lds-roller div:nth-child(5) {
+	animation-delay: -0.18s;
+}
+.lds-roller div:nth-child(5):after {
+	top: 71px;
+	left: 32px;
+}
+.lds-roller div:nth-child(6) {
+	animation-delay: -0.216s;
+}
+.lds-roller div:nth-child(6):after {
+	top: 68px;
+	left: 24px;
+}
+.lds-roller div:nth-child(7) {
+	animation-delay: -0.252s;
+}
+.lds-roller div:nth-child(7):after {
+	top: 63px;
+	left: 17px;
+}
+.lds-roller div:nth-child(8) {
+	animation-delay: -0.288s;
+}
+.lds-roller div:nth-child(8):after {
+	top: 56px;
+	left: 12px;
+}
+@keyframes lds-roller {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
 </style>
