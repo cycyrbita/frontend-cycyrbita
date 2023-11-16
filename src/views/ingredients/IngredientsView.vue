@@ -613,7 +613,7 @@ const send = async () => {
 
 		resetForm()
 		optionsReady.value = false
-		getOptions()
+		await getOptions()
 		setTimeout(() => optionsReady.value = true, 1000)
 
 		console.log(json)
