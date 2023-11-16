@@ -191,7 +191,6 @@
 				Добавить название
 			</Button>
 		</div>
-
 		<div class="form__row">
 			<div
 				class="form__col"
@@ -426,6 +425,15 @@ const removeCountry = (index) => {
 	listCountries.value.splice(index, 1)
 	// присваиваем последний язык селекту из списка языков на добавление
 	thisCountry.value = listCountries.value[listCountries.value.length - 1]
+
+	// удаляем языки из селектов
+	listTitles.value.forEach(el1 => {
+		if(!listCountries.value.some(el2 => el1.country.country === el2.country)) el1.country = ''
+	})
+
+	listDescriptions.value.forEach(el1 => {
+		if(!listCountries.value.some(el2 => el1.country.country === el2.country)) el1.country = ''
+	})
 }
 
 // Темы =====================================================
@@ -444,13 +452,13 @@ const addSelectTheme = (e) => {
 	if(!listThemes.value.length) return listThemes.value.push(listSelectThemes.value[0])
 	// если нет совпадений между списком из базы и списком на отправку то пушим элемент в список на отправку
 	e.value.filter(el1 => !listThemes.value.find(el2 => el1.theme === el2.theme)).forEach(el => listThemes.value.push(el))
-
 	// получаем массив тем которые не выбраны и проверяем есть ли они в списке на добавление в базу и если нет, то удаляем из списка на добавление
 	// это нужно для того что бы при удалении из селекта удалялось и в списке на добавление в базу
 	listDbThemes.value.filter(el1 => !listSelectThemes.value.some(el2 => el1.theme === el2.theme)).forEach(el1 => listThemes.value.forEach((el2, index) => {
-		if(el1.theme !== el2.theme) listThemes.value.splice(index, 1)
+		if(el1.theme === el2.theme) listThemes.value.splice(index, 1)
 	}))
 }
+
 // добавляем тему через инпут
 const addTheme = () => {
 	// пустая строка то не добавляем
@@ -474,6 +482,12 @@ const removeTheme = (index) => {
 	listSelectThemes.value = listSelectThemes.value.filter(el1 => listThemes.value.find(el2 => el1.theme === el2.theme))
 	// обнуляем поле ввода темы
 	thisTheme.value = ''
+
+	// удаляем темы из селектов в тегах и описаниях
+	listDescriptions.value.forEach(el => {
+		el.themes = el.themes.filter(el1 => listThemes.value.some(el2 => el1.theme === el2.theme))
+	})
+	listTagsTheme.value = listTagsTheme.value.filter(el1 => listThemes.value.some(el2 => el1.theme === el2.theme))
 }
 
 // Заголовки =====================================================
@@ -502,7 +516,7 @@ const listDescriptions = ref([{description: '', country: '', themes: []}])
 const dbDescriptions = computed(() => {
 	let array = []
 	for(const item of listDescriptions.value) {
-		// проверяем что бы все поля юыли заполнены
+		// проверяем что бы все поля были заполнены
 		if((item.description !== '' && item.country.country && item.themes.length)) array.push({description: item.description, country: item.country.country, themes: item.themes})
 	}
 	return array
@@ -547,8 +561,6 @@ const getOptions = async () => {
 		const json = await res.json()
 		listDbThemes.value = json.themes.map(el => ({theme: el.theme}))
 		optionsReady.value = true
-
-		console.log(json)
 	} catch (e) {
 		console.log(e)
 	}
