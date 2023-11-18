@@ -37,6 +37,10 @@ export const useContry = () => {
             code: "AI"
         },
         {
+            country: "Английский",
+            code: "EN"
+        },
+        {
             country: "Ангола",
             code: "AO"
         },

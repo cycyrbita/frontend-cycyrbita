@@ -346,6 +346,7 @@
 						:showUploadButton="false"
 						chooseLabel="Добвить файл"
 						cancelLabel="Удалить все"
+						ref="imagesReset"
 					>
 						<template #empty>
 							<p>Перетащите сюда файлы для загрузки.</p>
@@ -400,6 +401,7 @@ let formData = new FormData()
 // Ингредиент
 const ingredients = ref()
 
+// готовность опций
 const optionsReady = ref()
 
 // Языки =====================================================
@@ -407,15 +409,27 @@ const optionsReady = ref()
 // база языков
 const countries = ref(useContry())
 // список стран которые пойдут в базу
-const listCountries = ref([])
+const listCountries = ref([{code: 'RU', country: 'Россия'}])
 // текущий язык
-const thisCountry = ref()
+const thisCountry = ref({code: 'RU', country: 'Россия'})
+// для того, чтобы при добавлении нового языка они также отображались в списке языков во всех элементах
+const addCountriesToAllElements = () => {
+	if(listTitles.value.length === 1) listTitles.value[0].country = thisCountry.value
+	if(listDescriptions.value.length === 1) listDescriptions.value[0].country = thisCountry.value
+	for(const description of listDescriptions.value) {
+		if(!description.country) description.country = thisCountry.value
+	}
+	for(const country of listTitles.value) {
+		if(!country.country) country.country = thisCountry.value
+	}
+}
 // добавление страны
 const addCountry = () => {
 	// добавляем тег
 	listCountries.value.push({country: thisCountry.value.country, code: thisCountry.value.code})
 	// удаляем страну из списка
 	countries.value.splice(0, countries.value.length, ...countries.value.filter(n => n.country !== thisCountry.value.country))
+	addCountriesToAllElements()
 }
 // удаляем тег стран
 const removeCountry = (index) => {
@@ -434,6 +448,8 @@ const removeCountry = (index) => {
 	listDescriptions.value.forEach(el1 => {
 		if(!listCountries.value.some(el2 => el1.country.country === el2.country)) el1.country = ''
 	})
+
+	addCountriesToAllElements()
 }
 
 // Темы =====================================================
@@ -446,8 +462,18 @@ const listThemes = ref([])
 const listSelectThemes = ref([])
 // список тем которые уже есть в базе
 const listDbThemes = ref([])
+// для того, чтобы при добавлении новой темы они также отображались в списке тем во всех элементах
+const addThemesToAllElements = () => {
+	if(listDescriptions.value.length === 1) listDescriptions.value[0].themes = listThemes.value
+	for(const description of listDescriptions.value) {
+		if(!description.themes.length) description.themes = listThemes.value
+	}
+
+	if(!listTagsTheme.value.length) listTagsTheme.value = listThemes.value
+}
 // добавляем тему через селект
 const addSelectTheme = (e) => {
+	addThemesToAllElements()
 	// если список на добавление в базу пустой то добавляем туда значение из списка выбранных селектов которые пришли из базы
 	if(!listThemes.value.length) return listThemes.value.push(listSelectThemes.value[0])
 	// если нет совпадений между списком из базы и списком на отправку то пушим элемент в список на отправку
@@ -465,6 +491,7 @@ const addTheme = () => {
 	if(thisTheme.value.trim() === '') return
 	// если в списке уже есть похожая тема
 	if(listThemes.value.find(el => el.theme.toLowerCase() === thisTheme.value.toLowerCase())) return
+	addThemesToAllElements()
 	// если в списке всех тем из базы есть похожая то мы добавляем в список тем селекта
 	listDbThemes.value.find(el => {
 		if(el.theme.toLowerCase() === thisTheme.value.toLowerCase()) listSelectThemes.value.push({theme: thisTheme.value})
@@ -488,20 +515,21 @@ const removeTheme = (index) => {
 		el.themes = el.themes.filter(el1 => listThemes.value.some(el2 => el1.theme === el2.theme))
 	})
 	listTagsTheme.value = listTagsTheme.value.filter(el1 => listThemes.value.some(el2 => el1.theme === el2.theme))
+	addThemesToAllElements()
 }
 
 // Заголовки =====================================================
 
 // добавление нового названия
-const addTitle = () => listTitles.value.push({title: '', country: '', code: ''})
+const addTitle = () => listTitles.value.push({title: '', country: thisCountry.value})
 // список заголовков
-const listTitles = ref([{title: '', country: '', code: ''}])
+const listTitles = ref([{title: '', country: thisCountry.value}])
 // список на отправку в базу заголовков
 const dbTitles = computed(() => {
 	let array = []
 	for(const item of listTitles.value) {
 		// проверяем что бы все поля были заполнены
-		if((item.title !== '' && item.country.country && item.country.code)) array.push({title: item.title, country: item.country.country, code: item.country.code})
+		if((item.title !== '' && item.country.country && item.country.code)) array.push({title: item.title, country: item.country.country})
 	}
 	return array
 })
@@ -509,9 +537,9 @@ const dbTitles = computed(() => {
 // Описания =====================================================
 
 // добавление нового описания
-const addDescription = () => listDescriptions.value.push({description: '', country: '', themes: []})
+const addDescription = () => listDescriptions.value.push({description: '', country: thisCountry.value, themes: listSelectThemes.value})
 // список описаний
-const listDescriptions = ref([{description: '', country: '', themes: []}])
+const listDescriptions = ref([{description: '', country: thisCountry.value, themes: listSelectThemes.value}])
 // список на добавление в базу описаний
 const dbDescriptions = computed(() => {
 	let array = []
@@ -554,6 +582,8 @@ const handleFileUpload = (e) => {
 	for (let key in e.files) formData.append('ingredientsImages', e.files[key])
 }
 
+const imagesReset = ref(null)
+
 const getOptions = async () => {
 	optionsReady.value = false
 	try {
@@ -587,6 +617,7 @@ const resetForm = () => {
 
 	formData.delete('ingredientsImages')
 	formData.delete('ingredients')
+	imagesReset.value.clear()
 }
 
 // метод отправки
