@@ -33,13 +33,14 @@
 		<div class="ingredient-card__images">
 			<p><b>Список картинок:</b></p>
 			<div class="ingredient-card__list">
-				<img v-for="image in props.ingredient.images" :src="`src/assets/ingredients/${image.src}`" :alt="image.alt">
+				<img v-for="image in props.ingredient.images" :src="`${VITE_IMAGE_PATH}/ingredients/${image.src}`" :alt="image.alt">
 			</div>
 		</div>
 	</div>
 </template>
 
 <script setup>
+	const VITE_IMAGE_PATH = import.meta.env.VITE_IMAGE_PATH
 	const props = defineProps(['ingredient'])
 </script>
 
