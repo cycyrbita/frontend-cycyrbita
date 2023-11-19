@@ -4,7 +4,7 @@
 		<div class="form__row">
 			<div class="form__col">
 				<div class="form__box">
-					<div>Выберите язык</div>
+					<div><b>Выбрать язык</b></div>
 					<Dropdown
 							v-model="thisCountry"
 							:options="countries"
@@ -65,7 +65,7 @@
 		<div class="form__row">
 			<div class="form__col">
 				<div class="form__box">
-					<div>Придумайте свою тему</div>
+					<div><b>Придумайте свою тему</b></div>
 					<InputText
 							type="text"
 							v-model="thisTheme"
@@ -81,10 +81,8 @@
 							class="form__box-button"
 					/>
 				</div>
-			</div>
-			<div class="form__col">
 				<div class="form__box">
-					<div>Выберите из уже имеющихся тем</div>
+					<div><b>Или выбрать из уже имеющихся тем</b></div>
 					<MultiSelect
 							v-model="listSelectThemes"
 							:options="listDbThemes"
@@ -123,14 +121,14 @@
 					v-for="(title, index) in listTitles"
 			>
 				<div class="form__box">
-					<div>Введите название</div>
+					<div><b>Введите название</b></div>
 					<InputText
 							v-model.trim="title.title"
 							placeholder="Название"
 					/>
 				</div>
 				<div class="form__box">
-					<div>Выберите язык</div>
+					<div><b>Выбрать язык</b></div>
 					<Dropdown
 							v-model="title.country"
 							:options="listCountries"
@@ -197,7 +195,7 @@
 					v-for="(description, index) in listDescriptions"
 			>
 				<div class="form__box">
-					<div>Введите описание</div>
+					<div><b>Введите описание</b></div>
 					<Textarea
 							v-model.trim="description.description"
 							autoResize rows="5"
@@ -206,7 +204,7 @@
 					/>
 				</div>
 				<div class="form__box">
-					<div>Выберите язык</div>
+					<div><b>Выбрать язык</b></div>
 					<Dropdown
 							v-model="description.country"
 							:options="listCountries"
@@ -245,7 +243,7 @@
 					</Dropdown>
 				</div>
 				<div class="form__box">
-					<div>Выберите темы</div>
+					<div><b>Выбрать темы</b></div>
 					<MultiSelect
 							v-model="description.themes"
 							display="chip"
@@ -285,7 +283,7 @@
 		<div class="form__row">
 			<div class="form__col">
 				<div class="form__box">
-					<div>Выберите тему для тега</div>
+					<div><b>Выбрать тему для тега</b></div>
 					<MultiSelect
 							v-model="listTagsTheme"
 							display="chip"
@@ -298,10 +296,8 @@
 							emptyMessage="Нет доступных вариантов"
 					/>
 				</div>
-			</div>
-			<div class="form__col">
 				<div class="form__box">
-					<div>Введите название тега</div>
+					<div><b>Введите название тега</b></div>
 					<InputText
 							type="text"
 							v-model="thisTag"
@@ -337,7 +333,7 @@
 		<div class="form__row">
 			<div class="form__col">
 				<div class="form__box">
-					<div>Загрузите изображения</div>
+					<div><b>Загрузите изображения</b></div>
 					<FileUpload
 							name="demo[]"
 							:multiple="true"
@@ -389,13 +385,6 @@ const errorMessages = ref({
 		messages: '',
 	},
 })
-
-const successMessages = () => {
-	let flag = true
-	if(!dbTitles.value.length) {errorMessages.value.succes = false, errorMessages.value.message = 'Заполните все поля', flag = false}
-	if(!listCountries.value.length) {errorMessages.value.succes = false, errorMessages.value.message = 'Выберите хотя бы одну срану', flag = false}
-	return flag
-}
 
 let formData = new FormData()
 // Ингредиент
@@ -659,10 +648,18 @@ onBeforeMount(getOptions)
 
 <style scoped lang="scss">
 .form {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+
+	b {
+		font-weight: 700;
+	}
+
 	&__row {
-		& + & {
-			margin-top: 30px;
-		}
+		padding: 15px;
+		border: 1px dashed #e1e1e1;
+		border-radius: 15px;
 	}
 
 	&__tags {

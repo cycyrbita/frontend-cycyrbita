@@ -2,7 +2,7 @@
 	<div class="ingredients">
 		<div class="ingredients-header">
 			<div class="ingredients-header__list">
-				<router-link v-if="$route.name !== 'ingredients'" style="line-height: normal; text-decoration: none" class="p-button p-component p-button-outlined" :to="{name: 'ingredients'}" outlined>Псомотреть ингредиенты</router-link>
+				<router-link v-if="$route.name !== 'ingredients'" style="line-height: normal; text-decoration: none" class="p-button p-component p-button-outlined" :to="{name: 'ingredients'}" outlined>Посмотреть ингредиенты</router-link>
 				<router-link v-if="$route.name !== 'ingredients-create'" style="line-height: normal; text-decoration: none" class="p-button p-component p-button-outlined" :to="{name: 'ingredients-create'}" outlined>Создать ингредиент</router-link>
 			</div>
 		</div>
