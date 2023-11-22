@@ -1,1003 +1,1003 @@
 export const useContry = () => {
     return [
         {
-            country: "Россия",
+            language: "Россия",
             code: "RU"
         },
         {
-            country: "Австралия",
+            language: "Австралия",
             code: "AU"
         },
         {
-            country: "Австрия",
+            language: "Австрия",
             code: "AT"
         },
         {
-            country: "Азербайджан",
+            language: "Азербайджан",
             code: "AZ"
         },
         {
-            country: "Аландские о-ва",
+            language: "Аландские о-ва",
             code: "AX"
         },
         {
-            country: "Албания",
+            language: "Албания",
             code: "AL"
         },
         {
-            country: "Алжир",
+            language: "Алжир",
             code: "DZ"
         },
         {
-            country: "Американское Самоа",
+            language: "Американское Самоа",
             code: "AS"
         },
         {
-            country: "Ангилья",
+            language: "Ангилья",
             code: "AI"
         },
         {
-            country: "Английский",
+            language: "Английский",
             code: "EN"
         },
         {
-            country: "Ангола",
+            language: "Ангола",
             code: "AO"
         },
         {
-            country: "Андорра",
+            language: "Андорра",
             code: "AD"
         },
         {
-            country: "Антарктида",
+            language: "Антарктида",
             code: "AQ"
         },
         {
-            country: "Антигуа и Барбуда",
+            language: "Антигуа и Барбуда",
             code: "AG"
         },
         {
-            country: "Аргентина",
+            language: "Аргентина",
             code: "AR"
         },
         {
-            country: "Армения",
+            language: "Армения",
             code: "AM"
         },
         {
-            country: "Аруба",
+            language: "Аруба",
             code: "AW"
         },
         {
-            country: "Афганистан",
+            language: "Афганистан",
             code: "AF"
         },
         {
-            country: "Багамы",
+            language: "Багамы",
             code: "BS"
         },
         {
-            country: "Бангладеш",
+            language: "Бангладеш",
             code: "BD"
         },
         {
-            country: "Барбадос",
+            language: "Барбадос",
             code: "BB"
         },
         {
-            country: "Бахрейн",
+            language: "Бахрейн",
             code: "BH"
         },
         {
-            country: "Беларусь",
+            language: "Беларусь",
             code: "BY"
         },
         {
-            country: "Белиз",
+            language: "Белиз",
             code: "BZ"
         },
         {
-            country: "Бельгия",
+            language: "Бельгия",
             code: "BE"
         },
         {
-            country: "Бенин",
+            language: "Бенин",
             code: "BJ"
         },
         {
-            country: "Бермудские о-ва",
+            language: "Бермудские о-ва",
             code: "BM"
         },
         {
-            country: "Болгария",
+            language: "Болгария",
             code: "BG"
         },
         {
-            country: "Боливия",
+            language: "Боливия",
             code: "BO"
         },
         {
-            country: "Бонэйр, Синт-Эстатиус и Саба",
+            language: "Бонэйр, Синт-Эстатиус и Саба",
             code: "BQ"
         },
         {
-            country: "Босния и Герцеговина",
+            language: "Босния и Герцеговина",
             code: "BA"
         },
         {
-            country: "Ботсвана",
+            language: "Ботсвана",
             code: "BW"
         },
         {
-            country: "Бразилия",
+            language: "Бразилия",
             code: "BR"
         },
         {
-            country: "Британская территория в Индийском океане",
+            language: "Британская территория в Индийском океане",
             code: "IO"
         },
         {
-            country: "Бруней-Даруссалам",
+            language: "Бруней-Даруссалам",
             code: "BN"
         },
         {
-            country: "Буркина-Фасо",
+            language: "Буркина-Фасо",
             code: "BF"
         },
         {
-            country: "Бурунди",
+            language: "Бурунди",
             code: "BI"
         },
         {
-            country: "Бутан",
+            language: "Бутан",
             code: "BT"
         },
         {
-            country: "Вануату",
+            language: "Вануату",
             code: "VU"
         },
         {
-            country: "Ватикан",
+            language: "Ватикан",
             code: "VA"
         },
         {
-            country: "Великобритания",
+            language: "Великобритания",
             code: "GB"
         },
         {
-            country: "Венгрия",
+            language: "Венгрия",
             code: "HU"
         },
         {
-            country: "Венесуэла",
+            language: "Венесуэла",
             code: "VE"
         },
         {
-            country: "Виргинские о-ва (Великобритания)",
+            language: "Виргинские о-ва (Великобритания)",
             code: "VG"
         },
         {
-            country: "Виргинские о-ва (США)",
+            language: "Виргинские о-ва (США)",
             code: "VI"
         },
         {
-            country: "Внешние малые о-ва (США)",
+            language: "Внешние малые о-ва (США)",
             code: "UM"
         },
         {
-            country: "Восточный Тимор",
+            language: "Восточный Тимор",
             code: "TL"
         },
         {
-            country: "Вьетнам",
+            language: "Вьетнам",
             code: "VN"
         },
         {
-            country: "Габон",
+            language: "Габон",
             code: "GA"
         },
         {
-            country: "Гаити",
+            language: "Гаити",
             code: "HT"
         },
         {
-            country: "Гайана",
+            language: "Гайана",
             code: "GY"
         },
         {
-            country: "Гамбия",
+            language: "Гамбия",
             code: "GM"
         },
         {
-            country: "Гана",
+            language: "Гана",
             code: "GH"
         },
         {
-            country: "Гваделупа",
+            language: "Гваделупа",
             code: "GP"
         },
         {
-            country: "Гватемала",
+            language: "Гватемала",
             code: "GT"
         },
         {
-            country: "Гвинея",
+            language: "Гвинея",
             code: "GN"
         },
         {
-            country: "Гвинея-Бисау",
+            language: "Гвинея-Бисау",
             code: "GW"
         },
         {
-            country: "Германия",
+            language: "Германия",
             code: "DE"
         },
         {
-            country: "Гернси",
+            language: "Гернси",
             code: "GG"
         },
         {
-            country: "Гибралтар",
+            language: "Гибралтар",
             code: "GI"
         },
         {
-            country: "Гондурас",
+            language: "Гондурас",
             code: "HN"
         },
         {
-            country: "Гонконг (САР)",
+            language: "Гонконг (САР)",
             code: "HK"
         },
         {
-            country: "Гренада",
+            language: "Гренада",
             code: "GD"
         },
         {
-            country: "Гренландия",
+            language: "Гренландия",
             code: "GL"
         },
         {
-            country: "Греция",
+            language: "Греция",
             code: "GR"
         },
         {
-            country: "Грузия",
+            language: "Грузия",
             code: "GE"
         },
         {
-            country: "Гуам",
+            language: "Гуам",
             code: "GU"
         },
         {
-            country: "Дания",
+            language: "Дания",
             code: "DK"
         },
         {
-            country: "Джерси",
+            language: "Джерси",
             code: "JE"
         },
         {
-            country: "Джибути",
+            language: "Джибути",
             code: "DJ"
         },
         {
-            country: "Доминика",
+            language: "Доминика",
             code: "DM"
         },
         {
-            country: "Доминиканская Республика",
+            language: "Доминиканская Республика",
             code: "DO"
         },
         {
-            country: "Египет",
+            language: "Египет",
             code: "EG"
         },
         {
-            country: "Замбия",
+            language: "Замбия",
             code: "ZM"
         },
         {
-            country: "Западная Сахара",
+            language: "Западная Сахара",
             code: "EH"
         },
         {
-            country: "Зимбабве",
+            language: "Зимбабве",
             code: "ZW"
         },
         {
-            country: "Израиль",
+            language: "Израиль",
             code: "IL"
         },
         {
-            country: "Индия",
+            language: "Индия",
             code: "IN"
         },
         {
-            country: "Индонезия",
+            language: "Индонезия",
             code: "ID"
         },
         {
-            country: "Иордания",
+            language: "Иордания",
             code: "JO"
         },
         {
-            country: "Ирак",
+            language: "Ирак",
             code: "IQ"
         },
         {
-            country: "Иран",
+            language: "Иран",
             code: "IR"
         },
         {
-            country: "Ирландия",
+            language: "Ирландия",
             code: "IE"
         },
         {
-            country: "Исландия",
+            language: "Исландия",
             code: "IS"
         },
         {
-            country: "Испания",
+            language: "Испания",
             code: "ES"
         },
         {
-            country: "Италия",
+            language: "Италия",
             code: "IT"
         },
         {
-            country: "Йемен",
+            language: "Йемен",
             code: "YE"
         },
         {
-            country: "Кабо-Верде",
+            language: "Кабо-Верде",
             code: "CV"
         },
         {
-            country: "Казахстан",
+            language: "Казахстан",
             code: "KZ"
         },
         {
-            country: "Камбоджа",
+            language: "Камбоджа",
             code: "KH"
         },
         {
-            country: "Камерун",
+            language: "Камерун",
             code: "CM"
         },
         {
-            country: "Канада",
+            language: "Канада",
             code: "CA"
         },
         {
-            country: "Катар",
+            language: "Катар",
             code: "QA"
         },
         {
-            country: "Кения",
+            language: "Кения",
             code: "KE"
         },
         {
-            country: "Кипр",
+            language: "Кипр",
             code: "CY"
         },
         {
-            country: "Киргизия",
+            language: "Киргизия",
             code: "KG"
         },
         {
-            country: "Кирибати",
+            language: "Кирибати",
             code: "KI"
         },
         {
-            country: "Китай",
+            language: "Китай",
             code: "CN"
         },
         {
-            country: "КНДР",
+            language: "КНДР",
             code: "KP"
         },
         {
-            country: "Кокосовые о-ва",
+            language: "Кокосовые о-ва",
             code: "CC"
         },
         {
-            country: "Колумбия",
+            language: "Колумбия",
             code: "CO"
         },
         {
-            country: "Коморы",
+            language: "Коморы",
             code: "KM"
         },
         {
-            country: "Конго - Браззавиль",
+            language: "Конго - Браззавиль",
             code: "CG"
         },
         {
-            country: "Конго - Киншаса",
+            language: "Конго - Киншаса",
             code: "CD"
         },
         {
-            country: "Коста-Рика",
+            language: "Коста-Рика",
             code: "CR"
         },
         {
-            country: "Кот-д’Ивуар",
+            language: "Кот-д’Ивуар",
             code: "CI"
         },
         {
-            country: "Куба",
+            language: "Куба",
             code: "CU"
         },
         {
-            country: "Кувейт",
+            language: "Кувейт",
             code: "KW"
         },
         {
-            country: "Кюрасао",
+            language: "Кюрасао",
             code: "CW"
         },
         {
-            country: "Лаос",
+            language: "Лаос",
             code: "LA"
         },
         {
-            country: "Латвия",
+            language: "Латвия",
             code: "LV"
         },
         {
-            country: "Лесото",
+            language: "Лесото",
             code: "LS"
         },
         {
-            country: "Либерия",
+            language: "Либерия",
             code: "LR"
         },
         {
-            country: "Ливан",
+            language: "Ливан",
             code: "LB"
         },
         {
-            country: "Ливия",
+            language: "Ливия",
             code: "LY"
         },
         {
-            country: "Литва",
+            language: "Литва",
             code: "LT"
         },
         {
-            country: "Лихтенштейн",
+            language: "Лихтенштейн",
             code: "LI"
         },
         {
-            country: "Люксембург",
+            language: "Люксембург",
             code: "LU"
         },
         {
-            country: "Маврикий",
+            language: "Маврикий",
             code: "MU"
         },
         {
-            country: "Мавритания",
+            language: "Мавритания",
             code: "MR"
         },
         {
-            country: "Мадагаскар",
+            language: "Мадагаскар",
             code: "MG"
         },
         {
-            country: "Майотта",
+            language: "Майотта",
             code: "YT"
         },
         {
-            country: "Макао (САР)",
+            language: "Макао (САР)",
             code: "MO"
         },
         {
-            country: "Малави",
+            language: "Малави",
             code: "MW"
         },
         {
-            country: "Малайзия",
+            language: "Малайзия",
             code: "MY"
         },
         {
-            country: "Мали",
+            language: "Мали",
             code: "ML"
         },
         {
-            country: "Мальдивы",
+            language: "Мальдивы",
             code: "MV"
         },
         {
-            country: "Мальта",
+            language: "Мальта",
             code: "MT"
         },
         {
-            country: "Марокко",
+            language: "Марокко",
             code: "MA"
         },
         {
-            country: "Мартиника",
+            language: "Мартиника",
             code: "MQ"
         },
         {
-            country: "Маршалловы Острова",
+            language: "Маршалловы Острова",
             code: "MH"
         },
         {
-            country: "Мексика",
+            language: "Мексика",
             code: "MX"
         },
         {
-            country: "Мозамбик",
+            language: "Мозамбик",
             code: "MZ"
         },
         {
-            country: "Молдова",
+            language: "Молдова",
             code: "MD"
         },
         {
-            country: "Монако",
+            language: "Монако",
             code: "MC"
         },
         {
-            country: "Монголия",
+            language: "Монголия",
             code: "MN"
         },
         {
-            country: "Монтсеррат",
+            language: "Монтсеррат",
             code: "MS"
         },
         {
-            country: "Мьянма (Бирма)",
+            language: "Мьянма (Бирма)",
             code: "MM"
         },
         {
-            country: "Намибия",
+            language: "Намибия",
             code: "NA"
         },
         {
-            country: "Науру",
+            language: "Науру",
             code: "NR"
         },
         {
-            country: "Непал",
+            language: "Непал",
             code: "NP"
         },
         {
-            country: "Нигер",
+            language: "Нигер",
             code: "NE"
         },
         {
-            country: "Нигерия",
+            language: "Нигерия",
             code: "NG"
         },
         {
-            country: "Нидерланды",
+            language: "Нидерланды",
             code: "NL"
         },
         {
-            country: "Никарагуа",
+            language: "Никарагуа",
             code: "NI"
         },
         {
-            country: "Ниуэ",
+            language: "Ниуэ",
             code: "NU"
         },
         {
-            country: "Новая Зеландия",
+            language: "Новая Зеландия",
             code: "NZ"
         },
         {
-            country: "Новая Каледония",
+            language: "Новая Каледония",
             code: "NC"
         },
         {
-            country: "Норвегия",
+            language: "Норвегия",
             code: "NO"
         },
         {
-            country: "о-в Буве",
+            language: "о-в Буве",
             code: "BV"
         },
         {
-            country: "о-в Мэн",
+            language: "о-в Мэн",
             code: "IM"
         },
         {
-            country: "о-в Норфолк",
+            language: "о-в Норфолк",
             code: "NF"
         },
         {
-            country: "о-в Рождества",
+            language: "о-в Рождества",
             code: "CX"
         },
         {
-            country: "о-в Св. Елены",
+            language: "о-в Св. Елены",
             code: "SH"
         },
         {
-            country: "о-ва Питкэрн",
+            language: "о-ва Питкэрн",
             code: "PN"
         },
         {
-            country: "о-ва Тёркс и Кайкос",
+            language: "о-ва Тёркс и Кайкос",
             code: "TC"
         },
         {
-            country: "о-ва Херд и Макдональд",
+            language: "о-ва Херд и Макдональд",
             code: "HM"
         },
         {
-            country: "ОАЭ",
+            language: "ОАЭ",
             code: "AE"
         },
         {
-            country: "Оман",
+            language: "Оман",
             code: "OM"
         },
         {
-            country: "Острова Кайман",
+            language: "Острова Кайман",
             code: "KY"
         },
         {
-            country: "Острова Кука",
+            language: "Острова Кука",
             code: "CK"
         },
         {
-            country: "Пакистан",
+            language: "Пакистан",
             code: "PK"
         },
         {
-            country: "Палау",
+            language: "Палау",
             code: "PW"
         },
         {
-            country: "Палестинские территории",
+            language: "Палестинские территории",
             code: "PS"
         },
         {
-            country: "Панама",
+            language: "Панама",
             code: "PA"
         },
         {
-            country: "Папуа — Новая Гвинея",
+            language: "Папуа — Новая Гвинея",
             code: "PG"
         },
         {
-            country: "Парагвай",
+            language: "Парагвай",
             code: "PY"
         },
         {
-            country: "Перу",
+            language: "Перу",
             code: "PE"
         },
         {
-            country: "Польша",
+            language: "Польша",
             code: "PL"
         },
         {
-            country: "Португалия",
+            language: "Португалия",
             code: "PT"
         },
         {
-            country: "Пуэрто-Рико",
+            language: "Пуэрто-Рико",
             code: "PR"
         },
         {
-            country: "Республика Корея",
+            language: "Республика Корея",
             code: "KR"
         },
         {
-            country: "Реюньон",
+            language: "Реюньон",
             code: "RE"
         },
         {
-            country: "Руанда",
+            language: "Руанда",
             code: "RW"
         },
         {
-            country: "Румыния",
+            language: "Румыния",
             code: "RO"
         },
         {
-            country: "Сальвадор",
+            language: "Сальвадор",
             code: "SV"
         },
         {
-            country: "Самоа",
+            language: "Самоа",
             code: "WS"
         },
         {
-            country: "Сан-Марино",
+            language: "Сан-Марино",
             code: "SM"
         },
         {
-            country: "Сан-Томе и Принсипи",
+            language: "Сан-Томе и Принсипи",
             code: "ST"
         },
         {
-            country: "Саудовская Аравия",
+            language: "Саудовская Аравия",
             code: "SA"
         },
         {
-            country: "Северная Македония",
+            language: "Северная Македония",
             code: "MK"
         },
         {
-            country: "Северные Марианские о-ва",
+            language: "Северные Марианские о-ва",
             code: "MP"
         },
         {
-            country: "Сейшельские Острова",
+            language: "Сейшельские Острова",
             code: "SC"
         },
         {
-            country: "Сен-Бартелеми",
+            language: "Сен-Бартелеми",
             code: "BL"
         },
         {
-            country: "Сен-Мартен",
+            language: "Сен-Мартен",
             code: "MF"
         },
         {
-            country: "Сен-Пьер и Микелон",
+            language: "Сен-Пьер и Микелон",
             code: "PM"
         },
         {
-            country: "Сенегал",
+            language: "Сенегал",
             code: "SN"
         },
         {
-            country: "Сент-Винсент и Гренадины",
+            language: "Сент-Винсент и Гренадины",
             code: "VC"
         },
         {
-            country: "Сент-Китс и Невис",
+            language: "Сент-Китс и Невис",
             code: "KN"
         },
         {
-            country: "Сент-Люсия",
+            language: "Сент-Люсия",
             code: "LC"
         },
         {
-            country: "Сербия",
+            language: "Сербия",
             code: "RS"
         },
         {
-            country: "Сингапур",
+            language: "Сингапур",
             code: "SG"
         },
         {
-            country: "Синт-Мартен",
+            language: "Синт-Мартен",
             code: "SX"
         },
         {
-            country: "Сирия",
+            language: "Сирия",
             code: "SY"
         },
         {
-            country: "Словакия",
+            language: "Словакия",
             code: "SK"
         },
         {
-            country: "Словения",
+            language: "Словения",
             code: "SI"
         },
         {
-            country: "Соединенные Штаты",
+            language: "Соединенные Штаты",
             code: "US"
         },
         {
-            country: "Соломоновы Острова",
+            language: "Соломоновы Острова",
             code: "SB"
         },
         {
-            country: "Сомали",
+            language: "Сомали",
             code: "SO"
         },
         {
-            country: "Судан",
+            language: "Судан",
             code: "SD"
         },
         {
-            country: "Суринам",
+            language: "Суринам",
             code: "SR"
         },
         {
-            country: "Сьерра-Леоне",
+            language: "Сьерра-Леоне",
             code: "SL"
         },
         {
-            country: "Таджикистан",
+            language: "Таджикистан",
             code: "TJ"
         },
         {
-            country: "Таиланд",
+            language: "Таиланд",
             code: "TH"
         },
         {
-            country: "Тайвань",
+            language: "Тайвань",
             code: "TW"
         },
         {
-            country: "Танзания",
+            language: "Танзания",
             code: "TZ"
         },
         {
-            country: "Того",
+            language: "Того",
             code: "TG"
         },
         {
-            country: "Токелау",
+            language: "Токелау",
             code: "TK"
         },
         {
-            country: "Тонга",
+            language: "Тонга",
             code: "TO"
         },
         {
-            country: "Тринидад и Тобаго",
+            language: "Тринидад и Тобаго",
             code: "TT"
         },
         {
-            country: "Тувалу",
+            language: "Тувалу",
             code: "TV"
         },
         {
-            country: "Тунис",
+            language: "Тунис",
             code: "TN"
         },
         {
-            country: "Туркменистан",
+            language: "Туркменистан",
             code: "TM"
         },
         {
-            country: "Турция",
+            language: "Турция",
             code: "TR"
         },
         {
-            country: "Уганда",
+            language: "Уганда",
             code: "UG"
         },
         {
-            country: "Узбекистан",
+            language: "Узбекистан",
             code: "UZ"
         },
         {
-            country: "Украина",
+            language: "Украина",
             code: "UA"
         },
         {
-            country: "Уоллис и Футуна",
+            language: "Уоллис и Футуна",
             code: "WF"
         },
         {
-            country: "Уругвай",
+            language: "Уругвай",
             code: "UY"
         },
         {
-            country: "Фарерские о-ва",
+            language: "Фарерские о-ва",
             code: "FO"
         },
         {
-            country: "Федеративные Штаты Микронезии",
+            language: "Федеративные Штаты Микронезии",
             code: "FM"
         },
         {
-            country: "Фиджи",
+            language: "Фиджи",
             code: "FJ"
         },
         {
-            country: "Филиппины",
+            language: "Филиппины",
             code: "PH"
         },
         {
-            country: "Финляндия",
+            language: "Финляндия",
             code: "FI"
         },
         {
-            country: "Фолклендские о-ва",
+            language: "Фолклендские о-ва",
             code: "FK"
         },
         {
-            country: "Франция",
+            language: "Франция",
             code: "FR"
         },
         {
-            country: "Французская Гвиана",
+            language: "Французская Гвиана",
             code: "GF"
         },
         {
-            country: "Французская Полинезия",
+            language: "Французская Полинезия",
             code: "PF"
         },
         {
-            country: "Французские Южные территории",
+            language: "Французские Южные территории",
             code: "TF"
         },
         {
-            country: "Хорватия",
+            language: "Хорватия",
             code: "HR"
         },
         {
-            country: "Центрально-Африканская Республика",
+            language: "Центрально-Африканская Республика",
             code: "CF"
         },
         {
-            country: "Чад",
+            language: "Чад",
             code: "TD"
         },
         {
-            country: "Черногория",
+            language: "Черногория",
             code: "ME"
         },
         {
-            country: "Чехия",
+            language: "Чехия",
             code: "CZ"
         },
         {
-            country: "Чили",
+            language: "Чили",
             code: "CL"
         },
         {
-            country: "Швейцария",
+            language: "Швейцария",
             code: "CH"
         },
         {
-            country: "Швеция",
+            language: "Швеция",
             code: "SE"
         },
         {
-            country: "Шпицберген и Ян-Майен",
+            language: "Шпицберген и Ян-Майен",
             code: "SJ"
         },
         {
-            country: "Шри-Ланка",
+            language: "Шри-Ланка",
             code: "LK"
         },
         {
-            country: "Эквадор",
+            language: "Эквадор",
             code: "EC"
         },
         {
-            country: "Экваториальная Гвинея",
+            language: "Экваториальная Гвинея",
             code: "GQ"
         },
         {
-            country: "Эритрея",
+            language: "Эритрея",
             code: "ER"
         },
         {
-            country: "Эсватини",
+            language: "Эсватини",
             code: "SZ"
         },
         {
-            country: "Эстония",
+            language: "Эстония",
             code: "EE"
         },
         {
-            country: "Эфиопия",
+            language: "Эфиопия",
             code: "ET"
         },
         {
-            country: "Южная Георгия и Южные Сандвичевы о-ва",
+            language: "Южная Георгия и Южные Сандвичевы о-ва",
             code: "GS"
         },
         {
-            country: "Южно-Африканская Республика",
+            language: "Южно-Африканская Республика",
             code: "ZA"
         },
         {
-            country: "Южный Судан",
+            language: "Южный Судан",
             code: "SS"
         },
         {
-            country: "Ямайка",
+            language: "Ямайка",
             code: "JM"
         },
         {
-            country: "Япония",
+            language: "Япония",
             code: "JP"
         }
     ]

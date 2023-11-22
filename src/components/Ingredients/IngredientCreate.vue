@@ -1,30 +1,37 @@
 <template>
-	<div class="lds-roller" v-if="!optionsReady"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
 	<div class="form">
 		<div class="form__row">
-			<div class="form__col">
+			<div
+				class="form__col"
+				v-for="(element, index) in listNames"
+			>
+				<div class="form__box">
+					<div><b>Введите название</b></div>
+					<InputText
+						v-model.trim="element.name"
+						placeholder="Название"
+					/>
+				</div>
 				<div class="form__box">
 					<div><b>Выбрать язык</b></div>
 					<Dropdown
-							v-model="thisCountry"
-							:options="countries"
-							filter
-							optionLabel="country"
-							placeholder="Язык"
-							class="w-full md:w-14rem"
-							@change="addCountry"
+						v-model="element.country"
+						:options="countries"
+						placeholder="Язык"
+						class="w-full md:w-14rem"
+						emptyMessage="Нет доступных вариантов"
 					>
 						<template #value="slotProps">
 							<div
-									v-if="slotProps.value"
-									class="flex align-items-center">
+								v-if="slotProps.value"
+								class="flex align-items-center">
 								<img
-										:alt="slotProps.value.label"
-										src="@/assets/img/flag_placeholder.png"
-										:class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`"
-										style="width: 18px"
+									:alt="slotProps.value.label"
+									src="@/assets/img/flag_placeholder.png"
+									:class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`"
+									style="width: 18px"
 								/>
-								<div>{{ slotProps.value.country }}</div>
+								<div>{{ slotProps.value.language }}</div>
 							</div>
 							<span v-else>
 								{{ slotProps.placeholder }}
@@ -33,33 +40,38 @@
 						<template #option="slotProps">
 							<div class="flex align-items-center">
 								<img
-										:alt="slotProps.option.label"
-										src="@/assets/img/flag_placeholder.png"
-										:class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`"
-										style="width: 18px"
+									:alt="slotProps.option.label"
+									src="@/assets/img/flag_placeholder.png"
+									:class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`"
+									style="width: 18px"
 								/>
-								<div>{{ slotProps.option.country }}</div>
+								<div>{{ slotProps.option.language }}</div>
 							</div>
 						</template>
 					</Dropdown>
-					<div
-							v-if="listCountries.length"
-							class="card flex flex-wrap gap-2 mt-3"
-					>
-						<Chip
-								v-for="(country, index) in listCountries"
-								icon="pi pi-times"
-						>
-							{{country.country}}
-							<i
-									class="pi pi-times-circle"
-									style="font-size: 0.9rem; margin-left: 0.3rem; cursor: pointer; padding: 5px 0;"
-									@click="removeCountry(index)"
-							></i>
-						</Chip>
-					</div>
+				</div>
+				<div
+					class="form__box"
+					v-if="listNames.length > 1"
+				>
+					<Button
+						@click="listNames.splice(index, 1)"
+						icon="pi pi-times"
+						severity="danger"
+						aria-label="Cancel"
+						class="form__box-button"
+					/>
 				</div>
 			</div>
+			<Button
+				@click="addName"
+				label="Primary"
+				outlined
+				class="form__row-button"
+				size="small"
+			>
+				Добавить название
+			</Button>
 		</div>
 
 		<div class="form__row">
@@ -67,269 +79,69 @@
 				<div class="form__box">
 					<div><b>Придумайте свою тему</b></div>
 					<InputText
-							type="text"
-							v-model="thisTheme"
-							@keyup.enter="addTheme"
-							placeholder="Тема"
+						type="text"
+						v-model="thisTheme"
+						@keyup.enter="addTheme"
+						placeholder="Тема"
 					/>
 				</div>
 				<div class="form__box">
 					<Button
-							@click="addTheme"
-							icon="pi pi-check"
-							aria-label="Filter"
-							class="form__box-button"
+						@click="addTheme"
+						icon="pi pi-check"
+						aria-label="Filter"
+						class="form__box-button"
 					/>
 				</div>
 				<div class="form__box">
 					<div><b>Или выбрать из уже имеющихся тем</b></div>
 					<MultiSelect
-							v-model="listSelectThemes"
-							:options="listDbThemes"
-							placeholder="Темы"
-							optionLabel="theme"
-							emptyMessage="Нет доступных вариантов"
-							:maxSelectedLabels="2"
-							@change="addSelectTheme"
-							filter
+						v-model="listSelectThemes"
+						:options="listDbThemes"
+						placeholder="Темы"
+						emptyMessage="Нет доступных вариантов"
+						:maxSelectedLabels="3"
+						@change="addSelectTheme"
+						filter
 					/>
 				</div>
 			</div>
+			<div class="form__col">
+				<div class="form__box">
+					<div v-for="(description, index) in listThemes">
+						<div v-if="activeThemeDescription === index"><b>Введите описание</b></div>
+						<Textarea
+							v-model="description.description"
+							autoResize rows="5"
+							cols="30"
+							placeholder="Описание"
+							v-if="activeThemeDescription === index"
+						/>
+					</div>
+				</div>
+			</div>
 			<div
-					class="form__col"
-					v-if="listThemes.length"
+				class="form__col"
+				v-if="listThemes.length"
 			>
 				<div class="form__tags">
 					<Chip
-							v-for="(theme, index) in listThemes"
-							icon="pi pi-times"
+						v-for="(theme, index) in listThemes"
+						icon="pi pi-times"
+						@click.stop="activeThemeDescription = index"
+						:class="{'active': activeThemeDescription === index}"
 					>
 						{{theme.theme}}
 						<i
-								class="pi pi-times-circle"
-								style="font-size: 0.9rem; margin-left: 0.3rem; cursor: pointer; padding: 5px 0;"
-								@click="removeTheme(index)"
+							class="pi pi-times-circle"
+							style="font-size: 0.9rem; margin-left: 0.3rem; cursor: pointer; padding: 5px 0;"
+							@click.stop="removeTheme(index)"
 						></i>
 					</Chip>
 				</div>
 			</div>
 		</div>
 
-		<div class="form__row">
-			<div
-					class="form__col"
-					v-for="(title, index) in listTitles"
-			>
-				<div class="form__box">
-					<div><b>Введите название</b></div>
-					<InputText
-							v-model.trim="title.title"
-							placeholder="Название"
-					/>
-				</div>
-				<div class="form__box">
-					<div><b>Выбрать язык</b></div>
-					<Dropdown
-							v-model="title.country"
-							:options="listCountries"
-							optionLabel="country"
-							placeholder="Язык"
-							class="w-full md:w-14rem"
-							emptyMessage="Нет доступных вариантов"
-					>
-						<template #value="slotProps">
-							<div
-									v-if="slotProps.value"
-									class="flex align-items-center">
-								<img
-										:alt="slotProps.value.label"
-										src="@/assets/img/flag_placeholder.png"
-										:class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`"
-										style="width: 18px"
-								/>
-								<div>{{ slotProps.value.country }}</div>
-							</div>
-							<span v-else>
-								{{ slotProps.placeholder }}
-							</span>
-						</template>
-						<template #option="slotProps">
-							<div class="flex align-items-center">
-								<img
-										:alt="slotProps.option.label"
-										src="@/assets/img/flag_placeholder.png"
-										:class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`"
-										style="width: 18px"
-								/>
-								<div>{{ slotProps.option.country }}</div>
-							</div>
-						</template>
-					</Dropdown>
-				</div>
-				<div
-						class="form__box"
-						v-if="listTitles.length > 1"
-				>
-					<Button
-							@click="listTitles.splice(index, 1)"
-							icon="pi pi-times"
-							severity="danger"
-							aria-label="Cancel"
-							class="form__box-button"
-					/>
-				</div>
-			</div>
-			<Button
-					@click="addTitle"
-					label="Primary"
-					outlined
-					class="form__row-button"
-					size="small"
-			>
-				Добавить название
-			</Button>
-		</div>
-		<div class="form__row">
-			<div
-					class="form__col"
-					v-for="(description, index) in listDescriptions"
-			>
-				<div class="form__box">
-					<div><b>Введите описание</b></div>
-					<Textarea
-							v-model.trim="description.description"
-							autoResize rows="5"
-							cols="30"
-							placeholder="Описание"
-					/>
-				</div>
-				<div class="form__box">
-					<div><b>Выбрать язык</b></div>
-					<Dropdown
-							v-model="description.country"
-							:options="listCountries"
-							optionLabel="country"
-							placeholder="Язык"
-							class="w-full md:w-14rem"
-							emptyMessage="Нет доступных вариантов"
-					>
-						<template #value="slotProps">
-							<div
-									v-if="slotProps.value"
-									class="flex align-items-center">
-								<img
-										:alt="slotProps.value.label"
-										src="@/assets/img/flag_placeholder.png"
-										:class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`"
-										style="width: 18px"
-								/>
-								<div>{{ slotProps.value.country }}</div>
-							</div>
-							<span v-else>
-								{{ slotProps.placeholder }}
-							</span>
-						</template>
-						<template #option="slotProps">
-							<div class="flex align-items-center">
-								<img
-										:alt="slotProps.option.label"
-										src="@/assets/img/flag_placeholder.png"
-										:class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`"
-										style="width: 18px"
-								/>
-								<div>{{ slotProps.option.country }}</div>
-							</div>
-						</template>
-					</Dropdown>
-				</div>
-				<div class="form__box">
-					<div><b>Выбрать темы</b></div>
-					<MultiSelect
-							v-model="description.themes"
-							display="chip"
-							:options="listThemes"
-							placeholder="Темы"
-							filter
-							:maxSelectedLabels="3"
-							class="w-full md:w-20rem"
-							optionLabel="theme"
-							emptyMessage="Нет доступных вариантов"
-					/>
-				</div>
-				<div
-						class="form__box"
-						v-if="listDescriptions.length > 1"
-				>
-					<Button
-							@click="listDescriptions.splice(index, 1)"
-							icon="pi pi-times"
-							severity="danger"
-							aria-label="Cancel"
-							class="form__box-button"
-					/>
-				</div>
-			</div>
-			<Button
-					@click="addDescription"
-					label="Primary"
-					outlined
-					class="form__row-button"
-					size="small"
-			>
-				Добавить описание
-			</Button>
-		</div>
-
-		<div class="form__row">
-			<div class="form__col">
-				<div class="form__box">
-					<div><b>Выбрать тему для тега</b></div>
-					<MultiSelect
-							v-model="listTagsTheme"
-							display="chip"
-							:options="listThemes"
-							placeholder="Темы"
-							:maxSelectedLabels="3"
-							class="w-full md:w-20rem"
-							optionLabel="theme"
-							filter
-							emptyMessage="Нет доступных вариантов"
-					/>
-				</div>
-				<div class="form__box">
-					<div><b>Введите название тега</b></div>
-					<InputText
-							type="text"
-							v-model="thisTag"
-							@keyup.enter="addTag"
-							placeholder="Тег"
-					/>
-				</div>
-				<div class="form__box">
-					<Button
-							@click="addTag"
-							icon="pi pi-check"
-							aria-label="Filter"
-							class="form__box-button"
-					/>
-				</div>
-			</div>
-			<div
-					class="form__col"
-					v-if="dbTags.length"
-			>
-				<div class="form__tags">
-					<Chip
-							v-for="(tag, index) in dbTags"
-							label="Thriller"
-							removable
-							@remove="removeTag(index)"
-					>
-						{{tag.tag}}
-					</Chip>
-				</div>
-			</div>
-		</div>
 		<div class="form__row">
 			<div class="form__col">
 				<div class="form__box">
@@ -363,8 +175,7 @@
 
 <script setup>
 import useFetch from '@/composables/useFetch'
-import {computed, onBeforeMount, ref} from 'vue'
-
+import {computed, ref} from 'vue'
 import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
@@ -373,74 +184,20 @@ import MultiSelect from 'primevue/multiselect'
 import FileUpload from 'primevue/fileupload'
 import Chip from 'primevue/chip'
 
-import { useContry } from '@/composables/useContry'
-
-const errorMessages = ref({
-	country: {
-		success: null,
-		messages: '',
-	},
-	title: {
-		success: null,
-		messages: '',
-	},
-})
+import {useContry} from '@/composables/useContry'
 
 let formData = new FormData()
 // Ингредиент
-const ingredients = ref()
-
-// готовность опций
-const optionsReady = ref()
-
-// Языки =====================================================
-
+const ingredients = ref({})
 // база языков
 const countries = ref(useContry())
-// список стран которые пойдут в базу
-const listCountries = ref([{code: 'RU', country: 'Россия'}])
-// текущий язык
-const thisCountry = ref({code: 'RU', country: 'Россия'})
-// для того, чтобы при добавлении нового языка они также отображались в списке языков во всех элементах
-const addCountriesToAllElements = () => {
-	if(listTitles.value.length === 1) listTitles.value[0].country = thisCountry.value
-	if(listDescriptions.value.length === 1) listDescriptions.value[0].country = thisCountry.value
-	for(const description of listDescriptions.value) {
-		if(!description.country) description.country = thisCountry.value
-	}
-	for(const country of listTitles.value) {
-		if(!country.country) country.country = thisCountry.value
-	}
-}
-// добавление страны
-const addCountry = () => {
-	if(listCountries.value.some(el => el.country === thisCountry.value.country)) return
-	// добавляем тег
-	listCountries.value.push({country: thisCountry.value.country, code: thisCountry.value.code})
-	// удаляем страну из списка
-	countries.value.splice(0, countries.value.length, ...countries.value.filter(n => n.country !== thisCountry.value.country))
-	addCountriesToAllElements()
-}
-// удаляем тег стран
-const removeCountry = (index) => {
-	// добавляем в начало
-	countries.value.unshift(listCountries.value[index])
-	// удаляем тег
-	listCountries.value.splice(index, 1)
-	// присваиваем последний язык селекту из списка языков на добавление
-	thisCountry.value = listCountries.value[listCountries.value.length - 1]
 
-	// удаляем языки из селектов
-	listTitles.value.forEach(el1 => {
-		if(!listCountries.value.some(el2 => el1.country.country === el2.country)) el1.country = ''
-	})
+// Заголовки =====================================================
 
-	listDescriptions.value.forEach(el1 => {
-		if(!listCountries.value.some(el2 => el1.country.country === el2.country)) el1.country = ''
-	})
-
-	addCountriesToAllElements()
-}
+// добавление нового названия
+const addName = () => listNames.value.push({name: '', country: ''})
+// список заголовков
+const listNames = ref([{name: '', country: ''}])
 
 // Темы =====================================================
 
@@ -451,119 +208,47 @@ const listThemes = ref([])
 // список выбранных тем из базы
 const listSelectThemes = ref([])
 // список тем которые уже есть в базе
-const listDbThemes = ref([])
-// для того, чтобы при добавлении новой темы они также отображались в списке тем во всех элементах
-const addThemesToAllElements = () => {
-	if(listDescriptions.value.length === 1) listDescriptions.value[0].themes = listThemes.value
-	for(const description of listDescriptions.value) {
-		if(!description.themes.length) description.themes = listThemes.value
-	}
+const listDbThemes = ref(['Омоложение', 'Похудение'])
 
-	if(!listTagsTheme.value.length) listTagsTheme.value = listThemes.value
-}
 // добавляем тему через селект
 const addSelectTheme = (e) => {
-	addThemesToAllElements()
-	// если список на добавление в базу пустой то добавляем туда значение из списка выбранных селектов которые пришли из базы
-	if(!listThemes.value.length) return listThemes.value.push(listSelectThemes.value[0])
-	// если нет совпадений между списком из базы и списком на отправку то пушим элемент в список на отправку
-	e.value.filter(el1 => !listThemes.value.find(el2 => el1.theme === el2.theme)).forEach(el => listThemes.value.push(el))
-	// получаем массив тем которые не выбраны и проверяем есть ли они в списке на добавление в базу и если нет, то удаляем из списка на добавление
-	// это нужно для того что бы при удалении из селекта удалялось и в списке на добавление в базу
-	listDbThemes.value.filter(el1 => !listSelectThemes.value.some(el2 => el1.theme === el2.theme)).forEach(el1 => listThemes.value.forEach((el2, index) => {
-		if(el1.theme === el2.theme) listThemes.value.splice(index, 1)
-	}))
+	// добавляем элементы
+	listSelectThemes.value.forEach(el1 => {
+		if(!listThemes.value.some(el2 => el2.theme === el1)) listThemes.value.push({theme: el1, description: ''})
+	})
+	// удаляем элементы
+	listThemes.value.forEach((el, index) => {
+		if(listDbThemes.value.filter(el1 => !listSelectThemes.value.includes(el1)).includes(el.theme)) listThemes.value.splice(index, 1)
+	})
 }
 
 // добавляем тему через инпут
 const addTheme = () => {
-	// пустая строка то не добавляем
+	// проверка на пустую строку
 	if(thisTheme.value.trim() === '') return
-	// если в списке уже есть похожая тема
-	if(listThemes.value.find(el => el.theme.toLowerCase() === thisTheme.value.toLowerCase())) return
-	addThemesToAllElements()
-	// если в списке всех тем из базы есть похожая то мы добавляем в список тем селекта
-	listDbThemes.value.find(el => {
-		if(el.theme.toLowerCase() === thisTheme.value.toLowerCase()) listSelectThemes.value.push({theme: thisTheme.value})
+	if(listThemes.value.some(el => el.theme.toLowerCase() === thisTheme.value.toLowerCase())) return
+	listThemes.value.push({theme: thisTheme.value, description: ''})
+	// добавляем в селект тему если она была в базе
+	listThemes.value.forEach(el => {
+		if(listDbThemes.value.includes(el.theme) && !listSelectThemes.value.includes(el.theme)) listSelectThemes.value.push(el.theme)
 	})
-	// добавляем тему в список тем на отправку в базу
-	listThemes.value.push({theme: thisTheme.value})
-	// обнуляем поле
 	thisTheme.value = ''
 }
-// удаление тегов
+
+// удаление тем
 const removeTheme = (index) => {
-	// удаляем тег по индексу
 	listThemes.value.splice(index, 1)
-	// удаляем из списка селектов темы
-	listSelectThemes.value = listSelectThemes.value.filter(el1 => listThemes.value.find(el2 => el1.theme === el2.theme))
-	// обнуляем поле ввода темы
-	thisTheme.value = ''
-
-	// удаляем темы из селектов в тегах и описаниях
-	listDescriptions.value.forEach(el => {
-		el.themes = el.themes.filter(el1 => listThemes.value.some(el2 => el1.theme === el2.theme))
-	})
-	listTagsTheme.value = listTagsTheme.value.filter(el1 => listThemes.value.some(el2 => el1.theme === el2.theme))
-	addThemesToAllElements()
-}
-
-// Заголовки =====================================================
-
-// добавление нового названия
-const addTitle = () => listTitles.value.push({title: '', country: thisCountry.value})
-// список заголовков
-const listTitles = ref([{title: '', country: thisCountry.value}])
-// список на отправку в базу заголовков
-const dbTitles = computed(() => {
-	let array = []
-	for(const item of listTitles.value) {
-		// проверяем что бы все поля были заполнены
-		if((item.title !== '' && item.country.country && item.country.code)) array.push({title: item.title, country: item.country.country})
-	}
-	return array
-})
-
-// Описания =====================================================
-
-// добавление нового описания
-const addDescription = () => listDescriptions.value.push({description: '', country: thisCountry.value, themes: listSelectThemes.value})
-// список описаний
-const listDescriptions = ref([{description: '', country: thisCountry.value, themes: listSelectThemes.value}])
-// список на добавление в базу описаний
-const dbDescriptions = computed(() => {
-	let array = []
-	for(const item of listDescriptions.value) {
-		// проверяем что бы все поля были заполнены
-		if((item.description !== '' && item.country.country && item.themes.length)) array.push({description: item.description, country: item.country.country, themes: item.themes})
-	}
-	return array
-})
-
-// Теги =====================================================
-
-// список тем тегов
-const listTagsTheme = ref([])
-// текущий тег на добавление
-const thisTag = ref('')
-// список тегов на добавление в базу
-const dbTags = ref([])
-// добавление тега
-const addTag = () => {
-	// проверка на пустоту
-	if(thisTag.value.trim() !== '') {
-		// проверка на повторение
-		if(dbTags.value.find(el => el.tag === thisTag.value)) return
-		// добавляем тег в список на отправку в базу
-		dbTags.value.push({tag: thisTag.value, themes: listTagsTheme.value})
-		// обнуляем поле с тегом
-		thisTag.value = ''
-		// обнуляем список тем тегов
-		listTagsTheme.value = []
+	// удаляем тему из активного списка из базы
+	listSelectThemes.value = listSelectThemes.value.filter(el1 => listThemes.value.find(el2 => el1 === el2.theme))
+	// удаляем список тем
+	if(listThemes.value.length === index) {
+		activeThemeDescription.value = listThemes.value.length - 1
+	} else {
+		if(activeThemeDescription.value > index) activeThemeDescription.value = activeThemeDescription.value - 1
 	}
 }
-// удаление тега
-const removeTag = (index) => dbTags.value.splice(index, 1)
+// показываем конткретное описание
+const activeThemeDescription = ref(0)
 
 // Картинки =====================================================
 
@@ -574,36 +259,16 @@ const handleFileUpload = (e) => {
 
 const imagesReset = ref(null)
 
-const getOptions = async () => {
-	optionsReady.value = false
-	try {
-		const res = await useFetch.get('ingredients/options')
-		const json = await res.json()
-		listDbThemes.value = json.themes.map(el => ({theme: el.theme}))
-		optionsReady.value = true
-	} catch (e) {
-		console.log(e)
-	}
-}
-
 const resetForm = () => {
 	ingredients.value = []
 
 	countries.value = useContry()
-	listCountries.value = []
-	thisCountry.value = ''
 
 	thisTheme.value = ''
 	listThemes.value = []
 	listSelectThemes.value = []
 
-	listTitles.value = [{title: '', country: '', code: ''}]
-
-	listDescriptions.value = [{description: '', country: '', themes: []}]
-
-	listTagsTheme.value = []
-	thisTag.value = ''
-	dbTags.value = []
+	listNames.value = [{name: '', country: ''}]
 
 	formData.delete('ingredientsImages')
 	formData.delete('ingredients')
@@ -620,10 +285,7 @@ const send = async () => {
 		}
 
 		ingredients.value = {
-			titles: dbTitles.value,
-			countries: listCountries.value,
-			descriptions: dbDescriptions.value,
-			tags: dbTags.value,
+			names: listNames.value,
 			themes: listThemes.value
 		}
 
@@ -633,17 +295,12 @@ const send = async () => {
 		const json = await res.json()
 
 		resetForm()
-		optionsReady.value = false
-		await getOptions()
-		setTimeout(() => optionsReady.value = true, 1000)
 
 		console.log(json)
 	} catch (e) {
 		console.log(e)
 	}
 }
-
-onBeforeMount(getOptions)
 </script>
 
 <style scoped lang="scss">
@@ -698,6 +355,14 @@ onBeforeMount(getOptions)
 	.p-dropdown,
 	.p-multiselect {
 		line-height: normal;
+	}
+
+	.p-chip {
+		cursor: pointer;
+
+		&.active {
+			border: 1px solid #000;
+		}
 	}
 }
 
