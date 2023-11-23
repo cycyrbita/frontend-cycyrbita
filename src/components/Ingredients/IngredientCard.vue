@@ -1,33 +1,21 @@
 <template>
 	<div class="ingredient-card">
-		<div class="ingredient-card__countrys">
-			<p><b>Список языков:</b></p>
+		<div class="ingredient-card__names">
+			<p><b>Список названий:</b></p>
 			<div class="ingredient-card__list">
-				<span v-for="(country, index) in props.ingredient.countries">{{country.country}}<span v-if="props.ingredient.countries.length > 1 && index + 1 < props.ingredient.countries.length">, </span></span>
+				<span v-for="(el, index) in props.ingredient.names">{{el.name}}<span v-if="props.ingredient.names.length > 1 && index + 1 < props.ingredient.names.length">, </span></span>
+			</div>
+			<div class="ingredient-card__list">
+				<span v-for="(el, index) in props.ingredient.names">{{el.country.language}}<span v-if="props.ingredient.names.length > 1 && index + 1 < props.ingredient.names.length">, </span></span>
 			</div>
 		</div>
 		<div class="ingredient-card__themes">
 			<p><b>Список тем:</b></p>
 			<div class="ingredient-card__list">
-				<span v-for="(theme, index) in props.ingredient.themes">{{theme.theme}}<span v-if="props.ingredient.themes.length > 1 && index + 1 < props.ingredient.themes.length">, </span></span>
+				<span v-for="(el, index) in props.ingredient.themes">{{el.theme}}<span v-if="props.ingredient.themes.length > 1 && index + 1 < props.ingredient.themes.length">, </span></span>
 			</div>
-		</div>
-		<div class="ingredient-card__titles">
-			<p><b>Список названий:</b></p>
 			<div class="ingredient-card__list">
-				<span v-for="(title, index) in props.ingredient.titles">{{title.title}}<span v-if="props.ingredient.titles.length > 1 && index + 1 < props.ingredient.titles.length">, </span></span>
-			</div>
-		</div>
-		<div class="ingredient-card__descriptions">
-			<p><b>Список описаний:</b></p>
-			<div class="ingredient-card__list">
-				<span v-for="(description, index) in props.ingredient.descriptions">{{description.description}}<span v-if="props.ingredient.descriptions.length > 1 && index + 1 < props.ingredient.descriptions.length">, </span></span>
-			</div>
-		</div>
-		<div class="ingredient-card__tags">
-			<p><b>Список тегов:</b></p>
-			<div class="ingredient-card__list">
-				<span v-for="(tag, index) in props.ingredient.tags">{{tag.tag}}<span v-if="props.ingredient.tags.length > 1 && index + 1 < props.ingredient.tags.length">, </span></span>
+				<span v-for="(el, index) in props.ingredient.themes">{{el.description}}<span v-if="props.ingredient.themes.length > 1 && index + 1 < props.ingredient.themes.length">, </span></span>
 			</div>
 		</div>
 		<div class="ingredient-card__images">
@@ -42,6 +30,7 @@
 <script setup>
 	const VITE_IMAGE_PATH = import.meta.env.VITE_IMAGE_PATH
 	const props = defineProps(['ingredient'])
+	console.log(props.ingredient)
 </script>
 
 <style scoped lang="scss">
@@ -71,6 +60,10 @@
 
 		b {
 			font-weight: 700;
+		}
+
+		img {
+			max-width: 100%;
 		}
 	}
 </style>

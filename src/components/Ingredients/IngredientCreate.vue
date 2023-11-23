@@ -11,6 +11,7 @@
 						v-model.trim="element.name"
 						placeholder="Название"
 					/>
+					<small class="error" v-if="listNames[index].name.trim() === '' && errorsFlag">Введите название</small>
 				</div>
 				<div class="form__box">
 					<div><b>Выбрать язык</b></div>
@@ -49,6 +50,7 @@
 							</div>
 						</template>
 					</Dropdown>
+					<small class="error" v-if="listNames[0].country === '' && errorsFlag">Нужно выбрать язык</small>
 				</div>
 				<div
 					class="form__box"
@@ -120,6 +122,7 @@
 					</div>
 				</div>
 			</div>
+			<small class="error" v-if="listThemes.some(el => el.description.trim() === '' && errorsFlag)">Проверьте везде ли есть описание</small>
 			<div
 				class="form__col"
 				v-if="listThemes.length"
@@ -175,7 +178,7 @@
 
 <script setup>
 import useFetch from '@/composables/useFetch'
-import {computed, ref} from 'vue'
+import {ref} from 'vue'
 import InputText from 'primevue/inputtext'
 import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
@@ -220,6 +223,8 @@ const addSelectTheme = (e) => {
 	listThemes.value.forEach((el, index) => {
 		if(listDbThemes.value.filter(el1 => !listSelectThemes.value.includes(el1)).includes(el.theme)) listThemes.value.splice(index, 1)
 	})
+	// активная тема
+	activeThemeDescription.value = listThemes.value.length - 1
 }
 
 // добавляем тему через инпут
@@ -232,6 +237,8 @@ const addTheme = () => {
 	listThemes.value.forEach(el => {
 		if(listDbThemes.value.includes(el.theme) && !listSelectThemes.value.includes(el.theme)) listSelectThemes.value.push(el.theme)
 	})
+	// активная тема
+	activeThemeDescription.value = listThemes.value.length - 1
 	thisTheme.value = ''
 }
 
@@ -241,11 +248,8 @@ const removeTheme = (index) => {
 	// удаляем тему из активного списка из базы
 	listSelectThemes.value = listSelectThemes.value.filter(el1 => listThemes.value.find(el2 => el1 === el2.theme))
 	// удаляем список тем
-	if(listThemes.value.length === index) {
-		activeThemeDescription.value = listThemes.value.length - 1
-	} else {
-		if(activeThemeDescription.value > index) activeThemeDescription.value = activeThemeDescription.value - 1
-	}
+	if(index < activeThemeDescription.value && activeThemeDescription.value != 0) return activeThemeDescription.value = activeThemeDescription.value - 1
+	if(index === listThemes.value.length) activeThemeDescription.value = listThemes.value.length - 1
 }
 // показываем конткретное описание
 const activeThemeDescription = ref(0)
@@ -275,9 +279,26 @@ const resetForm = () => {
 	imagesReset.value.clear()
 }
 
+const errorsFlag = ref(false)
+const checkErrorsFlag = () => {
+	let flag = false
+	listNames.value.forEach(el => {
+		if(el.country === '') flag = true
+		if(el.name.trim() === '') flag = true
+	})
+	listThemes.value.forEach(el => {
+		if(el.description.trim() === '') flag = true
+		if(el.theme.trim() === '') flag = true
+	})
+
+	return flag
+}
+
 // метод отправки
 const send = async () => {
 	try {
+		if(errorsFlag.value = checkErrorsFlag()) return
+
 		const headers = {
 			method: 'POST',
 			body: formData,
@@ -295,7 +316,6 @@ const send = async () => {
 		const json = await res.json()
 
 		resetForm()
-
 		console.log(json)
 	} catch (e) {
 		console.log(e)
@@ -363,6 +383,9 @@ const send = async () => {
 		&.active {
 			border: 1px solid #000;
 		}
+	}
+	small.error {
+		color: red;
 	}
 }
 
