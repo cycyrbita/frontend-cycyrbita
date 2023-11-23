@@ -154,6 +154,7 @@
 							:multiple="true"
 							accept="image/*"
 							@select="handleFileUpload($event)"
+							@remove="handleFileUpload($event)"
 							:showUploadButton="false"
 							chooseLabel="Добвить файл"
 							cancelLabel="Удалить все"
@@ -258,6 +259,8 @@ const activeThemeDescription = ref(0)
 
 // запихиваем картинки в массив и добавляем в formData
 const handleFileUpload = (e) => {
+	console.log(1111111)
+	formData.delete('ingredientsImages')
 	for (let key in e.files) formData.append('ingredientsImages', e.files[key])
 }
 
