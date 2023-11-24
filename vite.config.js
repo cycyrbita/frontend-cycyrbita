@@ -1,13 +1,15 @@
 import { fileURLToPath, URL } from 'node:url'
+import dotenv from 'dotenv'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-// https://vitejs.dev/config/
+dotenv.config()
+
 export default defineConfig({
-  base: '/beta/',
+  base: process.env.VITE_DIR_NAME,
   build: {
-    outDir: '../cycyrbita',
+    outDir: process.env.VITE_BUILD_PATH,
     emptyOutDir: true,
   },
   plugins: [

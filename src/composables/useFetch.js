@@ -2,7 +2,7 @@ import {useAuthStore} from "@/stores/auth";
 import {useUserStore} from "@/stores/user";
 import router from "@/router";
 
-const VITE_API_URL = import.meta.env.VITE_API_URL
+const VITE_API_URL = import.meta.env.MODE === 'production' ? import.meta.env.VITE_API_URL_PROD : import.meta.env.VITE_API_URL_DEV
 
 class useFetch {
     async post(url, data, headers, auth) {
