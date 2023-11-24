@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-	const VITE_IMAGE_PATH = import.meta.env.VITE_IMAGE_PATH
+	const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.VITE_IMAGE_PATH_PROD : import.meta.env.VITE_IMAGE_PATH_DEV
 	const props = defineProps(['ingredient'])
 	console.log(props.ingredient)
 </script>
