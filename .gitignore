@@ -28,5 +28,5 @@ coverage
 *.sw?
 src/assets/ingredients
 
-.env.prodaction
+.env.production
 .env
