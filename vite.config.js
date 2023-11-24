@@ -6,6 +6,10 @@ import vue from '@vitejs/plugin-vue'
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/beta/',
+  build: {
+    outDir: '../cycyrbita',
+    emptyOutDir: true,
+  },
   plugins: [
     vue(),
   ],
