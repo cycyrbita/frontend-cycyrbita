@@ -1,6 +1,9 @@
 @import 'base';
 
 .container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   width: 100%;
   max-width: 1320px;
   margin-right: auto;

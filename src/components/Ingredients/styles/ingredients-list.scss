@@ -1,0 +1,10 @@
+.ingredients-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 15px;
+
+  &__card {
+    width: calc(25% - 11.25px);
+  }
+}

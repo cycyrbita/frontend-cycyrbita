@@ -27,14 +27,7 @@ const getIngredients = async () => {
 
 onBeforeMount(getIngredients)
 </script>
-<style scoped lang="scss">
-	.ingredients-list {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 15px;
 
-		&__card {
-			width: calc(50% - 15px);
-		}
-	}
+<style scoped lang="scss">
+	@import '@/components/Ingredients/styles/ingredients-list.scss';
 </style>
