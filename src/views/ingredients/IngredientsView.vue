@@ -1,13 +1,15 @@
 <template>
 	<div class="ingredients">
-		<div class="ingredients__header">
-			<IngredientsFilter></IngredientsFilter>
-		</div>
-		<div class="ingredients__body">
-			<RouterView></RouterView>
-		</div>
-		<div class="ingredients__footer">
-			<IngredientsPagination></IngredientsPagination>
+		<div class="container">
+			<div class="ingredients__header">
+				<IngredientsFilter></IngredientsFilter>
+			</div>
+			<div class="ingredients__body">
+				<RouterView></RouterView>
+			</div>
+			<div class="ingredients__footer">
+				<IngredientsPagination></IngredientsPagination>
+			</div>
 		</div>
 	</div>
 </template>

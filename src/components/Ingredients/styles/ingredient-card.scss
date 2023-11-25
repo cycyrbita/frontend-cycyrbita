@@ -1,16 +1,54 @@
 .ingredient-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 20px;
 
+  &__name {
+    font-size: 18px;
+    font-weight: 700;
+  }
 }
 
 .ingredient-card-picture {
   &__box {
-    height: 61.73px;
+    position: relative;
+    padding-top: calc(100% - 10px);
     margin: 5px;
     overflow: hidden;
     border-radius: 50%;
+    background-color: #F8FAFD;
+
+    //@media (max-width: 1399px) {
+    //  width: 96.66px;
+    //  height: 96.66px;
+    //}
+    //
+    //@media (max-width: 1199px) {
+    //  width: 76.66px;
+    //  height: 76.66px;
+    //}
+    //
+    //@media (max-width: 991px) {
+    //  width: 89.16px;
+    //  height: 89.16px;
+    //}
+    //
+    //@media (max-width: 767px) {
+    //  width: 93.75px;
+    //  height: 93.75px;
+    //}
+    //
+    //@media (max-width: 575px) {
+    //  max-width: 100%;
+    //}
   }
 
   &__img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
