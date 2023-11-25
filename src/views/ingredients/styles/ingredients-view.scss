@@ -3,9 +3,11 @@
   flex-direction: column;
   height: 100%;
   background-color: #F1F3FB;
+  padding-top: 125px;
 
   &__header {
     display: flex;
+    margin-bottom: 70px;
   }
 
   &__body {
