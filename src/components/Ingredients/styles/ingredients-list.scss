@@ -7,7 +7,6 @@
 
   &__card {
     flex-grow: 0;
-    height: 200px;
     width: calc(25% - 11.25px);
 
     @media (max-width: 1399px) {

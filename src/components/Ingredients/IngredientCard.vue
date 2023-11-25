@@ -1,6 +1,18 @@
 <template>
 	<div class="ingredient-card">
-		<picture class="ingredient-card-picture">
+		<SpeedDial
+				:model="items"
+				type="quarter-circle"
+				direction="down-right"
+				:radius="50"
+				showIcon="pi pi-ellipsis-h"
+				class="ingredient-card-menu"
+				buttonClass="ingredient-card-menu__button"
+				:rotateAnimation="false"
+				:mask="true"
+				maskClass="ingredient-card-menu__mask"
+		/>
+		<picture class="ingredient-card-picture ingredient-card__picture">
 			<Carousel
 				:value="props.ingredient.images"
 				:numVisible="3"
@@ -23,15 +35,17 @@
 				</template>
 			</Carousel>
 		</picture>
-		<div class="ingredient-card__name">
+		<p class="ingredient-card__name">
 			{{props.ingredient.names[0].name}}
-		</div>
+		</p>
 	</div>
 </template>
 
 <script setup>
 	import {ref} from 'vue'
 	import Carousel from 'primevue/carousel'
+	import SpeedDial from 'primevue/speeddial'
+
 	const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.VITE_IMAGE_PATH_PROD : import.meta.env.VITE_IMAGE_PATH_DEV
 	const props = defineProps(['ingredient'])
 
@@ -48,14 +62,37 @@
 		},
 	]);
 
+	const items = ref([
+		{
+			label: 'Удалить',
+			icon: 'pi pi-trash',
+			command: () => {
+				console.log(1)
+			}
+		},
+		{
+			label: 'Копировать',
+			icon: 'pi pi-copy',
+			command: () => {
+				console.log(1)
+			}
+		},
+		{
+			label: 'Редактировать',
+			icon: 'pi pi-pencil',
+			command: () => {
+				console.log(1)
+			}
+		},
+	])
+
 	for(const image of props.ingredient.images) {
 		if(props.ingredient.images.length < 4) {
 			props.ingredient.images.push({src: '', alt: ''})
 		}
 	}
-
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 	@import '@/components/Ingredients/styles/ingredient-card.scss';
 </style>
