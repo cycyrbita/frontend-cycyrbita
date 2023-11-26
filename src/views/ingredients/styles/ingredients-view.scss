@@ -8,6 +8,14 @@
   &__header {
     display: flex;
     margin-bottom: 70px;
+
+    @media (max-width: 991px) {
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 575px) {
+      margin-bottom: 30px;
+    }
   }
 
   &__body {
@@ -17,5 +25,13 @@
 
   &__footer {
 
+  }
+
+  @media (max-width: 991px) {
+    padding-top: 60px;
+  }
+
+  @media (max-width: 575px) {
+    padding-top: 30px;
   }
 }

@@ -2,9 +2,9 @@
 	<div class="ingredients-filter">
 		<div
 				v-if="$route.name !== 'ingredients-create'"
-				class="ingredients-filter__elem">
+				class="ingredients-filter__elem ingredients-filter__search">
 			<span class="p-input-icon-right">
-		    <i class="pi pi-search mr-3" style="font-size: 1.3rem"/>
+		    <i class="pi pi-search" style="font-size: 1.3rem"/>
 		    <InputText class="ingredients-filter__field" v-model="value" placeholder="Поиск" />
 			</span>
 		</div>
@@ -24,14 +24,14 @@
 		</div>
 		<div class="ingredients-filter__elem ingredients-filter__elem-last">
 			<router-link
-					v-if="$route.name !== 'ingredients'"
-					class="ingredients-filter__add"
-					:to="{name: 'ingredients'}"
-			><i class="pi pi-plus"></i></router-link>
-			<router-link
 					v-if="$route.name !== 'ingredients-create'"
 					class="ingredients-filter__add"
 					:to="{name: 'ingredients-create'}"
+			><i class="pi pi-plus"></i></router-link>
+			<router-link
+					v-if="$route.name !== 'ingredients'"
+					class="ingredients-filter__add"
+					:to="{name: 'ingredients'}"
 			><i class="pi pi-minus"></i></router-link>
 		</div>
 	</div>
