@@ -1,207 +1,147 @@
 <template>
-	<div class="form">
-		<div class="form__row">
-			<div
-				class="form__col"
-				v-for="(element, index) in listNames"
-			>
-				<div class="form__box">
-					<div><b>Введите название</b></div>
-					<InputText
-						v-model.trim="element.name"
-						placeholder="Название"
-					/>
-					<small class="error" v-if="listNames[index].name.trim() === '' && errorsFlag">Введите название</small>
-				</div>
-				<div class="form__box">
-					<div><b>Выбрать язык</b></div>
-					<Dropdown
-						v-model="element.country"
-						:options="countries"
-						placeholder="Язык"
-						class="w-full md:w-14rem"
-						emptyMessage="Нет доступных вариантов"
-					>
-						<template #value="slotProps">
-							<div
-								v-if="slotProps.value"
-								class="flex align-items-center">
-								<img
-									:alt="slotProps.value.label"
-									src="@/assets/img/flag_placeholder.png"
-									:class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`"
-									style="width: 18px"
-								/>
-								<div>{{ slotProps.value.language }}</div>
-							</div>
-							<span v-else>
-								{{ slotProps.placeholder }}
-							</span>
-						</template>
-						<template #option="slotProps">
-							<div class="flex align-items-center">
-								<img
-									:alt="slotProps.option.label"
-									src="@/assets/img/flag_placeholder.png"
-									:class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`"
-									style="width: 18px"
-								/>
-								<div>{{ slotProps.option.language }}</div>
-							</div>
-						</template>
-					</Dropdown>
-					<small class="error" v-if="listNames[0].country === '' && errorsFlag">Нужно выбрать язык</small>
-				</div>
-				<div
-					class="form__box"
-					v-if="listNames.length > 1"
-				>
-					<Button
-						@click="listNames.splice(index, 1)"
-						icon="pi pi-times"
-						severity="danger"
-						aria-label="Cancel"
-						class="form__box-button"
-					/>
+	<Dialog
+		v-model:visible="storeModal.modalCreateVisible"
+		:dismissableMask="true"
+		modal
+		@hide="$emit('close')"
+		class="ingredient-create"
+	>
+		<template #header>
+			<SpeedDial
+				:model="items"
+				type="quarter-circle"
+				direction="down-right"
+				:radius="50"
+				showIcon="pi pi-ellipsis-h"
+				class="ingredient-create-menu"
+				buttonClass="ingredient-create-menu__button"
+				:rotateAnimation="false"
+				:mask="true"
+				maskClass="ingredient-create-menu__mask"
+			/>
+		</template>
+		<div class="ingredient-create__body">
+			<div class="ingredient-create__row ingredient-create__names">
+				<div class="ingredient-create__col ingredient-create__col" v-for="(element, index) in listNames">
+					<p class="ingredient-create__label-name">{{element.country}}</p>
+					<div class="ingredient-create__field">
+						<InputText class="ingredient-create-name" v-model.trim="element.name" placeholder="Название"/>
+					</div>
+					<small class="ingredient-create__error" v-if="listNames[index].name.trim() === '' && errorsFlag">Введите название</small>
 				</div>
 			</div>
-			<Button
-				@click="addName"
-				label="Primary"
-				outlined
-				class="form__row-button"
-				size="small"
-			>
-				Добавить название
-			</Button>
-		</div>
 
-		<div class="form__row">
-			<div class="form__col">
-				<div class="form__box">
-					<div><b>Придумайте свою тему</b></div>
-					<InputText
-						type="text"
-						v-model="thisTheme"
-						@keyup.enter="addTheme"
-						placeholder="Тема"
-					/>
+			<div class="ingredient-create__row ingredient-create__themes">
+				<div class="ingredient-create__col ingredient-create__col--grow">
+					<p class="ingredient-create__label-name">Придумайте свою тему</p>
+					<div class="ingredient-create__field">
+						<InputText class="ingredient-create-theme" type="text" v-model="thisTheme" @keyup.enter="addTheme" placeholder="Тема"/>
+					</div>
 				</div>
-				<div class="form__box">
-					<Button
-						@click="addTheme"
-						icon="pi pi-check"
-						aria-label="Filter"
-						class="form__box-button"
-					/>
-				</div>
-				<div class="form__box">
-					<div><b>Или выбрать из уже имеющихся тем</b></div>
-					<MultiSelect
-						v-model="listSelectThemes"
-						:options="listDbThemes"
-						placeholder="Темы"
-						emptyMessage="Нет доступных вариантов"
-						:maxSelectedLabels="3"
-						@change="addSelectTheme"
-						filter
-					/>
-				</div>
-			</div>
-			<div class="form__col">
-				<div class="form__box">
-					<div v-for="(description, index) in listThemes">
-						<div v-if="activeThemeDescription === index"><b>Введите описание</b></div>
-						<Textarea
-							v-model="description.description"
-							autoResize rows="5"
-							cols="30"
-							placeholder="Описание"
-							v-if="activeThemeDescription === index"
-						/>
+
+				<div class="ingredient-create__col ingredient-create__col--grow">
+					<p class="ingredient-create__label-name">Готовые темы</p>
+					<div class="ingredient-create__field">
+						<MultiSelect class="ingredient-create-ready-theme" v-model="listSelectThemes" :options="listDbThemes" placeholder="Темы" emptyMessage="Нет доступных вариантов" :maxSelectedLabels="3" @change="addSelectTheme" filter/>
 					</div>
 				</div>
 			</div>
-			<small class="error" v-if="listThemes.some(el => el.description.trim() === '' && errorsFlag)">Проверьте везде ли есть описание</small>
-			<div
-				class="form__col"
-				v-if="listThemes.length"
-			>
-				<div class="form__tags">
-					<Chip
-						v-for="(theme, index) in listThemes"
-						icon="pi pi-times"
-						@click.stop="activeThemeDescription = index"
-						:class="{'active': activeThemeDescription === index}"
-					>
-						{{theme.theme}}
-						<i
-							class="pi pi-times-circle"
-							style="font-size: 0.9rem; margin-left: 0.3rem; cursor: pointer; padding: 5px 0;"
-							@click.stop="removeTheme(index)"
-						></i>
-					</Chip>
-				</div>
-			</div>
-		</div>
 
-		<div class="form__row">
-			<div class="form__col">
-				<div class="form__box">
-					<div><b>Загрузите изображения</b></div>
-					<FileUpload
-							name="demo[]"
-							:multiple="true"
-							accept="image/*"
-							@select="handleFileUpload($event)"
-							@remove="handleFileUpload($event)"
-							:showUploadButton="false"
-							chooseLabel="Добвить файл"
-							cancelLabel="Удалить все"
-							ref="imagesReset"
-					>
-						<template #empty>
-							<p>Перетащите сюда файлы для загрузки.</p>
-						</template>
-					</FileUpload>
+			<div class="ingredient-create__row" v-if="listThemes.length">
+				<div class="ingredient-create__col">
+					<div class="ingredient-create__chips">
+						<Chip v-for="(theme, index) in listThemes" icon="pi pi-times" @click.stop="activeThemeDescription = index" :class="{'active': activeThemeDescription === index}">
+							{{theme.theme}}
+							<i class="pi pi-times-circle" @click.stop="removeTheme(index)"></i>
+						</Chip>
+					</div>
+				</div>
+			</div>
+
+			<div class="ingredient-create__row" v-if="listThemes.length">
+				<div class="ingredient-create__col ingredient-create__col--grow">
+					<div v-for="(description, index) in listThemes">
+						<p class="ingredient-create__label-name" v-if="activeThemeDescription === index"><b>Введите описание</b></p>
+						<div class="ingredient-create__field">
+							<Textarea class="ingredient-create-description" v-model="description.description" autoResize rows="5" cols="30" placeholder="Описание" v-if="activeThemeDescription === index"/>
+						</div>
+					</div>
+					<small v-if="listThemes.some(el => el.description.trim() === '' && errorsFlag)" class="ingredient-create__error">Проверьте везде ли есть описание</small>
+				</div>
+			</div>
+
+			<div class="ingredient-create__row">
+				<div class="ingredient-create__col ingredient-create__col--grow">
+					<p class="ingredient-create__label-name">Загрузите изображения</p>
+					<div class="ingredient-create__field ingredient-create-image">
+						<FileUpload name="demo[]" :multiple="true" accept="image/*" @select="handleFileUpload($event)" @remove="handleFileUpload($event)" :showUploadButton="false" chooseLabel="Добвить файл" cancelLabel="Удалить все" ref="imagesReset">
+							<template #empty><p>Перетащите сюда файлы для загрузки.</p></template>
+						</FileUpload>
+					</div>
+				</div>
+			</div>
+
+			<div class="ingredient-create__row">
+				<div class="ingredient-create__col">
+					<Button class="ingredient-create-button ingredient-create-button__send" rounded @click="send" label="Primary">Отправить</Button>
 				</div>
 			</div>
 		</div>
-		<div class="form__row">
-			<div class="form__col">
-				<div class="form__box">
-					<Button @click="send" label="Primary">Отправить</Button>
-				</div>
-			</div>
-		</div>
-	</div>
+	</Dialog>
 </template>
 
 <script setup>
 import useFetch from '@/composables/useFetch'
 import {ref} from 'vue'
 import InputText from 'primevue/inputtext'
-import Dropdown from 'primevue/dropdown'
 import Button from 'primevue/button'
 import Textarea from 'primevue/textarea'
 import MultiSelect from 'primevue/multiselect'
 import FileUpload from 'primevue/fileupload'
 import Chip from 'primevue/chip'
+import Dialog from 'primevue/dialog'
+import SpeedDial from 'primevue/speeddial'
+import {useIngredientsStore} from "@/stores/ingredients";
 
-import {useContry} from '@/composables/useContry'
+const storeModal = useIngredientsStore()
+
+const items = ref([
+	{
+		label: 'Удалить',
+		icon: 'pi pi-trash',
+		command: () => {
+			console.log(1)
+		}
+	},
+	{
+		label: 'Копировать',
+		icon: 'pi pi-copy',
+		command: () => {
+			console.log(1)
+		}
+	},
+	{
+		label: 'Редактировать',
+		icon: 'pi pi-pencil',
+		command: () => {
+			console.log(1)
+		}
+	},
+])
 
 let formData = new FormData()
 // Ингредиент
 const ingredients = ref({})
-// база языков
-const countries = ref(useContry())
 
 // Заголовки =====================================================
 
-// добавление нового названия
-const addName = () => listNames.value.push({name: '', country: ''})
-// список заголовков
-const listNames = ref([{name: '', country: ''}])
+// список названий
+const listNames = ref([
+	{name: '', country: 'Российский'},
+	{name: '', country: 'Английский'},
+	{name: '', country: 'Латинский'},
+	{name: '', country: 'Испанский'}
+])
 
 // Темы =====================================================
 
@@ -259,7 +199,6 @@ const activeThemeDescription = ref(0)
 
 // запихиваем картинки в массив и добавляем в formData
 const handleFileUpload = (e) => {
-	console.log(1111111)
 	formData.delete('ingredientsImages')
 	for (let key in e.files) formData.append('ingredientsImages', e.files[key])
 }
@@ -269,13 +208,16 @@ const imagesReset = ref(null)
 const resetForm = () => {
 	ingredients.value = []
 
-	countries.value = useContry()
-
 	thisTheme.value = ''
 	listThemes.value = []
 	listSelectThemes.value = []
 
-	listNames.value = [{name: '', country: ''}]
+	listNames.value = [
+		{name: '', country: 'Российский'},
+		{name: '', country: 'Английский'},
+		{name: '', country: 'Латинский'},
+		{name: '', country: 'Испанский'}
+	]
 
 	formData.delete('ingredientsImages')
 	formData.delete('ingredients')
@@ -326,6 +268,6 @@ const send = async () => {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 	@import '@/components/Ingredients/styles/ingredient-create.scss';
 </style>

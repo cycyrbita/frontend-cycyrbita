@@ -437,7 +437,7 @@ export const useContry = () => {
             code: "CW"
         },
         {
-            language: "Лаос",
+            language: "Латинский",
             code: "LA"
         },
         {

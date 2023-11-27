@@ -1,5 +1,6 @@
 <template>
 	<div class="ingredients-filter">
+		<IngredientCreate></IngredientCreate>
 		<div
 				v-if="$route.name !== 'ingredients-create'"
 				class="ingredients-filter__elem ingredients-filter__search">
@@ -23,28 +24,22 @@
 			/>
 		</div>
 		<div class="ingredients-filter__elem ingredients-filter__elem-last">
-			<router-link
-					v-if="$route.name !== 'ingredients-create'"
-					class="ingredients-filter__add"
-					:to="{name: 'ingredients-create'}"
-			><i class="pi pi-plus"></i></router-link>
-			<router-link
-					v-if="$route.name !== 'ingredients'"
-					class="ingredients-filter__add"
-					:to="{name: 'ingredients'}"
-			><i class="pi pi-minus"></i></router-link>
+			<div @click="storeModal.modalCreateVisible = true" class="ingredients-filter__add"><i class="pi pi-plus"></i></div>
 		</div>
 	</div>
 </template>
 
 <script setup>
+import {useIngredientsStore} from '@/stores/ingredients'
+
 import InputText from 'primevue/inputtext'
 import MultiSelect from 'primevue/multiselect'
-
+import IngredientCreate from '@/components/Ingredients/IngredientCreate.vue'
 import {ref} from 'vue'
 
-const value = ref(null);
+const storeModal = useIngredientsStore()
 
+const value = ref(null);
 const selectedThemes = ref();
 const themes = ref([
 	{ name: 'New York', code: 'NY' },

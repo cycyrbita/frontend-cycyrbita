@@ -10,6 +10,7 @@
 
 <script setup>
 import IngredientCard from '@/components/Ingredients/IngredientCard.vue'
+
 import useFetch from '@/composables/useFetch'
 import {onBeforeMount, ref} from 'vue'
 
@@ -28,5 +29,5 @@ onBeforeMount(getIngredients)
 </script>
 
 <style scoped lang="scss">
-	@import '@/components/Ingredients/styles/ingredients-list.scss';
+	@import '@/components/Ingredients/styles/ingredients-list.scss'
 </style>
