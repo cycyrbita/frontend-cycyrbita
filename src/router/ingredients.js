@@ -13,18 +13,6 @@ export default [
             {
                 path: '',
                 component: () => import('@/views/ingredients/IngredientsView.vue'),
-                children: [
-                    {
-                        path: '',
-                        name: 'ingredients',
-                        component: () => import('@/components/Ingredients/IngredientsList.vue'),
-                    },
-                    {
-                        path: 'create',
-                        name: 'ingredients-create',
-                        component: () => import('@/components/Ingredients/IngredientCreate.vue'),
-                    },
-                ]
             },
         ]
     }

@@ -3,7 +3,6 @@
 		v-model:visible="storeModal.modalCreateVisible"
 		:dismissableMask="true"
 		modal
-		@hide="$emit('close')"
 		class="ingredient-create"
 	>
 		<template #header>
@@ -33,16 +32,16 @@
 
 			<div class="ingredient-create__row ingredient-create__themes">
 				<div class="ingredient-create__col ingredient-create__col--grow">
-					<p class="ingredient-create__label-name">Придумайте свою тему</p>
-					<div class="ingredient-create__field">
-						<InputText class="ingredient-create-theme" type="text" v-model="thisTheme" @keyup.enter="addTheme" placeholder="Тема"/>
-					</div>
-				</div>
-
-				<div class="ingredient-create__col ingredient-create__col--grow">
 					<p class="ingredient-create__label-name">Готовые темы</p>
 					<div class="ingredient-create__field">
 						<MultiSelect class="ingredient-create-ready-theme" v-model="listSelectThemes" :options="listDbThemes" placeholder="Темы" emptyMessage="Нет доступных вариантов" :maxSelectedLabels="3" @change="addSelectTheme" filter/>
+					</div>
+				</div>
+
+				<div class="ingredient-create__col">
+					<p class="ingredient-create__label-name">Придумайте свою тему</p>
+					<div class="ingredient-create__field">
+						<InputText class="ingredient-create-theme" type="text" v-model="thisTheme" @keyup.enter="addTheme" placeholder="Тема"/>
 					</div>
 				</div>
 			</div>

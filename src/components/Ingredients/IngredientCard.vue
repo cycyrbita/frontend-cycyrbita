@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-	import {ref} from 'vue'
+import {defineEmits, ref} from 'vue'
 	import Carousel from 'primevue/carousel'
 	import SpeedDial from 'primevue/speeddial'
 	import useFetch from "@/composables/useFetch";
@@ -63,10 +63,14 @@
 		},
 	]);
 
+	const emit = defineEmits(['updateIngredients'])
+
 	const deleted = async () => {
 		try {
 			const res = await useFetch.delete('ingredients/deleted-ingredient', {id: props.ingredient._id, images: props.ingredient.images})
 			const json = await res.json()
+
+			emit('updateIngredients')
 		} catch (e) {
 			console.log(e)
 		}
