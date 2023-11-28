@@ -45,6 +45,7 @@
 	import {ref} from 'vue'
 	import Carousel from 'primevue/carousel'
 	import SpeedDial from 'primevue/speeddial'
+	import useFetch from "@/composables/useFetch";
 
 	const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.VITE_IMAGE_PATH_PROD : import.meta.env.VITE_IMAGE_PATH_DEV
 	const props = defineProps(['ingredient'])
@@ -62,13 +63,20 @@
 		},
 	]);
 
+	const deleted = async () => {
+		try {
+			const res = await useFetch.delete('ingredients/deleted-ingredient', {id: props.ingredient._id, images: props.ingredient.images})
+			const json = await res.json()
+		} catch (e) {
+			console.log(e)
+		}
+	}
+
 	const items = ref([
 		{
 			label: 'Удалить',
 			icon: 'pi pi-trash',
-			command: () => {
-				console.log(1)
-			}
+			command: () => deleted()
 		},
 		{
 			label: 'Копировать',

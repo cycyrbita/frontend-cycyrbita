@@ -20,6 +20,7 @@ const getIngredients = async () => {
 	try {
 		const res = await useFetch.post('ingredients/get-ingredients')
 		ingredients.value = await res.json()
+		console.log(ingredients.value)
 	} catch (e) {
 		console.log(e)
 	}
