@@ -10,7 +10,7 @@ export default defineConfig({
   base: process.env.VITE_DIR_NAME,
   build: {
     outDir: process.env.VITE_BUILD_PATH,
-    emptyOutDir: true,
+    emptyOutDir: false,
   },
   plugins: [
     vue(),
