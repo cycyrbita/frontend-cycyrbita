@@ -70,7 +70,7 @@
 				</div>
 			</div>
 
-			<div class="ingredient-create__row">
+			<div class="ingredient-create__row ingredient-create__images">
 				<div class="ingredient-create__col ingredient-create__col--grow">
 					<p class="ingredient-create__label-name">Загрузите изображения</p>
 					<div class="ingredient-create__field ingredient-create-image">
