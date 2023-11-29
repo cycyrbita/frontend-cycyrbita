@@ -1,17 +1,23 @@
 <template>
 	<div class="ingredient-card">
-		<SpeedDial
-				:model="items"
-				type="quarter-circle"
-				direction="down-right"
-				:radius="50"
-				showIcon="pi pi-ellipsis-h"
-				class="ingredient-card-menu"
-				buttonClass="ingredient-card-menu__button"
-				:rotateAnimation="false"
-				:mask="true"
-				maskClass="ingredient-card-menu__mask"
-		/>
+		<div class="ingredient-card__menu">
+			<Button
+					type="button"
+					icon="pi pi-ellipsis-h"
+					@click="toggle"
+					aria-haspopup="true"
+					showIcon="pi pi-ellipsis-h"
+					aria-controls="overlay_menu"
+			/>
+			<Menu
+					ref="menu"
+					id="overlay_menu"
+					:model="items"
+					:popup="true"
+					class="ingredient-card__menu-list"
+			/>
+		</div>
+
 		<picture class="ingredient-card-picture ingredient-card__picture">
 			<Carousel
 				:value="props.ingredient.images"
@@ -44,7 +50,8 @@
 <script setup>
 import {defineEmits, onBeforeMount, onUpdated, ref} from 'vue'
 	import Carousel from 'primevue/carousel'
-	import SpeedDial from 'primevue/speeddial'
+	import Menu from 'primevue/menu';
+	import Button from 'primevue/button';
 	import useFetch from '@/composables/useFetch'
 
 	const emit = defineEmits(['updateIngredients'])
@@ -75,22 +82,21 @@ import {defineEmits, onBeforeMount, onUpdated, ref} from 'vue'
 		}
 	}
 
+	const toggle = (event) => menu.value.toggle(event)
+	const menu = ref()
 	const items = ref([
 		{
 			label: 'Удалить',
-			icon: 'pi pi-trash',
 			command: () => deleted()
 		},
 		{
 			label: 'Копировать',
-			icon: 'pi pi-copy',
 			command: () => {
 				console.log(1)
 			}
 		},
 		{
 			label: 'Редактировать',
-			icon: 'pi pi-pencil',
 			command: () => {
 				console.log(1)
 			}

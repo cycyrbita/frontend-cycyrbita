@@ -17,6 +17,72 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  &__menu {
+    .p-button {
+      background-color: transparent;
+      border: 0;
+      box-shadow: none !important;
+      color: #000000;
+
+      .p-button-icon {
+        font-size: 26px;
+      }
+    }
+  }
+
+  &__menu-list {
+    background-color: #15133D !important;
+    border-radius: 10px;
+    max-width: 170px;
+
+    &::before {
+      position: absolute;
+      left: 16px;
+      top: -7px;
+      content: '';
+      width: 15px;
+      height: 15px;
+      transform: rotate(45deg);
+      background-color: #15133D;
+    }
+
+    .p-menuitem {
+      &:first-child {
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      &:last-child {
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .p-menuitem-link {
+        padding-top: 8px;
+        padding-bottom: 8px;
+        font-size: 14px;
+
+        &:hover {
+          span {
+            color: #F2297E;
+          }
+        }
+      }
+    }
+
+    .p-menuitem-text {
+      color: #ffffff;
+    }
+
+    .p-menuitem-content {
+      background-color: #15133D;
+
+      &:hover {
+        background-color: #15133D;
+      }
+    }
+  }
 }
 
 .ingredient-card-menu {
