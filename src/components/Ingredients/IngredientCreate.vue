@@ -9,9 +9,10 @@
 			<div class="ingredient-create__row ingredient-create__names">
 				<div class="ingredient-create__col ingredient-create__col" v-for="(element, index) in listNames">
 					<p class="ingredient-create__label-name">{{element.country}}</p>
-					<div class="ingredient-create__field">
-						<InputText class="ingredient-create-name" v-model.trim="element.name" placeholder="Название"/>
-					</div>
+					<span class="p-input-icon-right">
+						<i class="pi pi-copy" />
+						<InputText @keyup.enter="send" class="ingredient-create-name" v-model.trim="element.name" placeholder="Название"/>
+				</span>
 					<small class="ingredient-create__error" v-if="listNames[index].name.trim() === '' && errorsFlag && index === 0">Введите название</small>
 				</div>
 			</div>
@@ -27,7 +28,10 @@
 				<div class="ingredient-create__col">
 					<p class="ingredient-create__label-name">Придумайте свою тему</p>
 					<div class="ingredient-create__field">
+					<span class="p-input-icon-right">
+						<i class="pi pi-copy" />
 						<InputText class="ingredient-create-theme" type="text" v-model="thisTheme" @keyup.enter="addTheme" placeholder="Тема"/>
+					</span>
 					</div>
 				</div>
 			</div>
@@ -46,9 +50,10 @@
 			<div class="ingredient-create__row" v-if="listThemes.length">
 				<div class="ingredient-create__col ingredient-create__col--grow">
 					<div v-for="(description, index) in listThemes">
-						<p class="ingredient-create__label-name" v-if="activeThemeDescription === index"><b>Введите описание</b></p>
-						<div class="ingredient-create__field">
-							<Textarea class="ingredient-create-description" v-model="description.description" autoResize rows="5" cols="30" placeholder="Описание" v-if="activeThemeDescription === index"/>
+						<!--						<p class="ingredient-create__label-name" v-if="activeThemeDescription === index"><b>Введите описание</b></p>-->
+						<div class="ingredient-create__field ingredient-create__field--description p-input-icon-right" v-if="activeThemeDescription === index">
+							<i class="pi pi-copy"/>
+							<Textarea class="ingredient-create-description" v-model="description.description" autoResize rows="5" cols="30" placeholder="Описание"/>
 						</div>
 					</div>
 					<small v-if="listThemes.some(el => el.description.trim() === '' && errorsFlag)" class="ingredient-create__error">Проверьте везде ли есть описание</small>
@@ -57,7 +62,7 @@
 
 			<div class="ingredient-create__row ingredient-create__images">
 				<div class="ingredient-create__col ingredient-create__col--grow">
-					<p class="ingredient-create__label-name">Загрузите изображения</p>
+					<!--					<p class="ingredient-create__label-name">Загрузите изображения</p>-->
 					<div class="ingredient-create__field ingredient-create-image">
 						<FileUpload name="demo[]" :multiple="true" accept="image/*" @select="handleFileUpload($event)" @remove="handleFileUpload($event)" :showUploadButton="false" chooseLabel="Добвить файл" cancelLabel="Удалить все" ref="imagesReset">
 							<template #empty><p>Перетащите сюда файлы для загрузки.</p></template>
@@ -65,12 +70,11 @@
 					</div>
 				</div>
 			</div>
-
-			<div class="ingredient-create__row">
-				<div class="ingredient-create__col">
-					<Button class="ingredient-create-button ingredient-create-button__send" rounded @click="send" label="Primary">Отправить</Button>
-				</div>
-			</div>
+<!--			<div class="ingredient-create__row">-->
+<!--				<div class="ingredient-create__col">-->
+<!--					<Button class="ingredient-create-button ingredient-create-button__send" rounded @click="send" label="Primary">Создать</Button>-->
+<!--				</div>-->
+<!--			</div>-->
 		</div>
 	</Dialog>
 </template>
