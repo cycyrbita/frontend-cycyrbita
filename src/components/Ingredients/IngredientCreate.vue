@@ -8,7 +8,6 @@
 		<div class="ingredient-create__body">
 			<div class="ingredient-create__row ingredient-create__names">
 				<div class="ingredient-create__col ingredient-create__col--grow">
-					<p class="ingredient-create__label-name">{{listNames[0].country}}</p>
 					<span class="p-input-icon-right">
 						<i class="pi pi-copy" @click="copyText(listNames[0].name)" />
 						<InputText @keyup.enter="send" class="ingredient-create-name" v-model.trim="listNames[0].name" placeholder="Название"/>
@@ -17,7 +16,6 @@
 				</div>
 
 				<div class="ingredient-create__col ingredient-create__col--theme">
-					<p class="ingredient-create__label-name">Готовые темы</p>
 					<div class="ingredient-create__field">
 						<MultiSelect
 								ariaLabel="false"
