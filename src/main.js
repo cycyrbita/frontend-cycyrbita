@@ -8,6 +8,7 @@ import { createApp } from 'vue'
 import PrimeVue from 'primevue/config'
 import { createPinia } from 'pinia'
 import ToastService from 'primevue/toastservice'
+import VueClipboard from 'vue3-clipboard'
 
 import App from './App.vue'
 import router from './router'
@@ -18,5 +19,9 @@ app.use(createPinia())
 app.use(router)
 app.use(PrimeVue, { ripple: true })
 app.use(ToastService)
+app.use(VueClipboard, {
+    autoSetContainer: true,
+    appendToBody: true,
+})
 
 app.mount('#app')
