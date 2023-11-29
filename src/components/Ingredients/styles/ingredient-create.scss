@@ -8,7 +8,7 @@
   .p-dialog-header {
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: flex-end;
     border-radius: 20px;
     background-color: transparent;
     padding: 0;
@@ -225,6 +225,10 @@
   padding: 15px 27px;
   border-color: #fff;
 
+  &.p-inputtext:enabled:focus {
+    box-shadow: 0 0 0 0.2rem #9ba8d5;
+  }
+
   @media (max-width: 767px) {
     padding: 10px 20px;
   }
@@ -249,6 +253,10 @@
   padding: 15px 27px;
   border-color: #fff;
 
+  &.p-inputtext:enabled:focus {
+    box-shadow: 0 0 0 0.2rem #9ba8d5;
+  }
+
   @media (max-width: 767px) {
     padding: 10px 20px;
   }
@@ -264,6 +272,63 @@
 
   .p-multiselect-label {
     padding: 0;
+  }
+
+  &.p-multiselect:not(.p-disabled).p-focus {
+    box-shadow: 0 0 0 0.2rem #9ba8d5;
+  }
+
+  &__select-panel {
+    width: 825px;
+    border-radius: 30px;
+
+    .p-multiselect-filter {
+      border-radius: 30px;
+    }
+
+    .p-multiselect-header {
+      border-radius: 30px 30px 0 0;
+    }
+
+    .p-multiselect-items-wrapper {
+      border-radius: 0 0 30px 30px;
+    }
+
+    .p-multiselect-item.p-highlight {
+      color: #5c71bc;
+      background-color: #f1f3fb;
+    }
+
+    .p-checkbox-box.p-highlight {
+      border-color: #5c71bc;
+      background-color: #5c71bc;
+    }
+
+    .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+      box-shadow: 0 0 0 0.2rem #9ba8d5;
+      border-color: transparent;
+    }
+
+    @media (max-width: 1399px) {
+      max-width: 645px;
+    }
+
+    @media (max-width: 1199px) {
+      max-width: 465px;
+    }
+
+    @media (max-width: 991px) {
+      max-width: 335px;
+    }
+
+    @media (max-width: 767px) {
+      max-width: 215px;
+    }
+
+    @media (max-width: 575px) {
+      min-width: 0;
+      max-width: calc(100% - 100px);
+    }
   }
 
   @media (max-width: 767px) {
@@ -284,6 +349,11 @@
 
   .p-fileupload-content {
     border-radius: 0 0 30px 30px;
+  }
+
+  .p-fileupload-buttonbar,
+  .p-fileupload-content {
+    border: 0;
   }
 
   .p-button {

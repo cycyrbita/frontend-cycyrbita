@@ -5,13 +5,17 @@
 				<IngredientsFilter></IngredientsFilter>
 			</div>
 			<div class="ingredients__body">
+				<IngredientCreate @updateIngredients="getIngredients"></IngredientCreate>
 				<div class="ingredients-list">
-					<IngredientCard
-						class="ingredients-list__card"
-						v-for="ingredient in ingredients"
-						:ingredient="ingredient"
-						@updateIngredients="console.log(111111111111111111)"
-					/>
+					<TransitionGroup name="bounce">
+						<IngredientCard
+							class="ingredients-list__card"
+							v-for="ingredient in ingredients"
+							:key="ingredient._id"
+							:ingredient="ingredient"
+							@updateIngredients="getIngredients"
+						/>
+					</TransitionGroup>
 				</div>
 			</div>
 			<div class="ingredients__footer">
@@ -31,6 +35,7 @@ import {onBeforeMount, ref} from 'vue'
 import IngredientsFilter from '@/components/Ingredients/IngredientsFilter.vue'
 import IngredientsPagination from '@/components/Ingredients/IngredientsPagination.vue'
 import IngredientCard from '@/components/Ingredients/IngredientCard.vue'
+import IngredientCreate from '@/components/Ingredients/IngredientCreate.vue'
 
 import useFetch from '@/composables/useFetch'
 

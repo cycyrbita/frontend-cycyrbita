@@ -5,20 +5,6 @@
 		modal
 		class="ingredient-create"
 	>
-		<template #header>
-			<SpeedDial
-				:model="items"
-				type="quarter-circle"
-				direction="down-right"
-				:radius="50"
-				showIcon="pi pi-ellipsis-h"
-				class="ingredient-create-menu"
-				buttonClass="ingredient-create-menu__button"
-				:rotateAnimation="false"
-				:mask="true"
-				maskClass="ingredient-create-menu__mask"
-			/>
-		</template>
 		<div class="ingredient-create__body">
 			<div class="ingredient-create__row ingredient-create__names">
 				<div class="ingredient-create__col ingredient-create__col" v-for="(element, index) in listNames">
@@ -26,7 +12,7 @@
 					<div class="ingredient-create__field">
 						<InputText class="ingredient-create-name" v-model.trim="element.name" placeholder="Название"/>
 					</div>
-					<small class="ingredient-create__error" v-if="listNames[index].name.trim() === '' && errorsFlag">Введите название</small>
+					<small class="ingredient-create__error" v-if="listNames[index].name.trim() === '' && errorsFlag && index === 0">Введите название</small>
 				</div>
 			</div>
 
@@ -34,7 +20,7 @@
 				<div class="ingredient-create__col ingredient-create__col--grow">
 					<p class="ingredient-create__label-name">Готовые темы</p>
 					<div class="ingredient-create__field">
-						<MultiSelect class="ingredient-create-ready-theme" v-model="listSelectThemes" :options="listDbThemes" placeholder="Темы" emptyMessage="Нет доступных вариантов" :maxSelectedLabels="3" @change="addSelectTheme" filter/>
+						<MultiSelect ariaLabel="false" class="ingredient-create-ready-theme" panelClass="ingredient-create-ready-theme__select-panel" v-model="listSelectThemes" :options="listDbThemes" placeholder="Темы" emptyMessage="Нет доступных вариантов" :maxSelectedLabels="3" @change="addSelectTheme" filter/>
 					</div>
 				</div>
 
@@ -91,7 +77,7 @@
 
 <script setup>
 import useFetch from '@/composables/useFetch'
-import {ref} from 'vue'
+import {defineEmits, ref} from 'vue'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import Textarea from 'primevue/textarea'
@@ -100,33 +86,10 @@ import FileUpload from 'primevue/fileupload'
 import Chip from 'primevue/chip'
 import Dialog from 'primevue/dialog'
 import SpeedDial from 'primevue/speeddial'
-import {useIngredientsStore} from "@/stores/ingredients";
+import {useIngredientsStore} from '@/stores/ingredients'
+const emit = defineEmits(['updateIngredients'])
 
 const storeModal = useIngredientsStore()
-
-const items = ref([
-	{
-		label: 'Удалить',
-		icon: 'pi pi-trash',
-		command: () => {
-			console.log(1)
-		}
-	},
-	{
-		label: 'Копировать',
-		icon: 'pi pi-copy',
-		command: () => {
-			console.log(1)
-		}
-	},
-	{
-		label: 'Редактировать',
-		icon: 'pi pi-pencil',
-		command: () => {
-			console.log(1)
-		}
-	},
-])
 
 let formData = new FormData()
 // Ингредиент
@@ -136,7 +99,7 @@ const ingredients = ref({})
 
 // список названий
 const listNames = ref([
-	{name: '', country: 'Российский'},
+	{name: '', country: 'Русский'},
 	{name: '', country: 'Английский'},
 	{name: '', country: 'Латинский'},
 	{name: '', country: 'Испанский'}
@@ -212,7 +175,7 @@ const resetForm = () => {
 	listSelectThemes.value = []
 
 	listNames.value = [
-		{name: '', country: 'Российский'},
+		{name: '', country: 'Русский'},
 		{name: '', country: 'Английский'},
 		{name: '', country: 'Латинский'},
 		{name: '', country: 'Испанский'}
@@ -226,10 +189,10 @@ const resetForm = () => {
 const errorsFlag = ref(false)
 const checkErrorsFlag = () => {
 	let flag = false
-	listNames.value.forEach(el => {
-		if(el.country === '') flag = true
-		if(el.name.trim() === '') flag = true
-	})
+
+	if(listNames.value[0].country === '') flag = true
+	if(listNames.value[0].name.trim() === '') flag = true
+
 	listThemes.value.forEach(el => {
 		if(el.description.trim() === '') flag = true
 		if(el.theme.trim() === '') flag = true
@@ -259,8 +222,10 @@ const send = async () => {
 		const res = await useFetch.post('ingredients/create', null, headers)
 		const json = await res.json()
 
+		emit('updateIngredients')
+		storeModal.modalCreateVisible = false
+
 		resetForm()
-		console.log(json)
 	} catch (e) {
 		console.log(e)
 	}

@@ -1,6 +1,5 @@
 <template>
 	<div class="ingredients-filter">
-		<IngredientCreate></IngredientCreate>
 		<div
 				v-if="$route.name !== 'ingredients-create'"
 				class="ingredients-filter__elem ingredients-filter__search">
@@ -34,7 +33,6 @@ import {useIngredientsStore} from '@/stores/ingredients'
 
 import InputText from 'primevue/inputtext'
 import MultiSelect from 'primevue/multiselect'
-import IngredientCreate from '@/components/Ingredients/IngredientCreate.vue'
 import {ref} from 'vue'
 
 const storeModal = useIngredientsStore()

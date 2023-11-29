@@ -42,10 +42,12 @@
 </template>
 
 <script setup>
-import {defineEmits, ref} from 'vue'
+import {defineEmits, onBeforeMount, onUpdated, ref} from 'vue'
 	import Carousel from 'primevue/carousel'
 	import SpeedDial from 'primevue/speeddial'
-	import useFetch from "@/composables/useFetch";
+	import useFetch from '@/composables/useFetch'
+
+	const emit = defineEmits(['updateIngredients'])
 
 	const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.VITE_IMAGE_PATH_PROD : import.meta.env.VITE_IMAGE_PATH_DEV
 	const props = defineProps(['ingredient'])
@@ -63,13 +65,10 @@ import {defineEmits, ref} from 'vue'
 		},
 	]);
 
-	const emit = defineEmits(['updateIngredients'])
-
 	const deleted = async () => {
 		try {
 			const res = await useFetch.delete('ingredients/deleted-ingredient', {id: props.ingredient._id, images: props.ingredient.images})
 			const json = await res.json()
-
 			emit('updateIngredients')
 		} catch (e) {
 			console.log(e)
@@ -98,11 +97,17 @@ import {defineEmits, ref} from 'vue'
 		},
 	])
 
-	for(const image of props.ingredient.images) {
-		if(props.ingredient.images.length < 4) {
-			props.ingredient.images.push({src: '', alt: ''})
+	const addItemsImages = () => {
+		if(props.ingredient.images.length === 0) props.ingredient.images.push({src: '', alt: ''})
+		for(const image of props.ingredient.images) {
+			if(props.ingredient.images.length < 4) {
+				props.ingredient.images.push({src: '', alt: ''})
+			}
 		}
 	}
+
+	onUpdated(addItemsImages)
+	onBeforeMount(addItemsImages)
 </script>
 
 <style lang="scss">
