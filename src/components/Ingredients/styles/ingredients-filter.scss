@@ -96,7 +96,15 @@
         padding-bottom:0;
 
         .p-multiselect-item {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: space-between;
           color: #ffffff;
+
+          .p-checkbox-box {
+            background: transparent;
+            border: none;
+          }
           
           &:hover {
             background-color: #778de1;
