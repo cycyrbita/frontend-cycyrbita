@@ -157,21 +157,6 @@ const addSelectTheme = (e) => {
 	themeRef.value.hide()
 }
 
-// добавляем тему через инпут
-const addTheme = () => {
-	// проверка на пустую строку
-	if(thisTheme.value.trim() === '') return
-	if(listThemes.value.some(el => el.theme.toLowerCase() === thisTheme.value.toLowerCase())) return
-	listThemes.value.push({theme: thisTheme.value, description: ''})
-	// добавляем в селект тему если она была в базе
-	listThemes.value.forEach(el => {
-		if(listDbThemes.value.includes(el.theme) && !listSelectThemes.value.includes(el.theme)) listSelectThemes.value.push(el.theme)
-	})
-	// активная тема
-	activeThemeDescription.value = listThemes.value.length - 1
-	thisTheme.value = ''
-}
-
 // удаление тем
 const removeTheme = (index) => {
 	listThemes.value.splice(index, 1)
