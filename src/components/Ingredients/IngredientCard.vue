@@ -1,5 +1,17 @@
 <template>
 	<div class="ingredient-card">
+		<Dialog class="ingredient-card-confirmation" v-model:visible="visibleDeleted" modal :dismissableMask="true">
+			<template #container="{closeCallback}">
+				<div class="ingredient-card-confirmation__body">
+					<div class="ingredient-card-confirmation__title">Вы хорошо подумали?</div>
+					<div class="ingredient-card-confirmation__subtitle">Точно удалить?</div>
+					<div class="ingredient-card-confirmation__buttons">
+						<Button class="ingredient-card-confirmation__button" label="Я передумал" @click="closeCallback"></Button>
+						<Button class="ingredient-card-confirmation__button ingredient-card-confirmation__button--active" label="Удалить" @click="deleted"></Button>
+					</div>
+				</div>
+			</template>
+		</Dialog>
 		<div class="ingredient-card__menu">
 			<Button
 					type="button"
@@ -48,10 +60,11 @@
 </template>
 
 <script setup>
-import {defineEmits, onBeforeMount, onUpdated, ref} from 'vue'
+	import {defineEmits, onBeforeMount, onUpdated, ref} from 'vue'
 	import Carousel from 'primevue/carousel'
 	import Menu from 'primevue/menu';
 	import Button from 'primevue/button';
+	import Dialog from 'primevue/dialog';
 	import useFetch from '@/composables/useFetch'
 
 	const emit = defineEmits(['updateIngredients'])
@@ -82,12 +95,13 @@ import {defineEmits, onBeforeMount, onUpdated, ref} from 'vue'
 		}
 	}
 
+	const visibleDeleted = ref(false);
 	const toggle = (event) => menu.value.toggle(event)
 	const menu = ref()
 	const items = ref([
 		{
 			label: 'Удалить',
-			command: () => deleted()
+			command: () => visibleDeleted.value = true
 		},
 		{
 			label: 'Копировать',
