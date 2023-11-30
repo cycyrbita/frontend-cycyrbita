@@ -1,6 +1,6 @@
 <template>
 	<Dialog
-		v-model:visible="storeModal.modalCreateVisible"
+		v-model:visible="modalCreateVisible.modalCreateVisible"
 		:dismissableMask="true"
 		modal
 		class="ingredient-create"
@@ -112,7 +112,7 @@ import {useIngredientsStore} from '@/stores/ingredients'
 const emit = defineEmits(['updateIngredients'])
 import { copyText } from 'vue3-clipboard'
 
-const storeModal = useIngredientsStore()
+const modalCreateVisible = useIngredientsStore()
 
 let formData = new FormData()
 // Ингредиент
@@ -230,7 +230,7 @@ const send = async () => {
 		const json = await res.json()
 
 		emit('updateIngredients')
-		storeModal.modalCreateVisible = false
+		modalCreateVisible.modalCreateVisible = false
 
 		resetForm()
 	} catch (e) {

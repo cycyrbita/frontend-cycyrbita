@@ -3,5 +3,7 @@ import { defineStore } from 'pinia'
 
 export const useIngredientsStore = defineStore('ingredients', () => {
     const modalCreateVisible = ref(false)
-    return {modalCreateVisible}
+    const modalViewVisible = ref(false)
+    const ingredientId = ref('')
+    return {modalCreateVisible, modalViewVisible, ingredientId}
 })

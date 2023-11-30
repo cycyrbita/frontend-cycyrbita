@@ -6,6 +6,7 @@
 			</div>
 			<div class="ingredients__body">
 				<IngredientCreate @updateIngredients="getIngredients"></IngredientCreate>
+				<Ingredient v-if="modalViewVisible.modalViewVisible"></Ingredient>
 				<div class="ingredients-list">
 					<TransitionGroup name="bounce">
 						<IngredientCard
@@ -14,6 +15,7 @@
 							:key="ingredient._id"
 							:ingredient="ingredient"
 							@updateIngredients="getIngredients"
+							@click="getIngredient(ingredient._id)"
 						/>
 					</TransitionGroup>
 				</div>
@@ -36,6 +38,16 @@ import IngredientsFilter from '@/components/Ingredients/IngredientsFilter.vue'
 import IngredientsPagination from '@/components/Ingredients/IngredientsPagination.vue'
 import IngredientCard from '@/components/Ingredients/IngredientCard.vue'
 import IngredientCreate from '@/components/Ingredients/IngredientCreate.vue'
+import Ingredient from '@/components/Ingredients/Ingredient.vue'
+
+import {useIngredientsStore} from '@/stores/ingredients'
+const modalViewVisible = useIngredientsStore()
+const ingredientId = useIngredientsStore()
+
+const getIngredient = (id) => {
+	ingredientId.ingredientId = id
+	modalViewVisible.modalViewVisible = true
+}
 
 import useFetch from '@/composables/useFetch'
 

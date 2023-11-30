@@ -23,7 +23,7 @@
 			/>
 		</div>
 		<div class="ingredients-filter__elem ingredients-filter__elem-last">
-			<div @click="storeModal.modalCreateVisible = true" class="ingredients-filter__add"><i class="pi pi-plus"></i></div>
+			<div @click="modalCreateVisible.modalCreateVisible = true" class="ingredients-filter__add"><i class="pi pi-plus"></i></div>
 		</div>
 	</div>
 </template>
@@ -35,7 +35,7 @@ import InputText from 'primevue/inputtext'
 import MultiSelect from 'primevue/multiselect'
 import {ref} from 'vue'
 
-const storeModal = useIngredientsStore()
+const modalCreateVisible = useIngredientsStore()
 
 const value = ref(null);
 const selectedThemes = ref();
