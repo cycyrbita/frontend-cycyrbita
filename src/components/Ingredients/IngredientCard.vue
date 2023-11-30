@@ -66,6 +66,7 @@
 	import Button from 'primevue/button';
 	import Dialog from 'primevue/dialog';
 	import useFetch from '@/composables/useFetch'
+	import { copyText } from 'vue3-clipboard'
 
 	const emit = defineEmits(['updateIngredients'])
 
@@ -106,7 +107,12 @@
 		{
 			label: 'Копировать',
 			command: () => {
-				console.log(1)
+				copyText(`
+					Название: ${props.ingredient.names[0].name}
+					Тема: ${props.ingredient.themes.length ? props.ingredient.themes[0].theme : 'Пусто'}
+					Описание: ${props.ingredient.themes.length ? props.ingredient.themes[0].description : 'Пусто'}
+					Сссылка на картинку: ${props.ingredient.images.length ? VITE_IMAGE_PATH + '/ingredients/' + props.ingredient.images[0].src : 'Пусто'}
+				`)
 			}
 		},
 		{
