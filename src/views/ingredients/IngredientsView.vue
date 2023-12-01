@@ -6,18 +6,18 @@
 			</div>
 			<div class="ingredients__body">
 				<IngredientCreate @updateIngredients="getIngredients"></IngredientCreate>
-				<Ingredient v-if="modalViewVisible.modalViewVisible"></Ingredient>
+				<Ingredient></Ingredient>
 				<div class="ingredients-list">
-					<TransitionGroup name="bounce">
-						<IngredientCard
-							class="ingredients-list__card"
-							v-for="ingredient in ingredients"
-							:key="ingredient._id"
-							:ingredient="ingredient"
-							@updateIngredients="getIngredients"
-							@click="getIngredient(ingredient._id)"
-						/>
-					</TransitionGroup>
+<!--					<TransitionGroup name="bounce">-->
+<!--						<IngredientCard-->
+<!--							class="ingredients-list__card"-->
+<!--							v-for="ingredient in ingredients"-->
+<!--							:key="ingredient._id"-->
+<!--							:ingredient="ingredient"-->
+<!--							@updateIngredients="getIngredients"-->
+<!--							@click="getIngredient(ingredient._id)"-->
+<!--						/>-->
+<!--					</TransitionGroup>-->
 				</div>
 			</div>
 			<div class="ingredients__footer">
@@ -62,7 +62,7 @@ const getIngredients = async () => {
 	}
 }
 
-onBeforeMount(getIngredients)
+// onBeforeMount(getIngredients)
 </script>
 
 <style lang="scss" scoped>
