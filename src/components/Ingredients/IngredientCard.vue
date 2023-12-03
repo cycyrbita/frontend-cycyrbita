@@ -1,22 +1,10 @@
 <template>
 	<div class="ingredient-card">
-		<Dialog class="ingredient-card-confirmation" v-model:visible="visibleDeleted" modal :dismissableMask="true">
-			<template #container="{closeCallback}">
-				<div class="ingredient-card-confirmation__body">
-					<div class="ingredient-card-confirmation__title">Вы хорошо подумали?</div>
-					<div class="ingredient-card-confirmation__subtitle">Точно удалить?</div>
-					<div class="ingredient-card-confirmation__buttons">
-						<Button class="ingredient-card-confirmation__button" label="Я передумал" @click="closeCallback"></Button>
-						<Button class="ingredient-card-confirmation__button ingredient-card-confirmation__button--active" label="Удалить" @click="deleted"></Button>
-					</div>
-				</div>
-			</template>
-		</Dialog>
 		<div class="ingredient-card__menu">
 			<Button
 					type="button"
 					icon="pi pi-ellipsis-h"
-					@click="toggle"
+					@click.stop="toggle"
 					aria-haspopup="true"
 					showIcon="pi pi-ellipsis-h"
 					aria-controls="overlay_menu"
@@ -29,7 +17,6 @@
 					class="ingredient-card__menu-list"
 			/>
 		</div>
-
 		<picture class="ingredient-card-picture ingredient-card__picture">
 			<Carousel
 				:value="props.ingredient.images"
@@ -60,16 +47,14 @@
 </template>
 
 <script setup>
-	import {defineEmits, onBeforeMount, onUpdated, ref} from 'vue'
+	import {onBeforeMount, onUpdated, ref} from 'vue'
 	import Carousel from 'primevue/carousel'
 	import Menu from 'primevue/menu';
 	import Button from 'primevue/button';
-	import Dialog from 'primevue/dialog';
-	import useFetch from '@/composables/useFetch'
 	import { copyText } from 'vue3-clipboard'
+	import {useIngredientsStore} from '@/stores/ingredients'
 
-	const emit = defineEmits(['updateIngredients'])
-
+	const store = useIngredientsStore()
 	const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.VITE_IMAGE_PATH_PROD : import.meta.env.VITE_IMAGE_PATH_DEV
 	const props = defineProps(['ingredient'])
 
@@ -84,25 +69,18 @@
 			numVisible: 3,
 			numScroll: 1
 		},
-	]);
+	])
 
-	const deleted = async () => {
-		try {
-			const res = await useFetch.delete('ingredients/deleted-ingredient', {id: props.ingredient._id, images: props.ingredient.images})
-			const json = await res.json()
-			emit('updateIngredients')
-		} catch (e) {
-			console.log(e)
-		}
-	}
-
-	const visibleDeleted = ref(false);
 	const toggle = (event) => menu.value.toggle(event)
 	const menu = ref()
 	const items = ref([
 		{
 			label: 'Удалить',
-			command: () => visibleDeleted.value = true
+			command: () => {
+				store.visibleDeleted = true
+				store.idDeleted = props.ingredient._id
+				store.imagesDeleted = props.ingredient.images
+			}
 		},
 		{
 			label: 'Копировать',
@@ -113,12 +91,6 @@
 					Описание: ${props.ingredient.themes.length ? props.ingredient.themes[0].description : 'Пусто'}
 					Сссылка на картинку: ${props.ingredient.images.length ? VITE_IMAGE_PATH + '/ingredients/' + props.ingredient.images[0].src : 'Пусто'}
 				`)
-			}
-		},
-		{
-			label: 'Редактировать',
-			command: () => {
-				console.log(1)
 			}
 		},
 	])

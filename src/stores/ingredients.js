@@ -5,17 +5,40 @@ import useFetch from "@/composables/useFetch";
 export const useIngredientsStore = defineStore('ingredients', () => {
     const modalCreateVisible = ref(false)
     const modalViewVisible = ref(false)
-    const ingredientId = ref('6569c592e3cf5074560b531b')
+    const ingredientId = ref('')
 
-    const getIngredient = async () => {
+    const visibleDeleted = ref(false)
+    const idDeleted = ref(false)
+    const imagesDeleted = ref(false)
+
+    const getIngredients = async () => {
         try {
-            const res = useFetch.post('ingredients/get-ingredient', {id: ingredientId.value})
-            const json = res.json()
-            return json
+            const res = await useFetch.post('ingredients/get-ingredients')
+            return await res.json()
         } catch (e) {
             console.log(e)
         }
     }
 
-    return {modalCreateVisible, modalViewVisible, ingredientId, getIngredient}
+    const getIngredient = async () => {
+        try {
+            const res = await useFetch.post('ingredients/get-ingredient', {id: ingredientId.value})
+            return await res.json()
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const deleteIngredient = async () => {
+        try {
+            const res = await useFetch.delete('ingredients/deleted-ingredient', {id: idDeleted.value, images: imagesDeleted.value})
+            visibleDeleted.value = false
+            modalViewVisible.value = false
+            return await res.json()
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    return {modalCreateVisible, modalViewVisible, ingredientId, getIngredients, getIngredient, deleteIngredient, idDeleted, imagesDeleted, visibleDeleted}
 })

@@ -1,23 +1,35 @@
 <template>
+	<Dialog class="ingredients-view-confirmation" v-model:visible="store.visibleDeleted" modal :dismissableMask="true">
+		<template #container="{closeCallback}">
+			<div class="ingredients-view-confirmation__body">
+				<div class="ingredients-view-confirmation__title">Вы хорошо подумали?</div>
+				<div class="ingredients-view-confirmation__subtitle">Точно удалить?</div>
+				<div class="ingredients-view-confirmation__buttons">
+					<Button class="ingredients-view-confirmation__button" label="Я передумал" @click="closeCallback"></Button>
+					<Button class="ingredients-view-confirmation__button ingredients-view-confirmation__button--active" label="Удалить" @click="deleted"></Button>
+				</div>
+			</div>
+		</template>
+	</Dialog>
+	<IngredientCreate @updateIngredients="getIngredients"></IngredientCreate>
+	<Ingredient v-if="store.ingredientId"></Ingredient>
 	<div class="ingredients">
 		<div class="container">
 			<div class="ingredients__header">
 				<IngredientsFilter></IngredientsFilter>
 			</div>
 			<div class="ingredients__body">
-				<IngredientCreate @updateIngredients="getIngredients"></IngredientCreate>
-				<Ingredient></Ingredient>
 				<div class="ingredients-list">
-<!--					<TransitionGroup name="bounce">-->
-<!--						<IngredientCard-->
-<!--							class="ingredients-list__card"-->
-<!--							v-for="ingredient in ingredients"-->
-<!--							:key="ingredient._id"-->
-<!--							:ingredient="ingredient"-->
-<!--							@updateIngredients="getIngredients"-->
-<!--							@click="getIngredient(ingredient._id)"-->
-<!--						/>-->
-<!--					</TransitionGroup>-->
+					<TransitionGroup name="bounce">
+						<IngredientCard
+							class="ingredients-list__card"
+							v-for="ingredient in ingredients"
+							:key="ingredient._id"
+							:ingredient="ingredient"
+							@updateIngredients="getIngredients"
+							@click.stop="getIngredient(ingredient._id)"
+						/>
+					</TransitionGroup>
 				</div>
 			</div>
 			<div class="ingredients__footer">
@@ -27,10 +39,6 @@
 	</div>
 </template>
 
-<style scoped lang="scss">
-
-</style>
-
 <script setup>
 import {onBeforeMount, ref} from 'vue'
 
@@ -39,32 +47,35 @@ import IngredientsPagination from '@/components/Ingredients/IngredientsPaginatio
 import IngredientCard from '@/components/Ingredients/IngredientCard.vue'
 import IngredientCreate from '@/components/Ingredients/IngredientCreate.vue'
 import Ingredient from '@/components/Ingredients/Ingredient.vue'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
 
 import {useIngredientsStore} from '@/stores/ingredients'
-const modalViewVisible = useIngredientsStore()
-const ingredientId = useIngredientsStore()
+const store = useIngredientsStore()
 
 const getIngredient = (id) => {
-	ingredientId.ingredientId = id
-	modalViewVisible.modalViewVisible = true
+	store.ingredientId = id
+	store.modalViewVisible = true
 }
-
-import useFetch from '@/composables/useFetch'
 
 const ingredients = ref()
 
 const getIngredients = async () => {
 	try {
-		const res = await useFetch.post('ingredients/get-ingredients')
-		ingredients.value = await res.json()
+		ingredients.value = await store.getIngredients()
 	} catch (e) {
 		console.log(e)
 	}
 }
 
-// onBeforeMount(getIngredients)
+const deleted = async () => {
+	await store.deleteIngredient()
+	ingredients.value = await store.getIngredients()
+}
+
+onBeforeMount(getIngredients)
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	@import '@/views/ingredients/styles/ingredients-view.scss';
 </style>
