@@ -30,7 +30,7 @@
 					<i class="pi pi-copy" @click="copyText(ingredient.names[0].name) "/>
 					<InputText :readonly="!edit" v-model="ingredient.names[0].name" placeholder="Название"/>
 				</span>
-				<div><small class="ingredient__error">Введите название</small></div>
+				<div v-if="ingredient.names[0].name.trim() === ''"><small class="ingredient__error">Введите название</small></div>
 			</div>
 
 			<div class="ingredient__themes">
@@ -49,6 +49,9 @@
 
 			<template v-for="(name, index) in ingredient.names">
 				<div class="ingredient__name" v-if="index !== 0">
+					<div v-if="index === 1" class="ingredient__name-label">Английский</div>
+					<div v-if="index === 2" class="ingredient__name-label">Латинский</div>
+					<div v-if="index === 3" class="ingredient__name-label">Испанский</div>
 					<span class="p-input-icon-right">
 						<i class="pi pi-copy" @click="copyText(name.name)" />
 						<InputText :readonly="!edit" v-model="name.name" placeholder="Название"/>
@@ -88,7 +91,7 @@
 			</div>
 
 			<div class="ingredient__button" v-if="edit">
-				<Button rounded label="Primary">Сохранить</Button>
+				<Button rounded label="Сохранить"></Button>
 			</div>
 		</div>
 	</Dialog>

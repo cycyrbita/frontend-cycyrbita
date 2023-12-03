@@ -100,7 +100,7 @@
 
 <script setup>
 import useFetch from '@/composables/useFetch'
-import {defineEmits, ref} from 'vue'
+import {ref} from 'vue'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import Textarea from 'primevue/textarea'
