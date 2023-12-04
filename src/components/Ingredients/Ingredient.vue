@@ -121,7 +121,6 @@ const edit = ref(false)
 const dbThemes = ref(['Омоложение', 'Похудение', 'Зрение'])
 const listThemes = ref([])
 const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.VITE_IMAGE_PATH_PROD : import.meta.env.VITE_IMAGE_PATH_DEV
-const VITE_SRC_IMAGE = import.meta.env.MODE === 'production' ? import.meta.env.VITE_API_URL_PROD : import.meta.env.VITE_PORT_DEV
 
 // добавляем картинки
 const handleFileUpload = (e) => {
@@ -149,7 +148,7 @@ const deletedChip = (tag, index) => {
 
 const customUpload = async () => {
 	for(const image of ingredient.value.images) {
-		const blob = await fetch(`${VITE_SRC_IMAGE + VITE_IMAGE_PATH}/ingredients/${image.src}`).then((r) => r.blob())
+		const blob = await fetch(`${VITE_IMAGE_PATH}/ingredients/${image.src}`).then((r) => r.blob())
 		const file = new File([blob], image.src, {type: blob.type})
 		file.objectURL = URL.createObjectURL(blob)
 		imagesReset.value.files.push(file)
@@ -160,6 +159,7 @@ const customUpload = async () => {
 const getIngredient = async () => {
 	ingredient.value = await store.getIngredient()
 	ingredient.value.themes.forEach(el => listThemes.value.push(el.theme))
+	await customUpload()
 }
 
 const toggle2 = (event) => menu2.value.toggle(event)
