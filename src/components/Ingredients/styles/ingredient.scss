@@ -299,6 +299,7 @@
           height: 100%;
           object-fit: cover;
           border-radius: 50%;
+          background-color: #fff;
         }
       }
 
@@ -423,6 +424,31 @@
   @media (max-width: 575px) {
     padding: 20px 30px 40px;
     max-width: calc(100% - 40px);
+  }
+}
+
+.ingredient-images-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+
+  &__box {
+    width: 148px;
+    height: 148px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    overflow: hidden;
+
+    @media (max-width: 767px) {
+      width: 100px;
+      height: 100px;
+    }
+
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 }
 

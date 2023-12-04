@@ -1,6 +1,6 @@
 <template>
 	<div class="ingredient-card">
-		<div class="ingredient-card__menu">
+		<div class="ingredient-card__menu" v-if="!store.ingredientId">
 			<Button
 					type="button"
 					icon="pi pi-ellipsis-h"

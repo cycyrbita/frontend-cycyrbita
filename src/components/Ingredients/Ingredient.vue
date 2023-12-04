@@ -11,15 +11,15 @@
 			<Button
 					type="button"
 					icon="pi pi-ellipsis-h"
-					@click.stop="toggle"
+					@click.stop="toggle2"
 					aria-haspopup="true"
 					showIcon="pi pi-ellipsis-h"
-					aria-controls="overlay_menu"
+					aria-controls="menu_overlay"
 			/>
 			<Menu
-					ref="menu"
-					id="overlay_menu"
-					:model="items"
+					ref="menu2"
+					id="menu_overlay"
+					:model="items2"
 					:popup="true"
 					class="ingredient__menu-list"
 			/>
@@ -74,11 +74,13 @@
 			</template>
 
 			<div class="ingredient__images">
-				<div class="ingredient__images-preview" v-if="!edit" v-for="image in ingredient.images">
-					<img :src="`${VITE_IMAGE_PATH}/ingredients/${image.src}`" :alt="image.alt">
+				<div class="ingredient-images-preview" v-if="!edit">
+					<div class="ingredient-images-preview__box" v-if="imagesReset" v-for="image in imagesReset.files">
+						<img :src="image.objectURL">
+					</div>
 				</div>
 				<FileUpload
-					v-else
+					v-show="edit"
 					name="demo[]"
 					:multiple="true"
 					accept="image/*"
@@ -89,7 +91,6 @@
 				>
 				</FileUpload>
 			</div>
-
 			<div class="ingredient__button" v-if="edit">
 				<Button rounded label="Сохранить"></Button>
 			</div>
@@ -113,13 +114,14 @@ import {copyText} from 'vue3-clipboard'
 const store = useIngredientsStore()
 const ingredient = ref()
 const descriptionIndex = ref(0)
-const imagesReset = ref(null)
+const imagesReset = ref({files: []})
 let formData = new FormData()
 const edit = ref(false)
 
 const dbThemes = ref(['Омоложение', 'Похудение', 'Зрение'])
 const listThemes = ref([])
 const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.VITE_IMAGE_PATH_PROD : import.meta.env.VITE_IMAGE_PATH_DEV
+const VITE_SRC_IMAGE = import.meta.env.MODE === 'production' ? import.meta.env.VITE_API_URL_PROD : import.meta.env.VITE_PORT_DEV
 
 // добавляем картинки
 const handleFileUpload = (e) => {
@@ -145,15 +147,24 @@ const deletedChip = (tag, index) => {
 	ingredient.value.themes.splice(index, 1)
 }
 
+const customUpload = async () => {
+	for(const image of ingredient.value.images) {
+		const blob = await fetch(`${VITE_SRC_IMAGE + VITE_IMAGE_PATH}/ingredients/${image.src}`).then((r) => r.blob())
+		const file = new File([blob], image.src, {type: blob.type})
+		file.objectURL = URL.createObjectURL(blob)
+		imagesReset.value.files.push(file)
+	}
+}
+
 // получаем ингредиент
 const getIngredient = async () => {
 	ingredient.value = await store.getIngredient()
 	ingredient.value.themes.forEach(el => listThemes.value.push(el.theme))
 }
 
-const toggle = (event) => menu.value.toggle(event)
-const menu = ref()
-const items = ref([
+const toggle2 = (event) => menu2.value.toggle(event)
+const menu2 = ref()
+const items2 = ref([
 	{
 		label: 'Удалить',
 		command: () => {
