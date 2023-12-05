@@ -12,7 +12,7 @@
 		</template>
 	</Dialog>
 	<IngredientCreate @updateIngredients="getIngredients"></IngredientCreate>
-	<Ingredient v-if="store.ingredientId"></Ingredient>
+	<Ingredient @updateIngredients="getIngredients" v-if="store.ingredientId"></Ingredient>
 	<div class="ingredients">
 		<div class="container">
 			<div class="ingredients__header">

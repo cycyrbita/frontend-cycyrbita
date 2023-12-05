@@ -2,7 +2,6 @@
 	<div class="ingredient-card">
 		<div class="ingredient-card__menu">
 			<Button
-					v-if="!store.ingredientId"
 					type="button"
 					icon="pi pi-ellipsis-h"
 					@click.stop="toggle"
@@ -11,7 +10,6 @@
 					aria-controls="overlay_menu"
 			/>
 			<Menu
-					v-if="!store.ingredientId"
 					ref="menu"
 					id="overlay_menu"
 					:model="items"

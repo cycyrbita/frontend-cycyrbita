@@ -5,24 +5,18 @@
 			v-model:visible="store.modalViewVisible"
 			:dismissableMask="true"
 			modal
-			@hide="store.ingredientId = ''"
 	>
 		<template #header>
-			<Button
-					type="button"
-					icon="pi pi-ellipsis-h"
-					@click.stop="toggle"
-					aria-haspopup="true"
-					showIcon="pi pi-ellipsis-h"
-					aria-controls="menu_overlay"
-			/>
-			<Menu
-					ref="menu"
-					id="menu_overlay"
-					:model="items"
-					:popup="true"
-					class="ingredient__menu-list"
-			/>
+			<div class="ingredient-menu" ref="menuRef">
+				<div class="ingredient-menu__icon" @click="menu = !menu">
+					<i class="pi pi-ellipsis-h"></i>
+				</div>
+				<div v-if="menu" class="ingredient-menu__list">
+					<div class="ingredient-menu__item" @click="menuCopy">Копировать всё</div>
+					<div class="ingredient-menu__item" @click="edit = !edit">{{edit ? 'Просмотр' : 'Редактировать'}}</div>
+					<div class="ingredient-menu__item" @click="menuDelete">Удалить</div>
+				</div>
+			</div>
 		</template>
 		<div class="ingredient__body">
 			<div class="ingredient__name">
@@ -42,7 +36,7 @@
 					ariaLabel="false"
 					:showToggleAll="false"
 					placeholder="ТЕМАТИКА"
-					ref="themeReference"
+					ref="themeRef"
 					v-if="edit"
 				/>
 			</div>
@@ -84,8 +78,8 @@
 					name="demo[]"
 					:multiple="true"
 					accept="image/*"
-					@select="handleFileUpload($event)"
-					@remove="handleFileUpload($event)"
+					@select="handleFileUpload"
+					@remove="handleFileUpload"
 					:showUploadButton="false"
 					ref="imagesReset"
 				>
@@ -106,11 +100,11 @@ import Textarea from 'primevue/textarea'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import Chip from 'primevue/chip'
-import Menu from 'primevue/menu'
 import {useIngredientsStore} from '@/stores/ingredients'
-import {onBeforeMount, ref} from 'vue'
+import {onBeforeMount, ref, watchEffect} from 'vue'
 import {copyText} from 'vue3-clipboard'
-import useFetch from "@/composables/useFetch";
+import useFetch from "@/composables/useFetch"
+import { onClickOutside } from '@vueuse/core'
 
 const store = useIngredientsStore()
 const ingredient = ref()
@@ -124,9 +118,9 @@ const listThemes = ref([])
 const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.VITE_IMAGE_PATH_PROD : import.meta.env.VITE_IMAGE_PATH_DEV
 
 // добавляем картинки
-const handleFileUpload = (e) => {
+const handleFileUpload = () => {
 	formData.delete('ingredientsImages')
-	for (let key in e.files) formData.append('ingredientsImages', e.files[key])
+	for (let key in imagesReset.value.files) formData.append('ingredientsImages', imagesReset.value.files[key])
 }
 
 const changeSelectTheme = () => {
@@ -139,6 +133,8 @@ const changeSelectTheme = () => {
 	ingredient.value.themes.forEach((el, index) => {
 		if(dbThemes.value.filter(el1 => !listThemes.value.includes(el1)).includes(el.theme)) ingredient.value.themes.splice(index, 1)
 	})
+
+	themeRef.value.hide()
 }
 
 // удаляем теги тем
@@ -163,37 +159,26 @@ const getIngredient = async () => {
 	await customUpload()
 }
 
-const toggle = (event) => menu.value.toggle(event)
-const menu = ref()
-const items = ref([
-	{
-		label: 'Удалить',
-		command: () => {
-			store.visibleDeleted = true
-			store.idDeleted = ingredient.value._id
-			store.imagesDeleted = ingredient.value.images
-		}
-	},
-	{
-		label: 'Копировать',
-		command: () => {
-			copyText(`
+const themeRef = ref()
+
+const menuRef = ref()
+onClickOutside(menuRef, () => menu.value = false)
+const menu = ref(false)
+const menuCopy = () => {
+	copyText(`
 					Название: ${ingredient.value.names[0].name}
 					Тема: ${ingredient.value.themes.length ? ingredient.value.themes[0].theme : 'Пусто'}
 					Описание: ${ingredient.value.themes.length ? ingredient.value.themes[0].description : 'Пусто'}
 					Сссылка на картинку: ${ingredient.value.images.length ? VITE_IMAGE_PATH + '/ingredients/' + ingredient.value.images[0].src : 'Пусто'}
 				`)
-		}
-	},
-	{
-		label: 'Редактировать',
-		command: function () {
-			edit.value = !edit.value
-			edit.value ? this.label = 'Просмотр' : this.label = 'Редактировать'
-		}
-	},
-])
+}
+const menuDelete = () => {
+	store.visibleDeleted = true
+	store.idDeleted = ingredient.value._id
+	store.imagesDeleted = ingredient.value.images
+}
 
+const emit = defineEmits(['updateIngredients'])
 const send = async () => {
 	try {
 		const headers = {
@@ -201,14 +186,23 @@ const send = async () => {
 			body: formData,
 			credentials: 'include',
 		}
+		handleFileUpload()
 		formData.append('ingredient', JSON.stringify(ingredient.value))
 		const res = await useFetch.post('ingredients/edit-ingredient', null, headers)
+
+		emit('updateIngredients')
+		store.modalViewVisible = false
 
 		console.log(res.json())
 	} catch (e) {
 		console.log(e)
 	}
 }
+
+watchEffect(async () => {
+	store.ingredientId
+	await getIngredient()
+})
 
 onBeforeMount(getIngredient)
 </script>

@@ -65,59 +65,6 @@
     }
   }
 
-  &__menu-list {
-    background-color: #15133D !important;
-    border-radius: 10px;
-    max-width: 170px;
-
-    &::before {
-      position: absolute;
-      left: 16px;
-      top: -7px;
-      content: '';
-      width: 15px;
-      height: 15px;
-      transform: rotate(45deg);
-      background-color: #15133D;
-    }
-
-    .p-menuitem {
-      &:first-child {
-        border-radius: 10px;
-        overflow: hidden;
-      }
-
-      &:last-child {
-        border-radius: 10px;
-        overflow: hidden;
-      }
-
-      .p-menuitem-link {
-        padding-top: 8px;
-        padding-bottom: 8px;
-        font-size: 14px;
-
-        &:hover {
-          span {
-            color: #F2297E;
-          }
-        }
-      }
-    }
-
-    .p-menuitem-text {
-      color: #ffffff;
-    }
-
-    .p-menuitem-content {
-      background-color: #15133D;
-
-      &:hover {
-        background-color: #15133D;
-      }
-    }
-  }
-
   &__body {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -395,6 +342,7 @@
   &__button {
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 
     .p-button {
       border-color: #5C71BC;
@@ -548,3 +496,64 @@
     max-width: calc(100% - 140px);
   }
 }
+
+.ingredient-menu {
+  position: relative;
+  cursor: pointer;
+
+  &__icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+
+    i {
+      font-size: 26px;
+      color: #000000;
+    }
+  }
+
+  &__list {
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 0;
+    background-color: #15133D;
+    border-radius: 10px;
+    color: #ffffff;
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    &::before {
+      position: absolute;
+      left: 12px;
+      top: -7px;
+      content: '';
+      width: 15px;
+      height: 15px;
+      transform: rotate(45deg);
+      background-color: #15133D;
+    }
+  }
+
+  &__item {
+    padding: 4px 15px;
+    white-space: nowrap;
+    font-size: 14px;
+
+    &:first-child {
+      border-radius: 10px 10px 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 0 10px 10px;
+    }
+
+    &:hover {
+      background-color: #191749;
+      color: #F2297E;
+    }
+  }
+}
+
