@@ -5,6 +5,7 @@
 			v-model:visible="store.modalViewVisible"
 			:dismissableMask="true"
 			modal
+			@hide="store.ingredientId = ''"
 	>
 		<template #header>
 			<div class="ingredient-menu" ref="menuRef">
@@ -13,7 +14,7 @@
 				</div>
 				<div v-if="menu" class="ingredient-menu__list">
 					<div class="ingredient-menu__item" @click="menuCopy">Копировать всё</div>
-					<div class="ingredient-menu__item" @click="edit = !edit">{{edit ? 'Просмотр' : 'Редактировать'}}</div>
+					<div class="ingredient-menu__item" @click="menuEdit">{{edit ? 'Просмотр' : 'Редактировать'}}</div>
 					<div class="ingredient-menu__item" @click="menuDelete">Удалить</div>
 				</div>
 			</div>
@@ -54,9 +55,9 @@
 			</template>
 
 			<div class="ingredient__chips">
-				<Chip v-for="(tag, index) in listThemes" @click="descriptionIndex = index" :class="{'active': descriptionIndex === index}">
+				<Chip v-for="(tag, index) in listThemes" @click.stop="descriptionIndex = index" :class="{'active': descriptionIndex === index}">
 					{{tag}}
-					<i v-if="edit" @click="deletedChip(tag, index)" class="pi pi-times-circle"></i>
+					<i v-if="edit" @click.stop="deletedChip(tag, index)" class="pi pi-times-circle"></i>
 				</Chip>
 			</div>
 
@@ -101,7 +102,7 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import Chip from 'primevue/chip'
 import {useIngredientsStore} from '@/stores/ingredients'
-import {onBeforeMount, ref, watchEffect} from 'vue'
+import {onBeforeMount, ref} from 'vue'
 import {copyText} from 'vue3-clipboard'
 import useFetch from "@/composables/useFetch"
 import { onClickOutside } from '@vueuse/core'
@@ -134,6 +135,8 @@ const changeSelectTheme = () => {
 		if(dbThemes.value.filter(el1 => !listThemes.value.includes(el1)).includes(el.theme)) ingredient.value.themes.splice(index, 1)
 	})
 
+	descriptionIndex.value = listThemes.value.length - 1
+
 	themeRef.value.hide()
 }
 
@@ -141,6 +144,11 @@ const changeSelectTheme = () => {
 const deletedChip = (tag, index) => {
 	listThemes.value.splice(index, 1)
 	ingredient.value.themes.splice(index, 1)
+
+	if(descriptionIndex.value < index) return
+	if(descriptionIndex.value > index) return descriptionIndex.value = descriptionIndex.value - 1
+	if(descriptionIndex.value === listThemes.value.length) return descriptionIndex.value = index - 1
+	if(descriptionIndex.value === index) return descriptionIndex.value = index
 }
 
 const customUpload = async () => {
@@ -171,11 +179,21 @@ const menuCopy = () => {
 					Описание: ${ingredient.value.themes.length ? ingredient.value.themes[0].description : 'Пусто'}
 					Сссылка на картинку: ${ingredient.value.images.length ? VITE_IMAGE_PATH + '/ingredients/' + ingredient.value.images[0].src : 'Пусто'}
 				`)
+	menu.value = false
+}
+const menuEdit = () => {
+	edit.value = !edit.value
+	menu.value = false
 }
 const menuDelete = () => {
 	store.visibleDeleted = true
 	store.idDeleted = ingredient.value._id
 	store.imagesDeleted = ingredient.value.images
+}
+
+const hideDialog = () => {
+	store.ingredientId = ''
+	store.modalViewVisible = false
 }
 
 const emit = defineEmits(['updateIngredients'])
@@ -191,18 +209,13 @@ const send = async () => {
 		const res = await useFetch.post('ingredients/edit-ingredient', null, headers)
 
 		emit('updateIngredients')
-		store.modalViewVisible = false
+		hideDialog()
 
 		console.log(res.json())
 	} catch (e) {
 		console.log(e)
 	}
 }
-
-watchEffect(async () => {
-	store.ingredientId
-	await getIngredient()
-})
 
 onBeforeMount(getIngredient)
 </script>
