@@ -1,244 +1,163 @@
 <template>
 	<Dialog
-		v-model:visible="modalCreateVisible.modalCreateVisible"
+		v-model:visible="store.modalCreateVisible"
 		:dismissableMask="true"
 		modal
 		class="ingredient-create"
 	>
 		<div class="ingredient-create__body">
-			<div class="ingredient-create__row ingredient-create__names">
-				<div class="ingredient-create__col ingredient-create__col--grow">
-					<span class="p-input-icon-right">
-						<i class="pi pi-copy" @click="copyText(listNames[0].name)" />
-						<InputText @keyup.enter="send" class="ingredient-create-name" v-model.trim="listNames[0].name" placeholder="Название"/>
-					</span>
-					<small class="ingredient-create__error" v-if="listNames[0].name.trim() === '' && errorsFlag">Введите название</small>
-				</div>
-
-				<div class="ingredient-create__col ingredient-create__col--theme">
-					<div class="ingredient-create__field">
-						<MultiSelect
-								ariaLabel="false"
-								:showToggleAll="false"
-								class="ingredient-create-ready-theme"
-								panelClass="ingredient-create-ready-theme__select-panel"
-								v-model="listSelectThemes"
-								:options="listDbThemes"
-								placeholder="ТЕМАТИКА"
-								emptyMessage="Нет доступных вариантов"
-								:maxSelectedLabels="3"
-								@change="addSelectTheme"
-								ref="themeRef"
-						/>
-					</div>
-				</div>
+			<div class="ingredient-create__name">
+				<span class="p-input-icon-right">
+					<i class="pi pi-copy" @click="copyText(ingredient.names[0].name) "/>
+					<InputText v-model="ingredient.names[0].name" placeholder="Название"/>
+				</span>
+				<div v-if="ingredient.names[0].name.trim() === ''"><small class="ingredient-create__error">Введите название</small></div>
 			</div>
 
-			<div class="ingredient-create__row ingredient-create__themes">
-				<div class="ingredient-create__col">
-					<p class="ingredient-create__label-name">{{listNames[1].country}}</p>
+			<div class="ingredient-create__themes">
+				<MultiSelect
+					panelClass="ingredient-themes-panel"
+					v-model="listThemes"
+					:options="dbThemes"
+					@change="changeSelectTheme"
+					ariaLabel="false"
+					:showToggleAll="false"
+					placeholder="ТЕМАТИКА"
+					ref="themeRef"
+				/>
+			</div>
+
+			<template v-for="(name, index) in ingredient.names">
+				<div class="ingredient-create__name" v-if="index !== 0">
+					<div v-if="index === 1" class="ingredient-create__name-label">Английский</div>
+					<div v-if="index === 2" class="ingredient-create__name-label">Латинский</div>
+					<div v-if="index === 3" class="ingredient-create__name-label">Испанский</div>
 					<span class="p-input-icon-right">
-						<i class="pi pi-copy" @click="copyText(listNames[1].name)"/>
-						<InputText @keyup.enter="send" class="ingredient-create-name" v-model.trim="listNames[1].name" placeholder="Название"/>
+						<i class="pi pi-copy" @click="copyText(name.name)" />
+						<InputText v-model="name.name" placeholder="Название"/>
 					</span>
 				</div>
+			</template>
 
-				<div class="ingredient-create__col">
-					<p class="ingredient-create__label-name">{{listNames[2].country}}</p>
-					<span class="p-input-icon-right">
-						<i class="pi pi-copy" @click="copyText(listNames[2].name)"/>
-						<InputText @keyup.enter="send" class="ingredient-create-name" v-model.trim="listNames[2].name" placeholder="Название"/>
-					</span>
-				</div>
-
-				<div class="ingredient-create__col">
-					<p class="ingredient-create__label-name">{{listNames[3].country}}</p>
-					<span class="p-input-icon-right">
-						<i class="pi pi-copy" @click="copyText(listNames[3].name)"/>
-						<InputText @keyup.enter="send" class="ingredient-create-name" v-model.trim="listNames[3].name" placeholder="Название"/>
-					</span>
-				</div>
+			<div class="ingredient-create__chips">
+				<Chip v-for="(tag, index) in listThemes" @click.stop="descriptionIndex = index" :class="{'active': descriptionIndex === index}">
+					{{tag}}
+					<i @click.stop="deletedChip(tag, index)" class="pi pi-times-circle"></i>
+				</Chip>
 			</div>
 
-			<div class="ingredient-create__row" v-if="listThemes.length">
-				<div class="ingredient-create__col">
-					<div class="ingredient-create__chips">
-						<Chip v-for="(theme, index) in listThemes" icon="pi pi-times" @click.stop="activeThemeDescription = index" :class="{'active': activeThemeDescription === index}">
-							{{theme.theme}}
-							<i class="pi pi-times-circle" @click.stop="removeTheme(index)"></i>
-						</Chip>
-					</div>
+			<template v-for="(description, index) in ingredient.themes">
+				<div class="ingredient-create__description" v-if="descriptionIndex === index">
+					<i class="pi pi-copy" @click="copyText(description.description)"/>
+					<Textarea v-model="description.description" autoResize rows="5" cols="30" placeholder="Описание"/>
 				</div>
-			</div>
+			</template>
 
-			<div class="ingredient-create__row" v-if="listThemes.length">
-				<div class="ingredient-create__col ingredient-create__col--grow">
-					<div v-for="(description, index) in listThemes">
-						<div class="ingredient-create__field ingredient-create__field--description p-input-icon-right" v-if="activeThemeDescription === index">
-							<i class="pi pi-copy" @click="copyText(description.description)"/>
-							<Textarea class="ingredient-create-description" v-model="description.description" autoResize rows="5" cols="30" placeholder="Описание"/>
-						</div>
-					</div>
-				</div>
+			<div class="ingredient-create__images">
+				<FileUpload
+					name="demo[]"
+					:multiple="true"
+					accept="image/*"
+					@select="handleFileUpload"
+					@remove="handleFileUpload"
+					:showUploadButton="false"
+					ref="imagesReset"
+				>
+				</FileUpload>
 			</div>
-
-			<div class="ingredient-create__row ingredient-create__images">
-				<div class="ingredient-create__col ingredient-create__col--grow">
-					<div class="ingredient-create__field ingredient-create-image">
-						<FileUpload name="demo[]" :multiple="true" accept="image/*" @select="handleFileUpload($event)" @remove="handleFileUpload($event)" :showUploadButton="false" chooseLabel="Добвить файл" cancelLabel="Удалить все" ref="imagesReset"></FileUpload>
-					</div>
-				</div>
-			</div>
-			<div class="ingredient-create__row">
-				<div class="ingredient-create__col ingredient-create__col--button">
-					<Button class="ingredient-create-button ingredient-create-button__send" rounded @click="send" label="Primary">сохранить</Button>
-				</div>
+			<div class="ingredient-create__button">
+				<Button @click="send" rounded label="Сохранить"></Button>
 			</div>
 		</div>
 	</Dialog>
 </template>
 
 <script setup>
-import useFetch from '@/composables/useFetch'
-import {ref} from 'vue'
-import InputText from 'primevue/inputtext'
-import Button from 'primevue/button'
-import Textarea from 'primevue/textarea'
 import MultiSelect from 'primevue/multiselect'
 import FileUpload from 'primevue/fileupload'
-import Chip from 'primevue/chip'
+import InputText from 'primevue/inputtext'
+import Textarea from 'primevue/textarea'
 import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import Chip from 'primevue/chip'
 import {useIngredientsStore} from '@/stores/ingredients'
-const emit = defineEmits(['updateIngredients'])
-import { copyText } from 'vue3-clipboard'
+import {ref} from 'vue'
+import {copyText} from 'vue3-clipboard'
+import useFetch from '@/composables/useFetch'
 
-const modalCreateVisible = useIngredientsStore()
-
+const store = useIngredientsStore()
+const ingredient = ref({
+	names: [
+		{ name: '', language: 'Русский' },
+		{ name: '', language: 'Английский' },
+		{ name: '', language: 'Латинский' },
+		{ name: '', language: 'Испанский' },
+	],
+	themes: [],
+	images: [],
+})
+const descriptionIndex = ref(0)
+const imagesReset = ref({files: []})
 let formData = new FormData()
-// Ингредиент
-const ingredients = ref({})
 
-// Заголовки =====================================================
-
-// список названий
-const listNames = ref([
-	{name: '', country: 'Русский'},
-	{name: '', country: 'Английский'},
-	{name: '', country: 'Латинский'},
-	{name: '', country: 'Испанский'}
-])
-
-// Темы =====================================================
-
-// текущая тема в поле ввода
-const thisTheme = ref('')
-// список тем на добавление в базу
+const dbThemes = ref(['Омоложение', 'Похудение', 'Зрение'])
 const listThemes = ref([])
-// список выбранных тем из базы
-const listSelectThemes = ref([])
-// список тем которые уже есть в базе
-const listDbThemes = ref(['Омоложение', 'Похудение'])
 
-const themeRef = ref()
+// добавляем картинки
+const handleFileUpload = () => {
+	formData.delete('ingredientsImages')
+	for (let key in imagesReset.value.files) formData.append('ingredientsImages', imagesReset.value.files[key])
+}
 
-// добавляем тему через селект
-const addSelectTheme = (e) => {
+const changeSelectTheme = () => {
 	// добавляем элементы
-	listSelectThemes.value.forEach(el1 => {
-		if(!listThemes.value.some(el2 => el2.theme === el1)) listThemes.value.push({theme: el1, description: ''})
+	listThemes.value.forEach(el1 => {
+		if(!ingredient.value.themes.some(el2 => el2.theme === el1)) ingredient.value.themes.push({theme: el1, description: ''})
 	})
-	// удаляем элементы
-	listThemes.value.forEach((el, index) => {
-		if(listDbThemes.value.filter(el1 => !listSelectThemes.value.includes(el1)).includes(el.theme)) listThemes.value.splice(index, 1)
-	})
-	// активная тема
-	activeThemeDescription.value = listThemes.value.length - 1
 
+	// удаляем элементы
+	ingredient.value.themes.forEach((el, index) => {
+		if(dbThemes.value.filter(el1 => !listThemes.value.includes(el1)).includes(el.theme)) ingredient.value.themes.splice(index, 1)
+	})
+	descriptionIndex.value = listThemes.value.length - 1
 	themeRef.value.hide()
 }
 
-// удаление тем
-const removeTheme = (index) => {
+// удаляем теги тем
+const deletedChip = (tag, index) => {
 	listThemes.value.splice(index, 1)
-	// удаляем тему из активного списка из базы
-	listSelectThemes.value = listSelectThemes.value.filter(el1 => listThemes.value.find(el2 => el1 === el2.theme))
-	// удаляем список тем
-	if(index < activeThemeDescription.value && activeThemeDescription.value != 0) return activeThemeDescription.value = activeThemeDescription.value - 1
-	if(index === listThemes.value.length) activeThemeDescription.value = listThemes.value.length - 1
-}
-// показываем конткретное описание
-const activeThemeDescription = ref(0)
+	ingredient.value.themes.splice(index, 1)
 
-// Картинки =====================================================
-
-// запихиваем картинки в массив и добавляем в formData
-const handleFileUpload = (e) => {
-	formData.delete('ingredientsImages')
-	for (let key in e.files) formData.append('ingredientsImages', e.files[key])
+	if(descriptionIndex.value < index) return
+	if(descriptionIndex.value > index) return descriptionIndex.value = descriptionIndex.value - 1
+	if(descriptionIndex.value === listThemes.value.length) return descriptionIndex.value = index - 1
+	if(descriptionIndex.value === index) return descriptionIndex.value = index
 }
 
-const imagesReset = ref(null)
+const themeRef = ref()
 
-const resetForm = () => {
-	ingredients.value = []
-
-	thisTheme.value = ''
-	listThemes.value = []
-	listSelectThemes.value = []
-
-	listNames.value = [
-		{name: '', country: 'Русский'},
-		{name: '', country: 'Английский'},
-		{name: '', country: 'Латинский'},
-		{name: '', country: 'Испанский'}
-	]
-
-	formData.delete('ingredientsImages')
-	formData.delete('ingredients')
-	imagesReset.value.clear()
-}
-
-const errorsFlag = ref(false)
-const checkErrorsFlag = () => {
-	let flag = false
-
-	if(listNames.value[0].country === '') flag = true
-	if(listNames.value[0].name.trim() === '') flag = true
-
-	return flag
-}
-
-// метод отправки
+const emit = defineEmits(['updateIngredients'])
 const send = async () => {
 	try {
-		if(errorsFlag.value = checkErrorsFlag()) return
-
 		const headers = {
 			method: 'POST',
 			body: formData,
 			credentials: 'include',
 		}
 
-		ingredients.value = {
-			names: listNames.value,
-			themes: listThemes.value
-		}
-
-		formData.append('ingredients', JSON.stringify(ingredients.value))
-
-		const res = await useFetch.post('ingredients/create', null, headers)
-		const json = await res.json()
+		formData.append('ingredient', JSON.stringify(ingredient.value))
+		const res = await useFetch.post('ingredients/edit-ingredient', null, headers)
 
 		emit('updateIngredients')
-		modalCreateVisible.modalCreateVisible = false
 
-		resetForm()
+		console.log(res.json())
 	} catch (e) {
 		console.log(e)
 	}
 }
+
 </script>
 
 <style lang="scss">
-	@import '@/components/Ingredients/styles/ingredient-create.scss';
+@import '@/components/Ingredients/styles/ingredient-create.scss';
 </style>
