@@ -11,15 +11,15 @@
 			<Button
 					type="button"
 					icon="pi pi-ellipsis-h"
-					@click.stop="toggle2"
+					@click.stop="toggle"
 					aria-haspopup="true"
 					showIcon="pi pi-ellipsis-h"
 					aria-controls="menu_overlay"
 			/>
 			<Menu
-					ref="menu2"
+					ref="menu"
 					id="menu_overlay"
-					:model="items2"
+					:model="items"
 					:popup="true"
 					class="ingredient__menu-list"
 			/>
@@ -92,7 +92,7 @@
 				</FileUpload>
 			</div>
 			<div class="ingredient__button" v-if="edit">
-				<Button rounded label="Сохранить"></Button>
+				<Button @click="send" rounded label="Сохранить"></Button>
 			</div>
 		</div>
 	</Dialog>
@@ -110,6 +110,7 @@ import Menu from 'primevue/menu'
 import {useIngredientsStore} from '@/stores/ingredients'
 import {onBeforeMount, ref} from 'vue'
 import {copyText} from 'vue3-clipboard'
+import useFetch from "@/composables/useFetch";
 
 const store = useIngredientsStore()
 const ingredient = ref()
@@ -162,9 +163,9 @@ const getIngredient = async () => {
 	await customUpload()
 }
 
-const toggle2 = (event) => menu2.value.toggle(event)
-const menu2 = ref()
-const items2 = ref([
+const toggle = (event) => menu.value.toggle(event)
+const menu = ref()
+const items = ref([
 	{
 		label: 'Удалить',
 		command: () => {
@@ -192,6 +193,23 @@ const items2 = ref([
 		}
 	},
 ])
+
+const send = async () => {
+	try {
+		const headers = {
+			method: 'POST',
+			body: formData,
+			credentials: 'include',
+		}
+		formData.append('ingredient', JSON.stringify(ingredient.value))
+		const res = await useFetch.post('ingredients/edit-ingredient', null, headers)
+
+		console.log(res.json())
+	} catch (e) {
+		console.log(e)
+	}
+}
+
 onBeforeMount(getIngredient)
 </script>
 
