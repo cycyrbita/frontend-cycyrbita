@@ -40,12 +40,10 @@ const modalCreateVisible = useIngredientsStore()
 const value = ref(null);
 const selectedThemes = ref();
 const themes = ref([
-	{ name: 'New York', code: 'NY' },
-	{ name: 'Rome', code: 'RM' },
-	{ name: 'London', code: 'LDN' },
-	{ name: 'Istanbul', code: 'IST' },
-	{ name: 'Paris', code: 'PRS' }
-]);
+	{ name: 'Омоложение'},
+	{ name: 'Похудение'},
+	{ name: 'Зрение'},
+])
 </script>
 
 <style lang="scss">

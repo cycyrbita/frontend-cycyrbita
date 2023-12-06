@@ -11,7 +11,7 @@
 					<i class="pi pi-copy" @click="copyText(ingredient.names[0].name) "/>
 					<InputText v-model="ingredient.names[0].name" placeholder="Название"/>
 				</span>
-				<div v-if="ingredient.names[0].name.trim() === ''"><small class="ingredient-create__error">Введите название</small></div>
+				<div v-if="ingredient.names[0].name.trim() === '' && sendFlag"><small class="ingredient-create__error">Введите название</small></div>
 			</div>
 
 			<div class="ingredient-create__themes">
@@ -94,7 +94,6 @@ const ingredient = ref({
 		{ name: '', language: 'Испанский' },
 	],
 	themes: [],
-	images: [],
 })
 const descriptionIndex = ref(0)
 const imagesReset = ref({files: []})
@@ -137,7 +136,11 @@ const deletedChip = (tag, index) => {
 const themeRef = ref()
 
 const emit = defineEmits(['updateIngredients'])
+
+const sendFlag = ref(false)
 const send = async () => {
+	sendFlag.value = true
+	if(ingredient.value.names[0].name.trim() === '') return
 	try {
 		const headers = {
 			method: 'POST',
@@ -146,9 +149,9 @@ const send = async () => {
 		}
 
 		formData.append('ingredient', JSON.stringify(ingredient.value))
-		const res = await useFetch.post('ingredients/edit-ingredient', null, headers)
-
+		const res = await useFetch.post('ingredients/create-ingredient', null, headers)
 		emit('updateIngredients')
+		store.modalCreateVisible = false
 
 		console.log(res.json())
 	} catch (e) {

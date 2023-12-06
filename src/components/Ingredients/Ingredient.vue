@@ -191,11 +191,6 @@ const menuDelete = () => {
 	store.imagesDeleted = ingredient.value.images
 }
 
-const hideDialog = () => {
-	store.ingredientId = ''
-	store.modalViewVisible = false
-}
-
 const emit = defineEmits(['updateIngredients'])
 const send = async () => {
 	try {
@@ -209,7 +204,8 @@ const send = async () => {
 		const res = await useFetch.post('ingredients/edit-ingredient', null, headers)
 
 		emit('updateIngredients')
-		hideDialog()
+		store.ingredientId = ''
+		store.modalViewVisible = false
 
 		console.log(res.json())
 	} catch (e) {
