@@ -62,7 +62,7 @@
 					@remove="handleFileUpload"
 					:showUploadButton="false"
 					ref="imagesReset"
-					:maxFileSize="2000000"
+					:maxFileSize="20000000"
 					invalidFileSizeMessage="Файл слишком большой"
 					:fileLimit="10"
 				>
