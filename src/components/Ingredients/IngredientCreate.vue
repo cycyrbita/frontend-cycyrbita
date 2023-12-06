@@ -140,10 +140,16 @@ const themeRef = ref()
 
 const emit = defineEmits(['updateIngredients'])
 
+const load = ref(true)
+
 const sendFlag = ref(false)
 const send = async () => {
 	sendFlag.value = true
 	if(ingredient.value.names[0].name.trim() === '') return
+
+	if(!load) return
+	load.value = false
+
 	try {
 		const headers = {
 			method: 'POST',
@@ -155,6 +161,7 @@ const send = async () => {
 		const res = await useFetch.post('ingredients/create-ingredient', null, headers)
 		emit('updateIngredients')
 		store.modalCreateVisible = false
+		load.value = true
 
 		console.log(res.json())
 	} catch (e) {
