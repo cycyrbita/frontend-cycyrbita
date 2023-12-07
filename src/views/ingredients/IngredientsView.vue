@@ -33,8 +33,9 @@
 				</div>
 			</div>
 			<div class="ingredients__footer">
-				<IngredientsPagination></IngredientsPagination>
+				<Paginator v-model:first="paginationCount" @update:first="getIngredients" :rows="limit" :totalRecords="ingredientsLength"></Paginator>
 			</div>
+			<pre>{{paginationCount}}</pre>
 		</div>
 	</div>
 </template>
@@ -43,12 +44,12 @@
 import {onBeforeMount, ref} from 'vue'
 
 import IngredientsFilter from '@/components/Ingredients/IngredientsFilter.vue'
-import IngredientsPagination from '@/components/Ingredients/IngredientsPagination.vue'
 import IngredientCard from '@/components/Ingredients/IngredientCard.vue'
 import IngredientCreate from '@/components/Ingredients/IngredientCreate.vue'
 import Ingredient from '@/components/Ingredients/Ingredient.vue'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
+import Paginator from 'primevue/paginator'
 
 import {useIngredientsStore} from '@/stores/ingredients'
 const store = useIngredientsStore()
@@ -58,11 +59,18 @@ const getIngredient = (id) => {
 	store.modalViewVisible = true
 }
 
-const ingredients = ref()
+const ingredients = ref([])
+
+const ingredientsLength = ref(0)
+const paginationCount = ref(0)
+const limit = ref(10)
 
 const getIngredients = async () => {
 	try {
-		ingredients.value = await store.getIngredients()
+		const res = await store.getIngredients(paginationCount.value, limit.value)
+		ingredients.value = res.ingredients
+		ingredientsLength.value = res.ingredientsLength
+
 	} catch (e) {
 		console.log(e)
 	}

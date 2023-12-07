@@ -11,9 +11,9 @@ export const useIngredientsStore = defineStore('ingredients', () => {
     const idDeleted = ref(false)
     const imagesDeleted = ref(false)
 
-    const getIngredients = async () => {
+    const getIngredients = async (paginationCount, limit) => {
         try {
-            const res = await useFetch.post('ingredients/get-ingredients')
+            const res = await useFetch.post('ingredients/get-ingredients', {paginationCount, limit})
             return await res.json()
         } catch (e) {
             console.log(e)
