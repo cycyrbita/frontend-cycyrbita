@@ -57,12 +57,13 @@
 				<FileUpload
 					name="demo[]"
 					:multiple="true"
-					accept="image/*"
+					accept=".jpg, .png, .webp, .jpeg"
+					invalidFileTypeMessage="Можно использовать только эти форматы: jpg, png, webp, jpeg"
 					@select="handleFileUpload"
 					@remove="handleFileUpload"
 					:showUploadButton="false"
 					ref="imagesReset"
-					:maxFileSize="20000000"
+					:maxFileSize="2000000"
 					invalidFileSizeMessage="Файл слишком большой"
 					:fileLimit="10"
 				>

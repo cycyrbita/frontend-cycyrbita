@@ -78,7 +78,8 @@
 					v-show="edit"
 					name="demo[]"
 					:multiple="true"
-					accept="image/*"
+					accept=".jpg, .png, .webp, .jpeg"
+					invalidFileTypeMessage="Можно использовать только эти форматы: jpg, png, webp, jpeg"
 					@select="handleFileUpload"
 					@remove="handleFileUpload"
 					:showUploadButton="false"
@@ -156,8 +157,8 @@ const deletedChip = (tag, index) => {
 
 const customUpload = async () => {
 	for(const image of ingredient.value.images) {
-		const blob = await fetch(`${VITE_IMAGE_PATH}/ingredients/${image.src}`).then((r) => r.blob())
-		const file = new File([blob], image.src, {type: blob.type})
+		const blob = await fetch(`${VITE_IMAGE_PATH}/ingredients/${image}`).then((r) => r.blob())
+		const file = new File([blob], image, {type: blob.type})
 		file.objectURL = URL.createObjectURL(blob)
 		imagesReset.value.files.push(file)
 	}
@@ -180,7 +181,7 @@ const menuCopy = () => {
 					Название: ${ingredient.value.names[0].name}
 					Тема: ${ingredient.value.themes.length ? ingredient.value.themes[0].theme : 'Пусто'}
 					Описание: ${ingredient.value.themes.length ? ingredient.value.themes[0].description : 'Пусто'}
-					Сссылка на картинку: ${ingredient.value.images.length ? VITE_IMAGE_PATH + '/ingredients/' + ingredient.value.images[0].src : 'Пусто'}
+					Сссылка на картинку: ${ingredient.value.images.length ? VITE_IMAGE_PATH + '/ingredients/' + ingredient.value.images[0] : 'Пусто'}
 				`)
 	menu.value = false
 }

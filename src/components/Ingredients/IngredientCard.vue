@@ -31,10 +31,10 @@
 				<template #item="slotProps">
 					<div class="ingredient-card-picture__box">
 						<img
-							v-if="slotProps.data.src !== ''"
+							v-if="slotProps.data !== ''"
 							class="ingredient-card-picture__img"
-							:src="`${VITE_IMAGE_PATH}/ingredients/${slotProps.data.src}`"
-							:alt="slotProps.data.alt"
+							:src="`${VITE_IMAGE_PATH}/ingredients/${slotProps.data}`"
+							alt="Картинка"
 						/>
 					</div>
 				</template>
@@ -89,17 +89,17 @@
 					Название: ${props.ingredient.names[0].name}
 					Тема: ${props.ingredient.themes.length ? props.ingredient.themes[0].theme : 'Пусто'}
 					Описание: ${props.ingredient.themes.length ? props.ingredient.themes[0].description : 'Пусто'}
-					Сссылка на картинку: ${props.ingredient.images.length ? VITE_IMAGE_PATH + '/ingredients/' + props.ingredient.images[0].src : 'Пусто'}
+					Сссылка на картинку: ${props.ingredient.images.length ? VITE_IMAGE_PATH + '/ingredients/' + props.ingredient.images[0] : 'Пусто'}
 				`)
 			}
 		},
 	])
 
 	const addItemsImages = () => {
-		if(props.ingredient.images.length === 0) props.ingredient.images.push({src: '', alt: ''})
+		if(props.ingredient.images.length === 0) props.ingredient.images.push('')
 		for(const image of props.ingredient.images) {
 			if(props.ingredient.images.length < 4) {
-				props.ingredient.images.push({src: '', alt: ''})
+				props.ingredient.images.push('')
 			}
 		}
 	}

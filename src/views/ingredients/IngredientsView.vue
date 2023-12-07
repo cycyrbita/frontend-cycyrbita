@@ -11,7 +11,7 @@
 			</div>
 		</template>
 	</Dialog>
-	<IngredientCreate @updateIngredients="getIngredients"></IngredientCreate>
+	<IngredientCreate v-if="store.modalCreateVisible" @updateIngredients="getIngredients"></IngredientCreate>
 	<Ingredient @updateIngredients="getIngredients" v-if="store.ingredientId"></Ingredient>
 	<div class="ingredients">
 		<div class="container">
