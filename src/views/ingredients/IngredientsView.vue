@@ -13,16 +13,16 @@
 	</Dialog>
 	<IngredientCreate v-if="store.modalCreateVisible" @updateIngredients="getIngredients"></IngredientCreate>
 	<Ingredient @updateIngredients="getIngredients" v-if="store.ingredientId"></Ingredient>
-	<div class="ingredients">
+	<div class="ingredients-view">
 		<div class="container">
-			<div class="ingredients__header">
+			<div class="ingredients-view__header">
 				<IngredientsFilter></IngredientsFilter>
 			</div>
-			<div class="ingredients__body">
-				<div class="ingredients-list">
+			<div class="ingredients-view__body">
+				<div class="ingredients-view__list ingredients-view-list">
 					<TransitionGroup name="bounce">
 						<IngredientCard
-							class="ingredients-list__card"
+							class="ingredients-view-list__card"
 							v-for="ingredient in ingredients"
 							:key="ingredient._id"
 							:ingredient="ingredient"
@@ -31,11 +31,11 @@
 						/>
 					</TransitionGroup>
 				</div>
+				<Paginator class="ingredients-view-pagination ingredients-view__pagination" v-model:first="paginationCount" @update:first="getIngredients" :rows="limit" :totalRecords="ingredientsLength"></Paginator>
 			</div>
-			<div class="ingredients__footer">
-				<Paginator v-model:first="paginationCount" @update:first="getIngredients" :rows="limit" :totalRecords="ingredientsLength"></Paginator>
+			<div class="ingredients-view__footer">
+
 			</div>
-			<pre>{{paginationCount}}</pre>
 		</div>
 	</div>
 </template>
