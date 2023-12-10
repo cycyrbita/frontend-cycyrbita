@@ -94,9 +94,6 @@
 			<div class="ingredient__button" v-if="edit">
 				<Button @click="send" rounded label="Сохранить"></Button>
 			</div>
-			<pre>{{listThemes}}</pre>
-			<pre>{{dbThemes}}</pre>
-			<pre>{{ingredient}}</pre>
 		</div>
 	</Dialog>
 </template>
