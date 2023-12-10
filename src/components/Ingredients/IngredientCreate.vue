@@ -19,6 +19,7 @@
 					panelClass="ingredient-themes-panel"
 					v-model="listThemes"
 					:options="dbThemes"
+					optionLabel="theme"
 					@change="changeSelectTheme"
 					ariaLabel="false"
 					:showToggleAll="false"
@@ -41,7 +42,7 @@
 
 			<div class="ingredient-create__chips">
 				<Chip v-for="(tag, index) in listThemes" @click.stop="descriptionIndex = index" :class="{'active': descriptionIndex === index}">
-					{{tag}}
+					{{tag.theme}}
 					<i @click.stop="deletedChip(tag, index)" class="pi pi-times-circle"></i>
 				</Chip>
 			</div>
@@ -85,7 +86,7 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import Chip from 'primevue/chip'
 import {useIngredientsStore} from '@/stores/ingredients'
-import {ref} from 'vue'
+import {onBeforeMount, ref} from 'vue'
 import {copyText} from 'vue3-clipboard'
 import useFetch from '@/composables/useFetch'
 
@@ -103,7 +104,7 @@ const descriptionIndex = ref(0)
 const imagesReset = ref({files: []})
 let formData = new FormData()
 
-const dbThemes = ref(['Омоложение', 'Похудение', 'Зрение'])
+const dbThemes = ref([])
 const listThemes = ref([])
 
 // добавляем картинки
@@ -115,12 +116,12 @@ const handleFileUpload = () => {
 const changeSelectTheme = () => {
 	// добавляем элементы
 	listThemes.value.forEach(el1 => {
-		if(!ingredient.value.themes.some(el2 => el2.theme === el1)) ingredient.value.themes.push({theme: el1, description: ''})
+		if(!ingredient.value.themes.some(el2 => el2.theme === el1.theme)) ingredient.value.themes.push({theme: el1.theme, description: ''})
 	})
 
 	// удаляем элементы
 	ingredient.value.themes.forEach((el, index) => {
-		if(dbThemes.value.filter(el1 => !listThemes.value.includes(el1)).includes(el.theme)) ingredient.value.themes.splice(index, 1)
+		if(dbThemes.value.filter(el1 => !listThemes.value.some(el2 => el1.theme === el2.theme)).some(el3 => el.theme === el3.theme)) ingredient.value.themes.splice(index, 1)
 	})
 	descriptionIndex.value = listThemes.value.length - 1
 	themeRef.value.hide()
@@ -170,6 +171,15 @@ const send = async () => {
 	}
 }
 
+const getIngredientsThemes = async () => {
+	try {
+		dbThemes.value = await store.getIngredientsThemes()
+	} catch (e) {
+		console.log(e)
+	}
+}
+
+onBeforeMount(getIngredientsThemes)
 </script>
 
 <style lang="scss">
