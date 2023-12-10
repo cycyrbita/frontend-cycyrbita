@@ -1,4 +1,7 @@
 <template>
+<!--	если нужно добавить тему-->
+<!--	<input @keydown.enter="createIngredientTheme" v-model="theme">-->
+	<Toast />
 	<Dialog class="ingredients-view-confirmation" v-model:visible="store.visibleDeleted" modal :dismissableMask="true">
 		<template #container="{closeCallback}">
 			<div class="ingredients-view-confirmation__body">
@@ -11,8 +14,8 @@
 			</div>
 		</template>
 	</Dialog>
-	<IngredientCreate v-if="store.modalCreateVisible" @updateIngredients="getIngredients"></IngredientCreate>
-	<Ingredient @updateIngredients="getIngredients" v-if="store.ingredientId"></Ingredient>
+	<IngredientCreate v-if="store.modalCreateVisible" @updateIngredients="getIngredients" @toastIngredientCreate="toastIngredientCreate"></IngredientCreate>
+	<Ingredient @updateIngredients="getIngredients" @toastIngredientEdits="toastIngredientEdits" v-if="store.ingredientId"></Ingredient>
 	<div class="ingredients-view">
 		<div class="container">
 			<div class="ingredients-view__header">
@@ -22,6 +25,7 @@
 				<div class="ingredients-view__list ingredients-view-list">
 					<TransitionGroup name="bounce">
 						<IngredientCard
+							v-if="ingredients"
 							class="ingredients-view-list__card"
 							v-for="ingredient in ingredients"
 							:key="ingredient._id"
@@ -31,7 +35,18 @@
 						/>
 					</TransitionGroup>
 				</div>
-				<Paginator class="ingredients-view-pagination ingredients-view__pagination" v-model:first="paginationCount" @update:first="getIngredients" :rows="limit" :totalRecords="ingredientsLength"></Paginator>
+				<Paginator
+						v-if="ingredients.length"
+						class="ingredients-view-pagination ingredients-view__pagination"
+						v-model:first="paginationCount"
+						@update:first="getIngredients"
+						:rows="limit"
+						:totalRecords="ingredientsLength"
+						currentPageReportTemplate
+						:template="{
+                '767px': 'PrevPageLink PageLinks NextPageLink',
+            }">
+				></Paginator>
 			</div>
 			<div class="ingredients-view__footer">
 
@@ -50,6 +65,13 @@ import Ingredient from '@/components/Ingredients/Ingredient.vue'
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import Paginator from 'primevue/paginator'
+import Toast from 'primevue/toast'
+import {useToast} from 'primevue/usetoast'
+const toast = useToast()
+
+const toastIngredientCreate = () => toast.add({ severity: 'success', detail: 'Ингредиент создан!', life: 3000 })
+const toastIngredientDeleted = () => toast.add({ severity: 'success', detail: 'Ингредиент удален!', life: 3000 })
+const toastIngredientEdits = () => toast.add({ severity: 'success', detail: 'Ингредиент изменен!', life: 3000 })
 
 import {useIngredientsStore} from '@/stores/ingredients'
 const store = useIngredientsStore()
@@ -76,9 +98,15 @@ const getIngredients = async () => {
 	}
 }
 
+const theme = ref('')
+const createIngredientTheme = async () => {
+	await store.createIngredientTheme(theme.value)
+}
+
 const deleted = async () => {
 	await store.deleteIngredient()
-	ingredients.value = await store.getIngredients()
+	await getIngredients()
+	toastIngredientDeleted()
 }
 
 onBeforeMount(getIngredients)

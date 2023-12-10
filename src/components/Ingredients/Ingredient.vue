@@ -33,6 +33,7 @@
 					panelClass="ingredient-themes-panel"
 					v-model="listThemes"
 					:options="dbThemes"
+					optionLabel="theme"
 					@change="changeSelectTheme"
 					ariaLabel="false"
 					:showToggleAll="false"
@@ -56,7 +57,7 @@
 
 			<div class="ingredient__chips">
 				<Chip v-for="(tag, index) in listThemes" @click.stop="descriptionIndex = index" :class="{'active': descriptionIndex === index}">
-					{{tag}}
+					{{tag.theme}}
 					<i v-if="edit" @click.stop="deletedChip(tag, index)" class="pi pi-times-circle"></i>
 				</Chip>
 			</div>
@@ -93,6 +94,9 @@
 			<div class="ingredient__button" v-if="edit">
 				<Button @click="send" rounded label="Сохранить"></Button>
 			</div>
+			<pre>{{listThemes}}</pre>
+			<pre>{{dbThemes}}</pre>
+			<pre>{{ingredient}}</pre>
 		</div>
 	</Dialog>
 </template>
@@ -118,7 +122,7 @@ const imagesReset = ref({files: []})
 let formData = new FormData()
 const edit = ref(false)
 
-const dbThemes = ref(['Омоложение', 'Похудение', 'Зрение'])
+const dbThemes = ref([])
 const listThemes = ref([])
 const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.VITE_IMAGE_PATH_PROD : import.meta.env.VITE_IMAGE_PATH_DEV
 
@@ -131,12 +135,12 @@ const handleFileUpload = () => {
 const changeSelectTheme = () => {
 	// добавляем элементы
 	listThemes.value.forEach(el1 => {
-		if(!ingredient.value.themes.some(el2 => el2.theme === el1)) ingredient.value.themes.push({theme: el1, description: ''})
+		if(!ingredient.value.themes.some(el2 => el2.theme === el1.theme)) ingredient.value.themes.push({theme: el1.theme, description: ''})
 	})
 
 	// удаляем элементы
 	ingredient.value.themes.forEach((el, index) => {
-		if(dbThemes.value.filter(el1 => !listThemes.value.includes(el1)).includes(el.theme)) ingredient.value.themes.splice(index, 1)
+		if(dbThemes.value.filter(el1 => !listThemes.value.some(el2 => el1.theme === el2.theme)).some(el3 => el.theme === el3.theme)) ingredient.value.themes.splice(index, 1)
 	})
 
 	descriptionIndex.value = listThemes.value.length - 1
@@ -167,7 +171,7 @@ const customUpload = async () => {
 // получаем ингредиент
 const getIngredient = async () => {
 	ingredient.value = await store.getIngredient()
-	ingredient.value.themes.forEach(el => listThemes.value.push(el.theme))
+	ingredient.value.themes.forEach(el => listThemes.value.push({theme: el.theme}))
 	await customUpload()
 }
 
@@ -195,7 +199,7 @@ const menuDelete = () => {
 	store.imagesDeleted = ingredient.value.images
 }
 
-const emit = defineEmits(['updateIngredients'])
+const emit = defineEmits(['updateIngredients', 'toastIngredientEdits'])
 const send = async () => {
 	try {
 		const headers = {
@@ -208,15 +212,25 @@ const send = async () => {
 		const res = await useFetch.post('ingredients/edit-ingredient', null, headers)
 
 		emit('updateIngredients')
+		emit('toastIngredientEdits')
+
 		store.ingredientId = ''
 		store.modalViewVisible = false
 
-		console.log(res.json())
 	} catch (e) {
 		console.log(e)
 	}
 }
 
+const getIngredientsThemes = async () => {
+	try {
+		dbThemes.value = await store.getIngredientsThemes()
+	} catch (e) {
+		console.log(e)
+	}
+}
+
+onBeforeMount(getIngredientsThemes)
 onBeforeMount(getIngredient)
 </script>
 

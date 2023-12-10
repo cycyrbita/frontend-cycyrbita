@@ -96,7 +96,7 @@
 	])
 
 	const addItemsImages = () => {
-		if(props.ingredient.images.length === 0) props.ingredient.images.push('')
+		if(props.ingredient.images && props.ingredient.images.length === 0) props.ingredient.images.push('')
 		for(const image of props.ingredient.images) {
 			if(props.ingredient.images.length < 4) {
 				props.ingredient.images.push('')

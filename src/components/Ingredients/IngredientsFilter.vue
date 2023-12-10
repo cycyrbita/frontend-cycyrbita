@@ -14,7 +14,7 @@
 			<MultiSelect
 					v-model="selectedThemes"
 					:options="themes"
-					optionLabel="name"
+					optionLabel="theme"
 					placeholder="Тематики"
 					:maxSelectedLabels="3"
 					:showToggleAll="false"
@@ -23,7 +23,7 @@
 			/>
 		</div>
 		<div class="ingredients-filter__elem ingredients-filter__elem-last">
-			<div @click="modalCreateVisible.modalCreateVisible = true" class="ingredients-filter__add"><i class="pi pi-plus"></i></div>
+			<div @click="store.modalCreateVisible = true" class="ingredients-filter__add"><i class="pi pi-plus"></i></div>
 		</div>
 	</div>
 </template>
@@ -33,17 +33,23 @@ import {useIngredientsStore} from '@/stores/ingredients'
 
 import InputText from 'primevue/inputtext'
 import MultiSelect from 'primevue/multiselect'
-import {ref} from 'vue'
+import {onBeforeMount, ref} from 'vue'
 
-const modalCreateVisible = useIngredientsStore()
+const store = useIngredientsStore()
 
-const value = ref(null);
-const selectedThemes = ref();
-const themes = ref([
-	{ name: 'Омоложение'},
-	{ name: 'Похудение'},
-	{ name: 'Зрение'},
-])
+const value = ref(null)
+const selectedThemes = ref()
+
+const themes = ref([])
+const getIngredientsThemes = async () => {
+	try {
+		themes.value = await store.getIngredientsThemes()
+	} catch (e) {
+		console.log(e)
+	}
+}
+
+onBeforeMount(getIngredientsThemes)
 </script>
 
 <style lang="scss">

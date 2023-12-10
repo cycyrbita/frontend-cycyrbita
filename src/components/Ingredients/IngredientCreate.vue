@@ -139,7 +139,7 @@ const deletedChip = (tag, index) => {
 
 const themeRef = ref()
 
-const emit = defineEmits(['updateIngredients'])
+const emit = defineEmits(['updateIngredients', 'toastIngredientCreate'])
 
 const load = ref(true)
 
@@ -161,10 +161,10 @@ const send = async () => {
 		formData.append('ingredient', JSON.stringify(ingredient.value))
 		const res = await useFetch.post('ingredients/create-ingredient', null, headers)
 		emit('updateIngredients')
+		emit('toastIngredientCreate')
 		store.modalCreateVisible = false
 		load.value = true
 
-		console.log(res.json())
 	} catch (e) {
 		console.log(e)
 	}

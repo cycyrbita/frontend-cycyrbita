@@ -11,6 +11,24 @@ export const useIngredientsStore = defineStore('ingredients', () => {
     const idDeleted = ref(false)
     const imagesDeleted = ref(false)
 
+    const getIngredientsThemes = async () => {
+        try {
+            const res = await useFetch.get('ingredients/get-ingredient-themes')
+            return await res.json()
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const createIngredientTheme = async (theme) => {
+        try {
+            const res = await useFetch.post('ingredients/create-ingredient-theme', {theme})
+            return await res.json()
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     const getIngredients = async (paginationCount, limit) => {
         try {
             const res = await useFetch.post('ingredients/get-ingredients', {paginationCount, limit})
@@ -40,5 +58,5 @@ export const useIngredientsStore = defineStore('ingredients', () => {
         }
     }
 
-    return {modalCreateVisible, modalViewVisible, ingredientId, getIngredients, getIngredient, deleteIngredient, idDeleted, imagesDeleted, visibleDeleted}
+    return {modalCreateVisible, modalViewVisible, ingredientId, getIngredients, getIngredient, deleteIngredient, idDeleted, imagesDeleted, visibleDeleted, getIngredientsThemes, createIngredientTheme}
 })
