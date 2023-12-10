@@ -5,14 +5,14 @@
 				class="ingredients-filter__elem ingredients-filter__search">
 			<span class="p-input-icon-right">
 		    <i class="pi pi-search" style="font-size: 1.3rem"/>
-		    <InputText class="ingredients-filter__field" v-model="value" placeholder="Поиск" />
+		    <InputText class="ingredients-filter__field" v-model="store.filterIngredients.name" placeholder="Поиск" />
 			</span>
 		</div>
 		<div
 				v-if="$route.name !== 'ingredients-create'"
 				class="ingredients-filter__elem">
 			<MultiSelect
-					v-model="selectedThemes"
+					v-model="store.filterIngredients.themes"
 					:options="themes"
 					optionLabel="theme"
 					placeholder="Тематики"
@@ -37,8 +37,7 @@ import {onBeforeMount, ref} from 'vue'
 
 const store = useIngredientsStore()
 
-const value = ref(null)
-const selectedThemes = ref()
+const name = ref('')
 
 const themes = ref([])
 const getIngredientsThemes = async () => {

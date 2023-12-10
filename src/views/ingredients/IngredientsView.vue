@@ -1,6 +1,4 @@
 <template>
-<!--	если нужно добавить тему-->
-<!--	<input @keydown.enter="createIngredientTheme" v-model="theme">-->
 	<Toast />
 	<Dialog class="ingredients-view-confirmation" v-model:visible="store.visibleDeleted" modal :dismissableMask="true">
 		<template #container="{closeCallback}">
@@ -56,7 +54,7 @@
 </template>
 
 <script setup>
-import {onBeforeMount, ref} from 'vue'
+import {onBeforeMount, ref, watch} from 'vue'
 
 import IngredientsFilter from '@/components/Ingredients/IngredientsFilter.vue'
 import IngredientCard from '@/components/Ingredients/IngredientCard.vue'
@@ -98,16 +96,15 @@ const getIngredients = async () => {
 	}
 }
 
-const theme = ref('')
-const createIngredientTheme = async () => {
-	await store.createIngredientTheme(theme.value)
-}
-
 const deleted = async () => {
 	await store.deleteIngredient()
 	await getIngredients()
 	toastIngredientDeleted()
 }
+
+watch(store.filterIngredients,() => {
+	getIngredients(paginationCount.value, limit.value)
+}, { immediate: true })
 
 onBeforeMount(getIngredients)
 </script>
