@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import {onBeforeMount, ref, watch} from 'vue'
+import {onMounted, ref, onUnmounted, watch} from 'vue'
 
 import IngredientsFilter from '@/components/Ingredients/IngredientsFilter.vue'
 import IngredientCard from '@/components/Ingredients/IngredientCard.vue'
@@ -90,11 +90,14 @@ const getIngredients = async () => {
 		const res = await store.getIngredients(paginationCount.value, limit.value)
 		ingredients.value = res.ingredients
 		ingredientsLength.value = res.ingredientsLength
-
 	} catch (e) {
 		console.log(e)
 	}
 }
+
+const unwatch = watch(store.filterIngredients,() => {
+	getIngredients(paginationCount.value, limit.value)
+}, { immediate: true })
 
 const deleted = async () => {
 	await store.deleteIngredient()
@@ -102,11 +105,8 @@ const deleted = async () => {
 	toastIngredientDeleted()
 }
 
-watch(store.filterIngredients,() => {
-	getIngredients(paginationCount.value, limit.value)
-}, { immediate: true })
-
-onBeforeMount(getIngredients)
+onMounted(getIngredients)
+onUnmounted(unwatch)
 </script>
 
 <style lang="scss">
