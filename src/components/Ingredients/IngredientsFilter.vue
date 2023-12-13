@@ -5,7 +5,7 @@
 				class="ingredients-filter__elem ingredients-filter__search">
 			<span class="p-input-icon-right">
 		    <i class="pi pi-search" style="font-size: 1.3rem"/>
-		    <InputText class="ingredients-filter__field" v-model="store.filterIngredients.name" placeholder="Поиск" />
+		    <InputText class="ingredients-filter__field" @input="emit('paginationCount')" v-model="store.filterIngredients.name" placeholder="Поиск" />
 			</span>
 		</div>
 		<div
@@ -38,6 +38,8 @@ import {onBeforeMount, ref} from 'vue'
 const store = useIngredientsStore()
 
 const name = ref('')
+
+const emit = defineEmits(['paginationCount'])
 
 const themes = ref([])
 const getIngredientsThemes = async () => {

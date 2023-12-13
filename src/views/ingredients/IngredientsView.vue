@@ -17,7 +17,7 @@
 	<div class="ingredients-view">
 		<div class="container">
 			<div class="ingredients-view__header">
-				<IngredientsFilter></IngredientsFilter>
+				<IngredientsFilter @paginationCount="filterIngredietns"></IngredientsFilter>
 			</div>
 			<div class="ingredients-view__body">
 				<div class="ingredients-view__list ingredients-view-list">
@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import {onMounted, ref, onUnmounted, watch} from 'vue'
+import {onMounted, ref} from 'vue'
 
 import IngredientsFilter from '@/components/Ingredients/IngredientsFilter.vue'
 import IngredientCard from '@/components/Ingredients/IngredientCard.vue'
@@ -86,6 +86,11 @@ const ingredientsLength = ref(0)
 const paginationCount = ref(0)
 const limit = ref(10)
 
+const filterIngredietns = () => {
+	paginationCount.value = 0
+	getIngredients()
+}
+
 const getIngredients = async () => {
 	try {
 		const res = await store.getIngredients(paginationCount.value, limit.value)
@@ -96,10 +101,6 @@ const getIngredients = async () => {
 	}
 }
 
-const unwatch = watch(store.filterIngredients,() => {
-	getIngredients(paginationCount.value, limit.value)
-}, { immediate: true })
-
 const deleted = async () => {
 	await store.deleteIngredient()
 	await getIngredients()
@@ -107,7 +108,6 @@ const deleted = async () => {
 }
 
 onMounted(getIngredients)
-onUnmounted(unwatch)
 </script>
 
 <style lang="scss">
