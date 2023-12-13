@@ -40,7 +40,7 @@
 				</template>
 			</Carousel>
 		</picture>
-		<p class="ingredient-card__name">
+		<p @click.stop class="ingredient-card__name">
 			{{props.ingredient.names[0].name}}
 		</p>
 	</div>
