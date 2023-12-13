@@ -39,7 +39,7 @@
 						v-model:first="paginationCount"
 						@update:first="getIngredients"
 						:rows="limit"
-						pageLinkSize="4"
+						:pageLinkSize="4"
 						:totalRecords="ingredientsLength"
 						currentPageReportTemplate
 						:template="{
