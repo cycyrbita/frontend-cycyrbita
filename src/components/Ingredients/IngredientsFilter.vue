@@ -15,6 +15,7 @@
 					v-model="store.filterIngredients.themes"
 					:options="themes"
 					optionLabel="theme"
+					@change="emit('paginationCount')"
 					placeholder="Тематики"
 					:maxSelectedLabels="3"
 					:showToggleAll="false"

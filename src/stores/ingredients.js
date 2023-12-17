@@ -13,7 +13,7 @@ export const useIngredientsStore = defineStore('ingredients', () => {
 
     const filterIngredients = ref({
         name: '',
-        themes: []
+        themes: [],
     })
 
     const getIngredientsThemes = async () => {
