@@ -15,12 +15,13 @@
 					v-model="store.filterIngredients.themes"
 					:options="themes"
 					optionLabel="theme"
-					@change="emit('paginationCount')"
+					@change="changeSelectTheme"
 					placeholder="Тематики"
 					:maxSelectedLabels="3"
 					:showToggleAll="false"
 					class="ingredients-filter__select"
 					panelClass="ingredients-filter__select-panel"
+					ref="themeRef"
 			/>
 		</div>
 		<div class="ingredients-filter__elem ingredients-filter__elem-last">
@@ -41,6 +42,12 @@ const store = useIngredientsStore()
 const name = ref('')
 
 const emit = defineEmits(['paginationCount'])
+const themeRef = ref()
+
+const changeSelectTheme = () => {
+	emit('paginationCount')
+	themeRef.value.hide()
+}
 
 const themes = ref([])
 const getIngredientsThemes = async () => {
