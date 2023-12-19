@@ -2,6 +2,7 @@
 	<Dialog
 		v-model:visible="store.modalCreateVisible"
 		:dismissableMask="true"
+		:draggable="false"
 		modal
 		class="ingredient-create"
 	>
@@ -67,6 +68,7 @@
 					:maxFileSize="2000000"
 					invalidFileSizeMessage="Файл слишком большой"
 					:fileLimit="10"
+					invalidFileLimitMessage="Максимальное количество картинок 10"
 				>
 				</FileUpload>
 			</div>
@@ -109,6 +111,7 @@ const listThemes = ref([])
 
 // добавляем картинки
 const handleFileUpload = () => {
+	if(imagesReset.value.files.length > 10) imagesReset.value.files = imagesReset.value.files.slice(0, 10)
 	formData.delete('ingredientsImages')
 	for (let key in imagesReset.value.files) formData.append('ingredientsImages', imagesReset.value.files[key])
 }

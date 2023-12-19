@@ -17,7 +17,7 @@
 	<div class="ingredients-view">
 		<div class="container">
 			<div class="ingredients-view__header">
-				<IngredientsFilter @paginationCount="filterIngredietns"></IngredientsFilter>
+				<IngredientsFilter @paginationCount="debounced"></IngredientsFilter>
 			</div>
 			<div class="ingredients-view__body">
 				<div class="ingredients-view__list ingredients-view-list">
@@ -65,6 +65,7 @@ import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import Paginator from 'primevue/paginator'
 import Toast from 'primevue/toast'
+import { debounce } from 'lodash';
 import {useToast} from 'primevue/usetoast'
 const toast = useToast()
 
@@ -90,6 +91,8 @@ const filterIngredietns = () => {
 	paginationCount.value = 0
 	getIngredients()
 }
+
+const debounced = debounce(() => filterIngredietns(), 300)
 
 const getIngredients = async () => {
 	try {

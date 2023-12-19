@@ -1,21 +1,17 @@
 <template>
 	<div class="ingredient-card">
 		<div class="ingredient-card__menu">
-			<Button
-					type="button"
-					icon="pi pi-ellipsis-h"
-					@click.stop="toggle"
-					aria-haspopup="true"
-					showIcon="pi pi-ellipsis-h"
-					aria-controls="overlay_menu"
-			/>
-			<Menu
-					ref="menu"
-					id="overlay_menu"
-					:model="items"
-					:popup="true"
-					class="ingredient-card__menu-list"
-			/>
+				<div class="ingredient-card-menu" ref="menuRef">
+					<div class="ingredient-menu__icon" @click.stop="menu = !menu">
+						<i class="pi pi-ellipsis-h"></i>
+					</div>
+					<Transition name="bounce">
+						<div v-if="menu" class="ingredient-card-menu__list">
+							<div class="ingredient-card-menu__item" @click.stop="menuCopy">Копировать всё</div>
+							<div class="ingredient-card-menu__item" @click.stop="menuDelete">Удалить</div>
+						</div>
+					</Transition>
+				</div>
 		</div>
 		<picture class="ingredient-card-picture ingredient-card__picture">
 			<Carousel
@@ -49,10 +45,9 @@
 <script setup>
 	import {onBeforeMount, onUpdated, ref} from 'vue'
 	import Carousel from 'primevue/carousel'
-	import Menu from 'primevue/menu';
-	import Button from 'primevue/button';
 	import { copyText } from 'vue3-clipboard'
 	import {useIngredientsStore} from '@/stores/ingredients'
+	import {onClickOutside} from "@vueuse/core/index"
 
 	const store = useIngredientsStore()
 	const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.VITE_IMAGE_PATH_PROD : import.meta.env.VITE_IMAGE_PATH_DEV
@@ -71,29 +66,23 @@
 		},
 	])
 
-	const toggle = (event) => menu.value.toggle(event)
-	const menu = ref()
-	const items = ref([
-		{
-			label: 'Удалить',
-			command: () => {
-				store.visibleDeleted = true
-				store.idDeleted = props.ingredient._id
-				store.imagesDeleted = props.ingredient.images
-			}
-		},
-		{
-			label: 'Копировать',
-			command: () => {
-				copyText(`
+	const menuRef = ref()
+	onClickOutside(menuRef, () => menu.value = false)
+	const menu = ref(false)
+	const menuCopy = () => {
+		copyText(`
 					Название: ${props.ingredient.names[0].name}
 					Тема: ${props.ingredient.themes.length ? props.ingredient.themes[0].theme : 'Пусто'}
 					Описание: ${props.ingredient.themes.length ? props.ingredient.themes[0].description : 'Пусто'}
 					Сссылка на картинку: ${props.ingredient.images.length ? VITE_IMAGE_PATH + '/ingredients/' + props.ingredient.images[0] : 'Пусто'}
 				`)
-			}
-		},
-	])
+		menu.value = false
+	}
+	const menuDelete = () => {
+		store.visibleDeleted = true
+		store.idDeleted = props.ingredient._id
+		store.imagesDeleted = props.ingredient.images
+	}
 
 	const addItemsImages = () => {
 		if(props.ingredient.images && props.ingredient.images.length === 0) props.ingredient.images.push('')

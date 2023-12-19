@@ -4,6 +4,7 @@
 			v-if="ingredient"
 			v-model:visible="store.modalViewVisible"
 			:dismissableMask="true"
+			:draggable="false"
 			modal
 			@hide="store.ingredientId = ''"
 	>
@@ -12,11 +13,13 @@
 				<div class="ingredient-menu__icon" @click="menu = !menu">
 					<i class="pi pi-ellipsis-h"></i>
 				</div>
-				<div v-if="menu" class="ingredient-menu__list">
-					<div class="ingredient-menu__item" @click="menuCopy">Копировать всё</div>
-					<div class="ingredient-menu__item" @click="menuEdit">{{edit ? 'Просмотр' : 'Редактировать'}}</div>
-					<div class="ingredient-menu__item" @click="menuDelete">Удалить</div>
-				</div>
+				<Transition name="bounce">
+					<div v-if="menu" class="ingredient-menu__list">
+						<div class="ingredient-menu__item" @click="menuCopy">Копировать всё</div>
+						<div class="ingredient-menu__item" @click="menuEdit">{{edit ? 'Просмотр' : 'Редактировать'}}</div>
+						<div class="ingredient-menu__item" @click="menuDelete">Удалить</div>
+					</div>
+				</Transition>
 			</div>
 		</template>
 		<div class="ingredient__body">
@@ -29,18 +32,20 @@
 			</div>
 
 			<div class="ingredient__themes">
-				<MultiSelect
-					panelClass="ingredient-themes-panel"
-					v-model="listThemes"
-					:options="dbThemes"
-					optionLabel="theme"
-					@change="changeSelectTheme"
-					ariaLabel="false"
-					:showToggleAll="false"
-					placeholder="ТЕМАТИКА"
-					ref="themeRef"
-					v-if="edit"
-				/>
+				<Transition name="bounce">
+					<MultiSelect
+						panelClass="ingredient-themes-panel"
+						v-model="listThemes"
+						:options="dbThemes"
+						optionLabel="theme"
+						@change="changeSelectTheme"
+						ariaLabel="false"
+						:showToggleAll="false"
+						placeholder="ТЕМАТИКА"
+						ref="themeRef"
+						v-if="edit"
+					/>
+				</Transition>
 			</div>
 
 			<template v-for="(name, index) in ingredient.names">
@@ -58,7 +63,9 @@
 			<div class="ingredient__chips">
 				<Chip v-for="(tag, index) in listThemes" @click.stop="descriptionIndex = index" :class="{'active': descriptionIndex === index}">
 					{{tag.theme}}
-					<i v-if="edit" @click.stop="deletedChip(tag, index)" class="pi pi-times-circle"></i>
+					<Transition name="bounce">
+						<i v-if="edit" @click.stop="deletedChip(tag, index)" class="pi pi-times-circle"></i>
+					</Transition>
 				</Chip>
 			</div>
 
@@ -75,25 +82,30 @@
 						<img :src="image.objectURL">
 					</div>
 				</div>
-				<FileUpload
-					v-show="edit"
-					name="demo[]"
-					:multiple="true"
-					accept=".jpg, .png, .webp, .jpeg"
-					invalidFileTypeMessage="Можно использовать только эти форматы: jpg, png, webp, jpeg"
-					@select="handleFileUpload"
-					@remove="handleFileUpload"
-					:showUploadButton="false"
-					ref="imagesReset"
-					:maxFileSize="2000000"
-					invalidFileSizeMessage="Файл слишком большой"
-					:fileLimit="10"
-				>
-				</FileUpload>
+				<Transition name="bounce">
+					<FileUpload
+						v-show="edit"
+						name="demo[]"
+						:multiple="true"
+						accept=".jpg, .png, .webp, .jpeg"
+						invalidFileTypeMessage="Можно использовать только эти форматы: jpg, png, webp, jpeg"
+						@select="handleFileUpload"
+						@remove="handleFileUpload"
+						:showUploadButton="false"
+						ref="imagesReset"
+						:maxFileSize="2000000"
+						invalidFileSizeMessage="Файл слишком большой"
+						:fileLimit="10"
+						invalidFileLimitMessage="Максимальное количество картинок 10"
+					>
+					</FileUpload>
+				</Transition>
 			</div>
-			<div class="ingredient__button" v-if="edit">
-				<Button @click="send" rounded label="Сохранить"></Button>
-			</div>
+			<Transition name="bounce">
+				<div class="ingredient__button" v-if="edit">
+					<Button @click="send" rounded label="Сохранить"></Button>
+				</div>
+			</Transition>
 		</div>
 	</Dialog>
 </template>
@@ -125,6 +137,7 @@ const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.
 
 // добавляем картинки
 const handleFileUpload = () => {
+	if(imagesReset.value.files.length > 10) imagesReset.value.files = imagesReset.value.files.slice(0, 10)
 	formData.delete('ingredientsImages')
 	for (let key in imagesReset.value.files) formData.append('ingredientsImages', imagesReset.value.files[key])
 }
