@@ -52,7 +52,7 @@ class useFetch {
                         // обновляем дату последней активности
                         await this.post('last-activity-at', storeUser.user)
                         // запускаем повторный вызов который был изначально
-                        return await this.post(url, data)
+                        return await this.post(url, data, headers)
                     }
                     router.push('/login')
                 }
@@ -107,7 +107,7 @@ class useFetch {
                         // обновляем дату последней активности
                         await this.post('last-activity-at', storeUser.user)
                         // запускаем повторный вызов который был изначально
-                        return await this.get(url, data)
+                        return await this.get(url, data, headers)
                     }
                     router.push('/login')
                 }
@@ -167,7 +167,7 @@ class useFetch {
                         // обновляем дату последней активности
                         await this.post('last-activity-at', storeUser.user)
                         // запускаем повторный вызов который был изначально
-                        return await this.delete(url, data)
+                        return await this.delete(url, data, headers)
                     }
                     router.push('/login')
                 }

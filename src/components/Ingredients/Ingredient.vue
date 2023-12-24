@@ -214,6 +214,9 @@ const send = async () => {
 	try {
 		const headers = {
 			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('accessTokenCycyrbita')}`
+			},
 			body: formData,
 			credentials: 'include',
 		}

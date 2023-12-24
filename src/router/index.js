@@ -40,10 +40,8 @@ router.beforeResolve((to, ) => {
       if(to.name === 'login' || to.name === 'registration' || to.name === 'recovery-password') return {name: 'home'}
     }
     // если требует авторизации
-    if(to.meta.middleware.includes('auth')) return {name: 'login'}
+    if(to.meta.middleware.includes('auth') && !storeAuth.auth) return {name: 'login'}
   }
-
-  return
 })
 
 export default router

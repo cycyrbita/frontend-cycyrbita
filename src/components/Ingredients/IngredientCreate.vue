@@ -158,12 +158,15 @@ const send = async () => {
 	try {
 		const headers = {
 			method: 'POST',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('accessTokenCycyrbita')}`
+			},
 			body: formData,
 			credentials: 'include',
 		}
 
 		formData.append('ingredient', JSON.stringify(ingredient.value))
-		const res = await useFetch.post('ingredients/create-ingredient', null, headers)
+		const res = await useFetch.post('ingredients/create-ingredient', null, headers, true)
 		emit('updateIngredients')
 		emit('toastIngredientCreate')
 		store.modalCreateVisible = false

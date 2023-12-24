@@ -4,9 +4,9 @@ export default [
         component: () => import('@/layouts/DefaultLayout.vue'),
         meta: {
             middleware: [
+                'auth',
                 'role.admin',
                 'role.cycyrbit',
-                'role.default',
             ]
         },
         children: [
