@@ -2,7 +2,7 @@
   <header class="header">
 		<ul>
 			<li><router-link to="/">Главная</router-link></li>
-			<li><router-link v-if="storeAuth.auth" to="/ingredients">Ингредиенты</router-link></li>
+			<li><router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/ingredients">Ингредиенты</router-link></li>
 			<li><router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/about">О нас</router-link></li>
 			<li><router-link v-if="storeUser.user.role === 'role.admin'" to="/users">Пользователи</router-link></li>
 			<li><router-link v-if="!storeAuth.auth" to="/login">Войти</router-link></li>
