@@ -16,6 +16,7 @@
 					:options="themes"
 					optionLabel="theme"
 					@change="changeSelectTheme"
+					scrollHeight="350px"
 					placeholder="Тематики"
 					:maxSelectedLabels="3"
 					:showToggleAll="false"
