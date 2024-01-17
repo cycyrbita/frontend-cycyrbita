@@ -51,6 +51,7 @@
 
 	const store = useIngredientsStore()
 	const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.VITE_IMAGE_PATH_PROD : import.meta.env.VITE_IMAGE_PATH_DEV
+	const VITE_CLIENT_URL = import.meta.env.MODE === 'production' ? import.meta.env.VITE_CLIENT_URL_PROD : import.meta.env.VITE_CLIENT_URL_DEV
 	const props = defineProps(['ingredient'])
 
 	const responsiveOptions = ref([
@@ -70,12 +71,18 @@
 	onClickOutside(menuRef, () => menu.value = false)
 	const menu = ref(false)
 	const menuCopy = () => {
-		copyText(`
-					Название: ${props.ingredient.names[0].name}
-					Тема: ${props.ingredient.themes.length ? props.ingredient.themes[0].theme : 'Пусто'}
-					Описание: ${props.ingredient.themes.length ? props.ingredient.themes[0].description : 'Пусто'}
-					Сссылка на картинку: ${props.ingredient.images.length ? VITE_IMAGE_PATH + '/ingredients/' + props.ingredient.images[0] : 'Пусто'}
-				`)
+		let createText = ``
+		if(props.ingredient.names[0].name) createText += props.ingredient.names[0].name
+		if(props.ingredient.themes.length) {
+			if(props.ingredient.themes[0].theme) createText += `
+${props.ingredient.themes[0].theme}`
+			if(props.ingredient.themes[0].description) createText += `
+${props.ingredient.themes[0].description}`
+		}
+		if(props.ingredient.images.length) createText += `
+${VITE_CLIENT_URL + VITE_IMAGE_PATH + '/ingredients/' + props.ingredient.images[0]}`
+
+		copyText(createText)
 		menu.value = false
 	}
 	const menuDelete = () => {

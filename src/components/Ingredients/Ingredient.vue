@@ -135,6 +135,7 @@ const edit = ref(false)
 const dbThemes = ref([])
 const listThemes = ref([])
 const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.VITE_IMAGE_PATH_PROD : import.meta.env.VITE_IMAGE_PATH_DEV
+const VITE_CLIENT_URL = import.meta.env.MODE === 'production' ? import.meta.env.VITE_CLIENT_URL_PROD : import.meta.env.VITE_CLIENT_URL_DEV
 
 // добавляем картинки
 const handleFileUpload = () => {
@@ -192,12 +193,18 @@ const menuRef = ref()
 onClickOutside(menuRef, () => menu.value = false)
 const menu = ref(false)
 const menuCopy = () => {
-	copyText(`
-					Название: ${ingredient.value.names[0].name}
-					Тема: ${ingredient.value.themes.length ? ingredient.value.themes[0].theme : 'Пусто'}
-					Описание: ${ingredient.value.themes.length ? ingredient.value.themes[0].description : 'Пусто'}
-					Сссылка на картинку: ${ingredient.value.images.length ? VITE_IMAGE_PATH + '/ingredients/' + ingredient.value.images[0] : 'Пусто'}
-				`)
+	let createText = ``
+	if(ingredient.value.names[0].name) createText += ingredient.value.names[0].name
+	if(ingredient.value.themes.length) {
+		if(ingredient.value.themes[0].theme) createText += `
+${ingredient.value.themes[0].theme}`
+		if(ingredient.value.themes[0].description) createText += `
+${ingredient.value.themes[0].description}`
+	}
+	if(ingredient.value.images.length) createText += `
+${VITE_CLIENT_URL + VITE_IMAGE_PATH + '/ingredients/' + ingredient.value.images[0]}`
+
+	copyText(createText)
 	menu.value = false
 }
 const menuEdit = () => {
