@@ -51,7 +51,7 @@
 
 	const store = useIngredientsStore()
 	const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.VITE_IMAGE_PATH_PROD : import.meta.env.VITE_IMAGE_PATH_DEV
-	const VITE_CLIENT_URL = import.meta.env.MODE === 'production' ? import.meta.env.VITE_CLIENT_URL_PROD : import.meta.env.VITE_CLIENT_URL_DEV
+	const VITE_CLIENT_URL = import.meta.env.MODE === 'production' ? import.meta.env.VITE_API_URL_PROD : import.meta.env.VITE_CLIENT_URL_DEV
 	const props = defineProps(['ingredient'])
 
 	const responsiveOptions = ref([
