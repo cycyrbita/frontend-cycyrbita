@@ -20,10 +20,9 @@
 				<IngredientsFilter @paginationCount="debounced"></IngredientsFilter>
 			</div>
 			<div class="ingredients-view__body">
-				<div class="ingredients-view__list ingredients-view-list">
+				<div class="ingredients-view__list ingredients-view-list" v-if="ingredients">
 					<TransitionGroup name="fade">
 						<IngredientCard
-							v-if="ingredients"
 							class="ingredients-view-list__card"
 							v-for="ingredient in ingredients"
 							:key="ingredient._id"
@@ -85,7 +84,7 @@ const ingredients = ref([])
 
 const ingredientsLength = ref(0)
 const paginationCount = ref(0)
-const limit = ref(10)
+const limit = ref(12)
 
 const filterIngredietns = () => {
 	paginationCount.value = 0
