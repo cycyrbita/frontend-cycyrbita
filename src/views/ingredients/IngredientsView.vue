@@ -20,7 +20,7 @@
 				<IngredientsFilter @paginationCount="debounced"></IngredientsFilter>
 			</div>
 			<div class="ingredients-view__body">
-				<div class="ingredients-view__list ingredients-view-list" v-if="ingredients.length && isGetIngfredients">
+				<div class="ingredients-view__list ingredients-view-list" v-if="ingredients.length && isGetIngredients">
 					<IngredientCard
 						class="ingredients-view-list__card"
 						v-for="ingredient in ingredients"
@@ -79,7 +79,7 @@ const getIngredient = (id) => {
 }
 
 const ingredients = ref([])
-const isGetIngfredients = ref(true)
+const isGetIngredients = ref(true)
 
 const ingredientsLength = ref(0)
 const paginationCount = ref(0)
@@ -93,7 +93,7 @@ const filterIngredietns = () => {
 const debounced = debounce(() => filterIngredietns(), 300)
 
 const getIngredients = async () => {
-	isGetIngfredients.value = false
+	isGetIngredients.value = false
 	try {
 		const res = await store.getIngredients(paginationCount.value, limit.value)
 		ingredients.value = res.ingredients
@@ -101,7 +101,7 @@ const getIngredients = async () => {
 	} catch (e) {
 		console.log(e)
 	} finally {
-		isGetIngfredients.value = true
+		isGetIngredients.value = true
 	}
 }
 
