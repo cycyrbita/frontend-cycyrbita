@@ -3,7 +3,7 @@
   flex-direction: column;
   height: 100%;
   background-color: #F1F3FB;
-  padding-top: 125px;
+  padding-top: 60px;
 
   &__header {
     display: flex;
@@ -34,8 +34,11 @@
     margin-top: auto;
   }
 
-  &__footer {
-
+  &__header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding: 15px;
   }
 
   @media (max-width: 991px) {
