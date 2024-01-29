@@ -20,7 +20,7 @@
 				<IngredientsFilter @paginationCount="debounced"></IngredientsFilter>
 			</div>
 			<div class="ingredients-view__body">
-				<div class="ingredients-view__list ingredients-view-list" v-if="ingredients.length">
+				<div class="ingredients-view__list ingredients-view-list" v-if="ingredients.length && isGetIngfredients">
 					<IngredientCard
 						class="ingredients-view-list__card"
 						v-for="ingredient in ingredients"
