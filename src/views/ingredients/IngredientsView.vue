@@ -21,7 +21,7 @@
 			</div>
 			<div class="ingredients-view__body">
 				<div class="ingredients-view__list ingredients-view-list">
-					<TransitionGroup name="bounce">
+					<TransitionGroup name="fade">
 						<IngredientCard
 							v-if="ingredients"
 							class="ingredients-view-list__card"
