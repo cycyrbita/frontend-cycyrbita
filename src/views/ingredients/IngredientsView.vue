@@ -110,7 +110,6 @@ const deleted = async () => {
 	await getIngredients()
 	toastIngredientDeleted()
 }
-
 onMounted(getIngredients)
 </script>
 
