@@ -20,17 +20,15 @@
 				<IngredientsFilter @paginationCount="debounced"></IngredientsFilter>
 			</div>
 			<div class="ingredients-view__body">
-				<div class="ingredients-view__list ingredients-view-list" v-if="ingredients">
-<!--					<TransitionGroup name="fade">-->
-						<IngredientCard
-							class="ingredients-view-list__card"
-							v-for="ingredient in ingredients"
-							:key="ingredient._id"
-							:ingredient="ingredient"
-							@updateIngredients="getIngredients"
-							@click.stop="getIngredient(ingredient._id)"
-						/>
-<!--					</TransitionGroup>-->
+				<div class="ingredients-view__list ingredients-view-list" v-if="ingredients.length">
+					<IngredientCard
+						class="ingredients-view-list__card"
+						v-for="ingredient in ingredients"
+						:key="ingredient._id"
+						:ingredient="ingredient"
+						@updateIngredients="getIngredients"
+						@click.stop="getIngredient(ingredient._id)"
+					/>
 				</div>
 				<Paginator
 						v-if="ingredients.length"
@@ -81,6 +79,7 @@ const getIngredient = (id) => {
 }
 
 const ingredients = ref([])
+const isGetIngfredients = ref(true)
 
 const ingredientsLength = ref(0)
 const paginationCount = ref(0)
@@ -94,12 +93,15 @@ const filterIngredietns = () => {
 const debounced = debounce(() => filterIngredietns(), 300)
 
 const getIngredients = async () => {
+	isGetIngfredients.value = false
 	try {
 		const res = await store.getIngredients(paginationCount.value, limit.value)
 		ingredients.value = res.ingredients
 		ingredientsLength.value = res.ingredientsLength
 	} catch (e) {
 		console.log(e)
+	} finally {
+		isGetIngfredients.value = true
 	}
 }
 
