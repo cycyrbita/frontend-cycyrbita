@@ -21,7 +21,7 @@
 			</div>
 			<div class="ingredients-view__body">
 				<div class="ingredients-view__list ingredients-view-list" v-if="ingredients">
-					<TransitionGroup name="fade">
+<!--					<TransitionGroup name="fade">-->
 						<IngredientCard
 							class="ingredients-view-list__card"
 							v-for="ingredient in ingredients"
@@ -30,7 +30,7 @@
 							@updateIngredients="getIngredients"
 							@click.stop="getIngredient(ingredient._id)"
 						/>
-					</TransitionGroup>
+<!--					</TransitionGroup>-->
 				</div>
 				<Paginator
 						v-if="ingredients.length"
