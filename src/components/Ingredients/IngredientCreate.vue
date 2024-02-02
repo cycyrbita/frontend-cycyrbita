@@ -56,6 +56,11 @@
 				</div>
 			</template>
 
+			<div class="ingredient-create__description" v-if="!ingredient.themes.length">
+				<i class="pi pi-copy" @click="copyText(first_description)"/>
+				<Textarea v-model="first_description" autoResize rows="5" cols="30" placeholder="Описание"/>
+			</div>
+
 			<div class="ingredient-create__images">
 				<FileUpload
 					name="demo[]"
@@ -103,6 +108,8 @@ const ingredient = ref({
 	],
 	themes: [],
 })
+
+const first_description = ref()
 const descriptionIndex = ref(0)
 const imagesReset = ref({files: []})
 let formData = new FormData()
@@ -121,11 +128,15 @@ const changeSelectTheme = () => {
 	// добавляем элементы
 	listThemes.value.forEach(el1 => {
 		if(!ingredient.value.themes.some(el2 => el2.theme === el1.theme)) ingredient.value.themes.push({theme: el1.theme, description: ''})
+		if(ingredient.value.themes.length) ingredient.value.themes[0].description = first_description.value
 	})
 
 	// удаляем элементы
 	ingredient.value.themes.forEach((el, index) => {
-		if(dbThemes.value.filter(el1 => !listThemes.value.some(el2 => el1.theme === el2.theme)).some(el3 => el.theme === el3.theme)) ingredient.value.themes.splice(index, 1)
+		if(dbThemes.value.filter(el1 => !listThemes.value.some(el2 => el1.theme === el2.theme)).some(el3 => el.theme === el3.theme)) {
+			if(ingredient.value.themes.length === 1) first_description.value = ingredient.value.themes[0].description
+			ingredient.value.themes.splice(index, 1)
+		}
 	})
 	descriptionIndex.value = listThemes.value.length - 1
 	themeRef.value.hide()
@@ -133,6 +144,7 @@ const changeSelectTheme = () => {
 
 // удаляем теги тем
 const deletedChip = (tag, index) => {
+	if(ingredient.value.themes.length === 1) first_description.value = ingredient.value.themes[0].description
 	listThemes.value.splice(index, 1)
 	ingredient.value.themes.splice(index, 1)
 
