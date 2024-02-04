@@ -171,18 +171,24 @@
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
-        border-radius: 0 0 30px 30px;
+        border-radius: 30px;
+        padding: 30px;
+      }
+
+      .p-fileupload-empty {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #5C71BC;
       }
 
       .p-fileupload-buttonbar,
       .p-fileupload-content {
-        padding: 0;
         border: 0;
-        background-color: transparent;
       }
 
-      .p-fileupload-empty {
-        display: none;
+      .p-fileupload-buttonbar {
+        background-color: transparent;
       }
 
       .p-progressbar {
