@@ -171,6 +171,36 @@
         />
       </div>
 
+      <div
+        class="card flex justify-content-center"
+        v-if="imagesReset.files.length"
+      >
+        <Galleria
+          v-model:visible="is_show_gallery"
+          :value="imagesReset.files"
+          :numVisible="9"
+          containerStyle="max-width: 50%"
+          :circular="true"
+          :fullScreen="true"
+          :showItemNavigators="true"
+          :showThumbnails="false"
+          :responsiveOptions="responsiveGallery"
+        >
+          <template #item="slotProps">
+            <img
+              :src="slotProps.item.objectURL"
+              style="width: 100%; display: block"
+            />
+          </template>
+          <template #thumbnail="slotProps">
+            <img
+              :src="slotProps.item.objectURL"
+              style="display: block"
+            />
+          </template>
+        </Galleria>
+      </div>
+
       <div class="ingredient__images">
         <div
           class="ingredient-images-preview"
@@ -180,6 +210,7 @@
             class="ingredient-images-preview__box"
             v-if="imagesReset"
             v-for="image in imagesReset.files"
+            @click.stop="is_show_gallery = true"
           >
             <img :src="image.objectURL" />
           </div>
@@ -235,6 +266,7 @@
   import { copyText } from 'vue3-clipboard'
   import useFetch from '@/composables/useFetch'
   import { onClickOutside } from '@vueuse/core'
+  import Galleria from 'primevue/galleria'
 
   const store = useIngredientsStore()
   const ingredient = ref()
@@ -248,6 +280,26 @@
   const listThemes = ref([])
   const VITE_IMAGE_PATH = import.meta.env.MODE === 'production' ? import.meta.env.VITE_IMAGE_PATH_PROD : import.meta.env.VITE_IMAGE_PATH_DEV
   const VITE_CLIENT_URL = import.meta.env.MODE === 'production' ? import.meta.env.VITE_API_URL_PROD : import.meta.env.VITE_CLIENT_URL_DEV
+
+  const is_show_gallery = ref(false)
+  const responsiveGallery = ref([
+    {
+      breakpoint: '1500px',
+      numVisible: 5,
+    },
+    {
+      breakpoint: '1024px',
+      numVisible: 3,
+    },
+    {
+      breakpoint: '768px',
+      numVisible: 2,
+    },
+    {
+      breakpoint: '560px',
+      numVisible: 1,
+    },
+  ])
 
   // добавляем картинки
   const handleFileUpload = () => {
