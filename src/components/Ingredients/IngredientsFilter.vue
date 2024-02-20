@@ -28,7 +28,7 @@
         optionValue="theme"
         @change="$emit('paginationCount')"
         showClear
-        scrollHeight="350px"
+        scrollHeight="700px"
         placeholder="Тематики"
         class="ingredients-filter__select"
         panelClass="ingredients-filter__select-panel"

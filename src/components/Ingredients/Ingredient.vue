@@ -69,7 +69,7 @@
             v-model="listThemes"
             :options="dbThemes"
             optionLabel="theme"
-            scrollHeight="350px"
+            scrollHeight="700px"
             @change="changeSelectTheme"
             ariaLabel="false"
             :showToggleAll="false"

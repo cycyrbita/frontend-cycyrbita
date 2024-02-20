@@ -26,7 +26,7 @@
           panelClass="ingredient-themes-panel"
           v-model="listThemes"
           :options="dbThemes"
-          scrollHeight="350px"
+          scrollHeight="700px"
           optionLabel="theme"
           @change="changeSelectTheme"
           ariaLabel="false"
