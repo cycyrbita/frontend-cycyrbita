@@ -10,6 +10,8 @@ import addRecoveryPasswordLink from "@/router/add-recovery-password-link"
 import registration from "@/router/registration"
 import users from "@/router/users"
 import ingredients from "@/router/ingredients"
+import error400 from "@/router/error404";
+import error500 from "@/router/error500";
 
 const routes = [
   ...home,
@@ -20,6 +22,8 @@ const routes = [
   ...addRecoveryPasswordLink,
   ...users,
   ...ingredients,
+  ...error400,
+  ...error500,
 ]
 
 const router = createRouter({

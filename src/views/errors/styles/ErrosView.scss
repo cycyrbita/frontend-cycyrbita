@@ -1,0 +1,80 @@
+$main: #6E77A5;
+$dark: #15133D;
+$white: #ffffff;
+
+html, body, .errors {
+  height: 100vh;
+}
+
+.errors {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  gap: 30px;
+  padding: 0 15px;
+
+  &_400 {
+    background: $main url("@/assets/img/error404__cycyrbita.svg") no-repeat 50% 100% / 70%;
+  }
+
+  &_500 {
+    background: $main url("/src/assets/img/error500__cycyrbita.svg") no-repeat 0 100% / 70%;
+  }
+
+  &__title {
+    color: $white;
+    font-size: 120px;
+    font-weight: 900;
+    line-height: 1;
+    text-align: center;
+    text-transform: uppercase;
+    max-width: 1025px;
+    margin: 0;
+  }
+
+  &__link {
+    color: $white;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    background: $dark;
+    width: 100%;
+    max-width: 370px;
+    padding: 25px;
+    border-radius: 40px;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .errors {
+    background-size: 600px;
+
+    &__title {
+      font-size: 10vw;
+    }
+  }
+
+  @media (orientation: landscape) {
+    .errors {
+      &__title {
+        font-size: 8vw;
+      }
+    }
+  }
+
+}
+
+@media screen and (max-width: 374px) {
+  .errors {
+    background-size: 400px;
+
+  }
+
+
+}
