@@ -1,15 +1,15 @@
 export default [
   {
-    path: '/',
-    component: () => import('@/layouts/default.vue'),
+    path: '/:pathMatch(.*)*',
+    component: () => import('@/layouts/errors.vue'),
     meta: {
       middleware: ['role.admin', 'role.cycyrbit', 'role.default'],
     },
     children: [
       {
         path: '',
-        name: 'home',
-        component: () => import('@/views/home/home.vue'),
+        name: '404',
+        component: () => import('@/views/404/404.vue'),
       },
     ],
   },

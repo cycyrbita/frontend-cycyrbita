@@ -1,19 +1,16 @@
 export default [
   {
     path: '/users',
-    component: () => import('@/layouts/DefaultLayout.vue'),
+    component: () => import('@/layouts/default.vue'),
     meta: {
-      middleware: [
-        'auth',
-        'role.admin',
-      ]
+      middleware: ['auth', 'role.admin'],
     },
     children: [
       {
         path: '',
         name: 'users',
-        component: () => import('@/views/users/UsersView.vue'),
+        component: () => import('@/views/users/users.vue'),
       },
-    ]
-  }
+    ],
+  },
 ]
