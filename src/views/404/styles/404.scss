@@ -34,10 +34,10 @@ $white: #ffffff;
 
     @media screen and (max-width: 991px) {
       font-size: 10vw;
-    }
 
-    @media (orientation: landscape) {
-      font-size: 8vw;
+      @media (orientation: landscape) {
+        font-size: 8vw;
+      }
     }
   }
 
