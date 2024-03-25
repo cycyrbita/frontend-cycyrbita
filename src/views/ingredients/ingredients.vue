@@ -36,10 +36,10 @@
     v-if="store.ingredientId"
   ></Ingredient>
   <div class="ingredients-view">
-    <div class="container">
       <div class="ingredients-view__header">
         <IngredientsFilter @paginationCount="debounced"></IngredientsFilter>
       </div>
+      <div class="container">
       <div class="ingredients-view__body">
         <div
           class="ingredients-view__list ingredients-view-list"
