@@ -1,39 +1,44 @@
 <template>
-	<div class="wrapper">
-    <div
-        class="overlay"
-        v-if="isLoading"
-    ></div>
-		<div class="heading"><h2>Авторизация</h2></div>
-		<div class="input-group">
-			<input
-          type="text"
-          class="input-field"
-          placeholder="Логин"
-          v-model="email"
-      >
-		</div>
-		<div class="input-group">
-			<input
-          type="password"
-          class="input-field"
-          placeholder="Пароль"
-          v-model="password"
-      >
-		</div>
-    <div class="input-group">
-      <small style="color: red"><p>{{message}}</p></small>
+    <div class="wrapper">
+        <div class="card">
+            <div
+                class="overlay"
+                v-if="isLoading"
+            ></div>
+            <div class="heading"><h2>Авторизация</h2></div>
+            <div class="input-group">
+                <input
+                    type="text"
+                    class="input-field"
+                    placeholder="Логин"
+                    v-model="email"
+                >
+            </div>
+            <div class="input-group">
+                <input
+                    type="password"
+                    class="input-field"
+                    placeholder="Пароль"
+                    v-model="password"
+                >
+            </div>
+            <div class="input-group">
+                <small style="color: red"><p>{{ message }}</p></small>
+            </div>
+            <div class="input-group">
+                <button @click="login">Войти</button>
+            </div>
+            <div class="input-group row">
+                <div class="row">
+                    <router-link to="/add-recovery-password-link" class="link__password">Забыли пароль?</router-link>
+                </div>
+                <div class="row">
+                    <router-link to="/registration" class="link__password link__password_color">Регистрация</router-link>
+                </div>
+            </div>
+
+        </div>
     </div>
-		<div class="input-group row">
-			<div class="row">
-				<router-link to="/add-recovery-password-link">Забыли пароль</router-link>
-			</div>
-			<div class="row">
-				<router-link to="/registration">Регистрация</router-link>
-			</div>
-		</div>
-		<div class="input-group"><button @click="login">Войти</button></div>
-	</div>
 </template>
 
 <script setup>
