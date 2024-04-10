@@ -1,3 +1,8 @@
+$main: #6E77A5;
+$dark: #15133D;
+$white: #ffffff;
+$inputBg: #f1f3fb;
+
 ::selection{
     color: #ffffff;
     background-color: #31285C;
@@ -15,8 +20,6 @@ a{
     color: #31285C;
 }
 
-
-
 body{
     width: 100%;
     min-height: 100vh;
@@ -30,37 +33,55 @@ body{
 
 .wrapper{
     position: relative;
-    width: 320px;
-    min-height:100px;
-    background-color: #FFFFFF;
-    border-radius: 5px;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
-    padding: 30px;
     margin-left: auto;
     margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: $main;
+    padding: 0 15px;
+}
+
+.card {
+    width: 100%;
+    position: relative;
+    max-width: 460px;
+    min-height: 100px;
+    background-color: #FFFFFF;
+    border-radius: 38px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+    padding: 45px;
+
+    @media (max-width: 576px) {
+        padding: 45px 15px;
+    }
 }
 
 .input-field{
     width: 100%;
     height: 45px;
     border: none;
-    padding: 10px;
-    background-color: #eeeeee;
+    padding: 30px;
+    background-color: $inputBg;
     color: gray;
     outline: none;
     font-size: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     transition: .5s;
-    border-radius: 5px;
+    border-radius: 39px;
 }
 
 input:hover{
 }
 
 
-.heading{
-    color: #3B3663;
-    margin-bottom: 20px;
+.heading h2{
+    font-size: 38px;
+    color: $dark;
+    margin-bottom: 40px;
+    text-align: center;
+    font-weight: 700;
 }
 
 .heading p{
@@ -79,14 +100,16 @@ label{
 
 button{
     width: 100%;
-    height: 45px;
     border: none;
-    color: #FFFFFF;
-    background-color: #31285C;
-    border-radius: 5px;
-    font-size: 17px;
-    font-weight: 500;
+    color: $white;
+    padding: 25px;
+    background-color: $dark;
+    border-radius: 39px;
+    font-size: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
     transition: 0.3s;
+    margin-bottom: 30px;
 }
 
 button:hover{
@@ -97,10 +120,11 @@ button:hover{
     min-width: 5px;
     min-height: 10px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;
     font-size: 15px;
+    gap: 8px;
 }
 
 .custom-checkbox{
@@ -130,4 +154,14 @@ input[type=checkbox]:checked ~ .custom-checkbox::before {
 footer{
     text-align: center;
     margin: 20px;
+}
+
+.form__link {
+    font-size: 22px;
+    color: $dark;
+
+    &_color {
+        font-weight: 700;
+        color: $main;
+    }
 }
