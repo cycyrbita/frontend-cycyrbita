@@ -44,9 +44,10 @@ body{
 }
 
 .card {
+  width: 100%;
   position: relative;
-  width: 460px;
-  min-height:100px;
+  max-width: 460px;
+  min-height: 100px;
   background-color: #FFFFFF;
   border-radius: 38px;
   box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
@@ -155,7 +156,7 @@ footer{
   margin: 20px;
 }
 
-.link__password {
+.form__link {
   font-size: 22px;
   color: $dark;
 

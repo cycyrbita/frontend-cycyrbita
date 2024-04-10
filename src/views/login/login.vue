@@ -30,10 +30,10 @@
             </div>
             <div class="input-group row">
                 <div class="row">
-                    <router-link to="/add-recovery-password-link" class="link__password">Забыли пароль?</router-link>
+                    <router-link to="/add-recovery-password-link" class="form__link">Забыли пароль?</router-link>
                 </div>
                 <div class="row">
-                    <router-link to="/registration" class="link__password link__password_color">Регистрация</router-link>
+                    <router-link to="/registration" class="form__link form__link_color">Регистрация</router-link>
                 </div>
             </div>
 
