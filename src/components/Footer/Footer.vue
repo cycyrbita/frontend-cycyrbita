@@ -1,13 +1,15 @@
 <template>
-	Footer
+  <footer class="footer">
+    Footer
+  </footer>
 </template>
 
 <script>
 export default {
-	name: "Footer.vue"
+  name: "Footer.vue"
 }
 </script>
 
-<style scoped>
-
+<style>
+@import "@/components/Footer/styles/footer.scss";
 </style>

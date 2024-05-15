@@ -40,35 +40,5 @@ const logout = async () => {
 </script>
 
 <style scoped>
-ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: #333;
-}
-
-li {
-	float: left;
-}
-
-li a,
-li button {
-	display: block;
-	color: white;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-	background-color: transparent;
-	border: 0;
-	line-height: 24px;
-	font-size: 15px;
-	cursor: pointer;
-}
-
-/* Change the link color to #111 (black) on hover */
-li a:hover,
-li button:hover {
-	background-color: #111;
-}
+@import "@/components/Header/styles/header.scss";
 </style>

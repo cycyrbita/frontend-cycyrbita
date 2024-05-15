@@ -26,7 +26,7 @@ coverage
 *.njsproj
 *.sln
 *.sw?
-src/assets/ingredients
+src/assets/img/ingredients
 
 .env.production
 .env
