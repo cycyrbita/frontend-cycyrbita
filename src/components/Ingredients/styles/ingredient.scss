@@ -1,7 +1,7 @@
 .ingredient {
   width: 100%;
   max-width: 1320px;
-  background-color: #F1F3FB;
+  background-color: $background_light;
   border-radius: 20px;
   padding: 40px;
 
@@ -12,7 +12,7 @@
     cursor: pointer;
 
     &:hover {
-      color: #5C71BC;
+      color: $main;
     }
   }
 
@@ -34,7 +34,7 @@
       background-color: transparent;
       border: 0;
       box-shadow: none !important;
-      color: #000000;
+      color: $black;
 
       .p-button-icon {
         font-size: 26px;
@@ -104,7 +104,7 @@
       margin-bottom: 5px;
       margin-left: 28px;
       font-size: 14px;
-      color: #5C71BC;
+      color: $main;
     }
 
     .p-inputtext {
@@ -126,19 +126,19 @@
   &__themes {
     .p-multiselect {
       width: 100%;
-      background-color: #5C71BC;
+      background-color: $main;
       border-radius: 30px;
       padding: 14px 11px 14px 27px;
-      border-color: #fff;
-      border-color: #5C71BC;
+      border-color: $white;
+      border-color: $main;
 
       .p-multiselect-label {
         padding: 0;
-        color: #ffffff;
+        color: $white;
       }
 
       .p-multiselect-trigger {
-        color: #ffffff;
+        color: $white;
       }
 
       &.p-multiselect:not(.p-disabled).p-focus {
@@ -175,7 +175,7 @@
       }
 
       .p-fileupload-empty {
-        color: #5C71BC;
+        color: $main;
       }
 
       .p-fileupload-buttonbar,
@@ -245,7 +245,7 @@
             padding: 0;
             background-color: transparent;
             border: 0;
-            color: #5C71BC;
+            color: $main;
           }
         }
 
@@ -254,16 +254,16 @@
           height: 100%;
           object-fit: cover;
           border-radius: 50%;
-          background-color: #fff;
+          background-color: $white;
         }
       }
 
       .p-button {
         padding: 15px;
         border-radius: 30px;
-        background-color: #5C71BC;
-        border-color: #5C71BC;
-        color: #ffffff;
+        background-color: $main;
+        border-color: $main;
+        color: $white;
 
         @media (max-width: 767px) {
           padding: 10px 15px;
@@ -298,18 +298,18 @@
     gap: 10px;
 
     .p-chip {
-      border: 1px solid #5C71BC;
+      border: 1px solid $background_dark;
       background-color: transparent;
       padding-top: 3px;
       padding-bottom: 3px;
-      color: #5C71BC;
+      color: $main;
       cursor: default;
       height: 33px;
 
       &.active {
-        background-color: #5C71BC;
-        color: #ffffff;
-        border-color: #5C71BC;
+        background-color: $main;
+        color: $white;
+        border-color: $main;
       }
 
       .pi {
@@ -332,7 +332,7 @@
       border-radius: 15px;
 
       &.p-inputtext:enabled:hover {
-        border-color: #9ba8d5;
+        border-color: $main;
       }
 
       &.p-inputtext:enabled:focus {
@@ -353,9 +353,9 @@
     margin-top: 30px;
 
     .p-button {
-      border-color: #5C71BC;
-      background-color: #5C71BC;
-      color: #ffffff;
+      border-color: $main;
+      background-color: $main;
+      color: $white;
       padding: 14px 77px;
       text-transform: uppercase;
     }
@@ -391,7 +391,7 @@
   &__box {
     width: 148px;
     height: 148px;
-    background-color: #ffffff;
+    background-color: $white;
     border-radius: 50%;
     overflow: hidden;
 
@@ -412,11 +412,11 @@
   border-radius: 0 0 30px 30px;
   box-shadow: none;
   transition: 0s;
-  background-color: #5C71BC;
+  background-color: $main;
   overflow: hidden;
 
   &:hover {
-    background-color: #4d5d9d;
+    background-color: $main;
   }
 
   .p-multiselect-filter {
@@ -431,7 +431,7 @@
       display: flex;
       flex-direction: row-reverse;
       justify-content: space-between;
-      color: #ffffff;
+      color: $white;
       padding-right: 30px;
       padding-left: 30px;
 
@@ -441,16 +441,16 @@
       }
 
       &:hover {
-        background-color: #778de1;
+        background-color: $main;
       }
 
       &.p-highlight {
-        background-color: #7e8dc7;
-        color: #ffffff;
+        background-color: $main;
+        color: $white;
       }
 
       &.p-focus {
-        background-color: #4d5d9d;
+        background-color: $main;
       }
     }
   }
@@ -468,13 +468,13 @@
   }
 
   .p-multiselect-item.p-highlight {
-    color: #5c71bc;
-    background-color: #f1f3fb;
+    color: $main;
+    background-color: $background_light;
   }
 
   .p-checkbox-box.p-highlight {
-    border-color: #5c71bc;
-    background-color: #5c71bc;
+    border-color: $main;
+    background-color: $main;
   }
 
   .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
@@ -496,7 +496,7 @@
 
     i {
       font-size: 26px;
-      color: #000000;
+      color: $black;
     }
   }
 
@@ -505,9 +505,9 @@
     z-index: 1;
     top: 100%;
     left: 0;
-    background-color: #15133D;
+    background-color: $dark;
     border-radius: 10px;
-    color: #ffffff;
+    color: $white;
     padding-top: 8px;
     padding-bottom: 8px;
 
@@ -519,7 +519,7 @@
       width: 15px;
       height: 15px;
       transform: rotate(45deg);
-      background-color: #15133D;
+      background-color: $dark;
     }
   }
 
@@ -537,8 +537,8 @@
     }
 
     &:hover {
-      background-color: #191749;
-      color: #F2297E;
+      background-color: $dark;
+      color: $pink;
     }
   }
 }

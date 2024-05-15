@@ -1,6 +1,6 @@
 .ingredient-card {
   position: relative;
-  background-color: #ffffff;
+  background-color: $white;
   border-radius: 20px;
   padding: 20px;
 
@@ -18,7 +18,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #15133D;
+    color: $dark;
   }
 
   &__menu {
@@ -28,7 +28,7 @@
       background-color: transparent;
       border: 0;
       box-shadow: none !important;
-      color: #000000;
+      color: $black;
 
       .p-button-icon {
         font-size: 26px;
@@ -37,7 +37,7 @@
   }
 
   &__menu-list {
-    background-color: #15133D !important;
+    background-color: $dark !important;
     border-radius: 10px;
     max-width: 170px;
 
@@ -49,7 +49,7 @@
       width: 15px;
       height: 15px;
       transform: rotate(45deg);
-      background-color: #15133D;
+      background-color: $dark;
     }
 
     .p-menuitem {
@@ -70,21 +70,21 @@
 
         &:hover {
           span {
-            color: #F2297E;
+            color: $pink;
           }
         }
       }
     }
 
     .p-menuitem-text {
-      color: #ffffff;
+      color: $white;
     }
 
     .p-menuitem-content {
-      background-color: #15133D;
+      background-color: $dark;
 
       &:hover {
-        background-color: #15133D;
+        background-color: $dark;
       }
     }
   }
@@ -108,7 +108,7 @@
     position: relative;
     border: 0;
     background: transparent;
-    color: #15133D;
+    color: $dark;
     width: 3rem;
     height: 2rem;
     padding: 0 10px;
@@ -127,7 +127,7 @@
     border-radius: 20px;
 
     &.p-speeddial-mask-visible {
-      background-color: #fff;
+      background-color: $white;
       opacity: .9;
       z-index: 1;
     }
@@ -141,7 +141,7 @@
     margin: 5px;
     overflow: hidden;
     border-radius: 50%;
-    background-color: #F8FAFD;
+    background-color: $background_light;
   }
 
   &__img {
@@ -167,7 +167,7 @@
 
     i {
       font-size: 26px;
-      color: #000000;
+      color: $black;
     }
   }
 
@@ -176,9 +176,9 @@
     z-index: 1;
     top: 100%;
     left: 0;
-    background-color: #15133D;
+    background-color: $dark;
     border-radius: 10px;
-    color: #ffffff;
+    color: $white;
     padding-top: 8px;
     padding-bottom: 8px;
 
@@ -190,7 +190,7 @@
       width: 15px;
       height: 15px;
       transform: rotate(45deg);
-      background-color: #15133D;
+      background-color: $dark;
     }
   }
 
@@ -208,8 +208,8 @@
     }
 
     &:hover {
-      background-color: #191749;
-      color: #F2297E;
+      background-color: $dark;
+      color: $pink;
     }
   }
 }

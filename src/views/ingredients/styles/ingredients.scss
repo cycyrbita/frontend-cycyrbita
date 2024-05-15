@@ -1,8 +1,7 @@
-.ingredients-view {
+.ingredients {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #F1F3FB;
   padding-top: 60px;
 
   &__header {
@@ -50,7 +49,7 @@
   }
 }
 
-.ingredients-view-list {
+.ingredients-list {
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
@@ -76,9 +75,9 @@
   }
 }
 
-.ingredients-view-confirmation {
+.ingredients-confirmation {
   padding: 30px 50px;
-  background-color: #fff;
+  background-color: $white;
   border-radius: 20px;
   min-width: 556px;
   background-image: url('@/assets/img/ingredients/ingredient-card-confirmation.svg');
@@ -91,7 +90,7 @@
     font-weight: 700;
     font-size: 24px;
     text-align: center;
-    color: #15133D;
+    color: $dark;
 
     @media (max-width: 575px) {
       font-size: 18px;
@@ -109,7 +108,7 @@
     background-color: transparent;
     border: 2px solid #000;
     border-radius: 40px;
-    color: #000000;
+    color: $black;
     padding: 15px;
     text-transform: uppercase;
 
@@ -122,9 +121,9 @@
     }
 
     &--active {
-      color: #fff;
-      background-color: #F2297E;
-      border-color: #F2297E;
+      color: $white;
+      background-color: $pink;
+      border-color: $pink;
     }
 
     @media (max-width: 575px) {

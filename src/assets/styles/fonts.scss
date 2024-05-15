@@ -1,6 +1,20 @@
 @font-face {
   font-family: 'Arial';
+  src: url("@/assets/fonts/Arial/Arial-Regular.woff2") format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Arial';
+  src: url("@/assets/fonts/Arial/Arial-Bold.woff2") format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Arial';
+  src: url("@/assets/fonts/Arial/Arial-Black.woff2") format('woff2');
   font-weight: 900;
-  src: url("src/assets/fonts/Arial/arial-black.woff2") format('woff2');
   font-style: normal;
 }
