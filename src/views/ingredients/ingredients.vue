@@ -1,23 +1,23 @@
 <template>
   <Toast />
   <Dialog
-    class="ingredients-view-confirmation"
+    class="ingredients-confirmation"
     v-model:visible="store.visibleDeleted"
     modal
     :dismissableMask="true"
   >
     <template #container="{ closeCallback }">
-      <div class="ingredients-view-confirmation__body">
-        <div class="ingredients-view-confirmation__title">Вы хорошо подумали?</div>
-        <div class="ingredients-view-confirmation__subtitle">Точно удалить?</div>
-        <div class="ingredients-view-confirmation__buttons">
+      <div class="ingredients-confirmation__body">
+        <div class="ingredients-confirmation__title">Вы хорошо подумали?</div>
+        <div class="ingredients-confirmation__subtitle">Точно удалить?</div>
+        <div class="ingredients-confirmation__buttons">
           <Button
-            class="ingredients-view-confirmation__button"
+            class="ingredients-confirmation__button"
             label="Я передумал"
             @click="closeCallback"
           ></Button>
           <Button
-            class="ingredients-view-confirmation__button ingredients-view-confirmation__button--active"
+            class="ingredients-confirmation__button ingredients-confirmation__button--active"
             label="Удалить"
             @click="deleted"
           ></Button>
@@ -35,18 +35,18 @@
     @toastIngredientEdits="toastIngredientEdits"
     v-if="store.ingredientId"
   ></Ingredient>
-  <div class="ingredients-view">
-      <div class="ingredients-view__header">
+  <div class="ingredients">
+      <div class="ingredients__header">
         <IngredientsFilter @paginationCount="debounced"></IngredientsFilter>
       </div>
       <div class="container">
-      <div class="ingredients-view__body">
+      <div class="ingredients__body">
         <div
-          class="ingredients-view__list ingredients-view-list"
+          class="ingredients__list ingredients-list"
           v-if="ingredients.length"
         >
           <IngredientCard
-            class="ingredients-view-list__card"
+            class="ingredients-list__card"
             v-for="ingredient in ingredients"
             :key="ingredient._id"
             :ingredient="ingredient"
@@ -56,7 +56,7 @@
         </div>
         <Paginator
           v-if="ingredients.length"
-          class="ingredients-view-pagination ingredients-view__pagination"
+          class="ingredients-pagination ingredients__pagination"
           v-model:first="paginationCount"
           @update:first="getIngredients"
           :rows="limit"
@@ -67,7 +67,7 @@
           }"
         ></Paginator>
       </div>
-      <div class="ingredients-view__footer"></div>
+      <div class="ingredients__footer"></div>
     </div>
   </div>
 </template>
@@ -131,5 +131,5 @@
 </script>
 
 <style lang="scss">
-  @import '@/views/ingredients/styles/ingredients-view.scss';
+  @import '@/views/ingredients/styles/ingredients.scss';
 </style>
