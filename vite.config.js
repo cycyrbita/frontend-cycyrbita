@@ -20,5 +20,13 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       '~': fileURLToPath(new URL('./node_modules', import.meta.url)),
     }
+  },
+  css: {
+    devSourcemap: true,
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@import "@/assets/styles/colors.scss";`
+      }
+    }
   }
 })
