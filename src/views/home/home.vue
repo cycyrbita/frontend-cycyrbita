@@ -1,9 +1,7 @@
 <template>
   <section class="home wrapper">
     <nav v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" class="home__nav">
-      <div v-for="item in viewsList" ref="nav__item" class="home__nav-item">
-        <router-link :to="item.link" class="home__nav-link"> {{ item.value }}</router-link>
-      </div>
+        <router-link v-for="item in viewsList" ref="nav__item" :to="item.link" class="home__nav-item home__nav-link"> {{ item.value }}</router-link>
     </nav>
   </section>
 </template>
@@ -23,13 +21,12 @@ const viewsList = [
   { link: '/avatars', value: 'Аватарки' }
 ]
 
-const nav__item = ref([])
-const itemBackground = (opacity) => `rgba(92, 113, 188, ${opacity})`
-const part = (array, index) => Math.round((index / array) * 10) / 10 + 0.4
-
 onMounted(() => {
-  const { value: navList, value: { length: arrayLength } } = nav__item
-  navList.forEach((item, index) => item.style.background = itemBackground(part(arrayLength, index)))
+  const navList = [...document.querySelectorAll('.home__nav-item')]
+  const itemBackground = (opacity) => `rgba(92, 113, 188, ${opacity})`
+  const part = (array, index) => Math.round((index / array) * 10) / 10 + 0.4
+
+  navList.forEach((item, index) => item.style.background = itemBackground(part(navList.length, index)))
 })
 
 </script>
