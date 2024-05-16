@@ -2,33 +2,50 @@
   background-color: $dark;
 
   ul {
-    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 35px;
     margin: 0;
-    padding: 0;
+    padding: 25px 0;
     overflow: hidden;
-  }
-
-  li {
-    float: left;
+    list-style-type: none;
   }
 
   li a,
   li button {
-    display: block;
     color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    background-color: transparent;
-    border: 0;
+    font-size: 18px;
+    font-weight: 700;
     line-height: 24px;
-    font-size: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    background-color: transparent;
     cursor: pointer;
+    padding-bottom: 5px;
+    border: 0;
+  }
+
+  li button {
+    padding: 0;
+  }
+
+  li a.active {
+    color: $main_light;
+    border-bottom: 3px solid $main_light;
   }
 
   /* Change the link color to #111 (black) on hover */
   li a:hover,
   li button:hover {
     background-color: $dark;
+  }
+
+  &__login {
+    margin-left: auto;
+    padding: 8px 25px;
+    border-radius: 20px;
+    border: 1px solid $white;
   }
 }
