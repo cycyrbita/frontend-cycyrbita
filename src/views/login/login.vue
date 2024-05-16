@@ -1,6 +1,8 @@
 <template>
     <div class="wrapper">
-        <div class="card">
+        <div class="card"
+             @keyup.enter="login"
+        >
             <div
                 class="overlay"
                 v-if="isLoading"
