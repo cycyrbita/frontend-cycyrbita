@@ -1,3 +1,8 @@
 <template>
-	<h1>Home</h1>
+  <section class="home">
+    <div class="container">
+      <h1>Home</h1>
+    </div>
+  </section>
+
 </template>
