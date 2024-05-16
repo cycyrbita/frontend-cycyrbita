@@ -1,7 +1,7 @@
 .header {
   background-color: $dark;
 
-  ul {
+  .nav {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -10,42 +10,37 @@
     padding: 25px 0;
     overflow: hidden;
     list-style-type: none;
-  }
 
-  li a,
-  li button {
-    color: white;
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 24px;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    background-color: transparent;
-    cursor: pointer;
-    padding-bottom: 5px;
-    border: 0;
-  }
+   &__link {
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 24px;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+      background-color: transparent;
+      cursor: pointer;
+      padding-bottom: 5px;
+      border: 0;
 
-  li button {
-    padding: 0;
-  }
+     &.active {
+       color: $main_light;
+       border-bottom: 3px solid $main_light;
+     }
+    }
 
-  li a.active {
-    color: $main_light;
-    border-bottom: 3px solid $main_light;
+    &__login {
+      margin-left: auto;
+      padding: 8px 25px;
+      border-radius: 20px;
+      border: 1px solid $white;
+    }
   }
 
   /* Change the link color to #111 (black) on hover */
   li a:hover,
   li button:hover {
     background-color: $dark;
-  }
-
-  &__login {
-    margin-left: auto;
-    padding: 8px 25px;
-    border-radius: 20px;
-    border: 1px solid $white;
   }
 }

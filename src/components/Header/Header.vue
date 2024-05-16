@@ -1,19 +1,17 @@
 <template>
   <header class="header">
     <div class="container">
-      <ul>
-        <li>
-          <router-link to="/">Главная</router-link>
-        </li>
-        <li v-if="storeAuth.auth && storeUser.user.role !== 'role.default'"><router-link to="/promo">Новые промо</router-link></li>
-        <li v-if="storeAuth.auth && storeUser.user.role !== 'role.default'"><router-link to="/clean">Чистые</router-link></li>
-        <li v-if="storeAuth.auth && storeUser.user.role !== 'role.default'"><router-link to="/ingredients">Ингредиенты</router-link></li>
-        <li v-if="storeAuth.auth && storeUser.user.role !== 'role.default'"><router-link to="/avatars">Аватарки</router-link></li>
-        <li v-if="storeUser.user.role === 'role.admin'"><router-link to="/users">Пользователи</router-link></li>
-        <li v-if="!storeAuth.auth"><router-link to="/login">Войти</router-link></li>
-        <li v-if="!storeAuth.auth"><router-link to="/registration">Регистрация</router-link></li>
-        <li v-if="storeAuth.auth" class="header__login"><button @click.prevent="logout">Выйти</button></li>
-      </ul>
+      <nav class="nav">
+        <router-link to="/" class="nav__link">Главная</router-link>
+        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/ingredients" class="nav__link">Ингредиенты</router-link>
+        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/new_promo" class="nav__link">Новые промо</router-link>
+        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/clean" class="nav__link">Чистые</router-link>
+        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/avatars" class="nav__link">Аватарки</router-link>
+        <router-link v-if="storeUser.user.role === 'role.admin'" to="/users" class="nav__link">Пользователи</router-link>
+        <router-link v-if="!storeAuth.auth" to="/login" class="nav__link">Войти</router-link>
+        <router-link v-if="!storeAuth.auth" to="/registration" class="nav__link">Регистрация</router-link>
+        <button v-if="storeAuth.auth" class="nav__link nav__login" @click.prevent="logout">Выйти</button>
+      </nav>
     </div>
   </header>
 </template>

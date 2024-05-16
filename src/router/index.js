@@ -12,6 +12,9 @@ import users from '@/router/users'
 import ingredients from '@/router/ingredients'
 import error_404 from '@/router/404'
 import error_500 from '@/router/500'
+import new_promo from '@/router/new_promo'
+import clean from '@/router/clean'
+import avatars from '@/router/avatars'
 
 const routes = [
   ...home,
@@ -24,6 +27,9 @@ const routes = [
   ...ingredients,
   ...error_404,
   ...error_500,
+  ...new_promo,
+  ...clean,
+  ...avatars,
 ]
 
 const router = createRouter({
