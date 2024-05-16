@@ -1,0 +1,29 @@
+.home {
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  &__nav-item {
+    text-align: center;
+    background: $background_dark;
+    width: 100%;
+    padding: 25px;
+    border-radius: 42px;
+    box-shadow: $shadow;
+  }
+
+  &__nav-link {
+    color: $white;
+    font-size: 25px;
+    font-weight: 700;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+}

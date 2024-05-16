@@ -5,3 +5,7 @@
     </div>
   </section>
 </template>
+
+<style scoped lang="scss">
+@import "@/views/new_promo/styles/new_promo.scss";
+</style>

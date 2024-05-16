@@ -5,3 +5,7 @@
     </div>
   </section>
 </template>
+
+<style scoped lang="scss">
+@import "@/views/avatars/styles/avatars.scss";
+</style>

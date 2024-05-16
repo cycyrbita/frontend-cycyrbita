@@ -1,12 +1,12 @@
 <template>
-  <header class="header">
+  <header v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" class="header">
     <div class="container">
       <nav class="nav">
         <router-link to="/" class="nav__link">Главная</router-link>
-        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/ingredients" class="nav__link">Ингредиенты</router-link>
-        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/new_promo" class="nav__link">Новые промо</router-link>
-        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/clean" class="nav__link">Чистые</router-link>
-        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/avatars" class="nav__link">Аватарки</router-link>
+        <router-link to="/ingredients" class="nav__link">Ингредиенты</router-link>
+        <router-link to="/new_promo" class="nav__link">Новые промо</router-link>
+        <router-link to="/clean" class="nav__link">Чистые</router-link>
+        <router-link to="/avatars" class="nav__link">Аватарки</router-link>
         <router-link v-if="storeUser.user.role === 'role.admin'" to="/users" class="nav__link">Пользователи</router-link>
         <router-link v-if="!storeAuth.auth" to="/login" class="nav__link">Войти</router-link>
         <router-link v-if="!storeAuth.auth" to="/registration" class="nav__link">Регистрация</router-link>
