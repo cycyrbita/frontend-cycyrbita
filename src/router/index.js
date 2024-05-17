@@ -34,6 +34,8 @@ const routes = [
   ...face
 ]
 
+const stopForAuthViews = ['login', 'registration', 'recovery-password', 'face']
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
@@ -50,7 +52,7 @@ router.beforeResolve(to => {
       if (!to.meta.middleware.includes(storeUser.user.role)) return false
 
       // запрещаем переходить по этим роутам если авторизованы
-      if (to.name === 'login' || to.name === 'registration' || to.name === 'recovery-password') return { name: 'home' }
+      if (stopForAuthViews.includes(to.name) ) return { name: 'home' }
     }
     // если требует авторизации
     if (to.meta.middleware.includes('auth') && !storeAuth.auth) return { name: 'face' }
