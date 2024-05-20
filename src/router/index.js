@@ -68,7 +68,7 @@ router.beforeResolve((to, from, next) => {
     console.log('авторизован')
   }
 
-  if (stopForAuth.includes(to.name)) {
+  if (!stopForAuth.includes(to.name)) {
     console.log('авторизован')
   }
 
