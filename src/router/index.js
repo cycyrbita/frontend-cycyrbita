@@ -40,7 +40,6 @@ let storeUser = null
 let count = 0
 
 const authorisation = async () => {
-  console.log(111)
   try {
     const res = await useFetch.get('refresh')
     const json = await res.json()
