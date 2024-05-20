@@ -20,13 +20,13 @@
 
       // если токен обновился
       if (res.status === 200) {
+        console.log(7777)
         // устанавливаем token
         localStorage.setItem('accessTokenCycyrbita', json.accessToken)
         // переключаем флаг авторизации
         storeAuth.auth = true
         // передаем пользователя
         storeUser.user = json.user
-        console.log(7777)
       } else {
         // переключаем флаг авторизации
         storeAuth.auth = false
