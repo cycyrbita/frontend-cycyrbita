@@ -16,6 +16,7 @@ import new_promo from '@/router/new_promo'
 import clean from '@/router/clean'
 import avatars from '@/router/avatars'
 import face from '@/router/face'
+import useFetch from '@/composables/useFetch'
 
 const routes = [
   ...home,
@@ -43,8 +44,35 @@ const router = createRouter({
 const stopForAuth = ['login', 'face', 'registration', 'recovery-password', 'add-recovery-password-link']
 
 router.beforeResolve(async (to, from, next) => {
+  const authorisation = async () => {
+    console.log(7777)
+    try {
+      const res = await useFetch.get('refresh')
+      const json = await res.json()
+
+      // если токен обновился
+      if (res.status === 200) {
+        // устанавливаем token
+        localStorage.setItem('accessTokenCycyrbita', json.accessToken)
+        // переключаем флаг авторизации
+        storeAuth.auth = true
+        // передаем пользователя
+        storeUser.user = json.user
+      } else {
+        // переключаем флаг авторизации
+        storeAuth.auth = false
+        // передаем дефолтного пользователя
+        storeUser.user = { role: 'role.default' }
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
   const storeAuth = useAuthStore()
   const storeUser = useUserStore()
+
+  await authorisation()
+
   console.log(8888)
 
   // редирект, если не авторизирован
