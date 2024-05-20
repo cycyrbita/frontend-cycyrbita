@@ -43,39 +43,21 @@ const router = createRouter({
 const stopForAuth = ['login', 'face', 'registration', 'recovery-password', 'add-recovery-password-link']
 
 router.beforeResolve(async (to, from, next) => {
+  const storeAuth = useAuthStore()
+  const storeUser = useUserStore()
   console.log(8888)
-  const storeAuth = await useAuthStore()
-  const storeUser = await useUserStore()
 
   // редирект, если не авторизирован
-  if (!storeAuth.auth && !stopForAuth.includes(to.name)) {
-    console.log(111)
-    return next({ name: 'face' })
-  }
+  if (!storeAuth.auth && !stopForAuth.includes(to.name)) return next({ name: 'face' })
 
   // проверка middleware
-  if (!to.meta.middleware) {
-    console.log(222)
-    throw new Error('на странице нету middleware')
-  }
+  if (!to.meta.middleware) throw new Error('на странице нету middleware')
 
   // проверка роли
-  if (!to.meta.middleware.includes(storeUser.user.role)) {
-    console.log(333)
-    throw new Error('у юзера нет ролей')
-  }
-
-  console.log(storeAuth.auth)
-  console.log(stopForAuth.includes(to.name))
-  console.log(to.name)
+  if (!to.meta.middleware.includes(storeUser.user.role)) throw new Error('у юзера нет ролей')
 
   // запрещаем переходить по этим роутам если авторизованы
-  if (storeAuth.auth && stopForAuth.includes(to.name)) {
-    console.log(444)
-    return next({ name: 'home' })
-  }
-
-  console.log(555)
+  if (storeAuth.auth && stopForAuth.includes(to.name)) return next({ name: 'home' })
 
   next()
 })
