@@ -86,6 +86,6 @@ const login = async () => {
 }
 </script>
 
-<style scoped>
-@import "/src/views/login/styles/login.scss";
+<style lang="scss">
+@import "@/views/login/styles/login.scss";
 </style>

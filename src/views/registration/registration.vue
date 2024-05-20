@@ -77,6 +77,6 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss">
 @import "/src/views/registration/styles/registration.scss";
 </style>
