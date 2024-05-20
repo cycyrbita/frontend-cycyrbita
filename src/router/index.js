@@ -70,6 +70,8 @@ router.beforeResolve((to, from, next) => {
     return next({ name: 'home' })
   }
 
+  console.log(555)
+
   next()
 })
 
