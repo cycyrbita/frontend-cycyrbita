@@ -14,13 +14,13 @@
   const storeUser = useUserStore()
 
   const authorisation = async () => {
+    console.log(7777)
     try {
       const res = await useFetch.get('refresh')
       const json = await res.json()
 
       // если токен обновился
       if (res.status === 200) {
-        console.log(7777)
         // устанавливаем token
         localStorage.setItem('accessTokenCycyrbita', json.accessToken)
         // переключаем флаг авторизации
