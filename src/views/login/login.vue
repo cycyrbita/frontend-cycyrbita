@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="login wrapper">
     <div class="auth-form"
          @keyup.enter="login"
     >

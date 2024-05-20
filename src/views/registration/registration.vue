@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="registration wrapper">
     <div class="auth-form">
       <div
           class="overlay"
