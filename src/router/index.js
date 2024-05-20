@@ -64,6 +64,14 @@ router.beforeResolve((to, from, next) => {
     throw new Error('у юзера нет ролей')
   }
 
+  if (storeAuth.auth) {
+    console.log('авторизован')
+  }
+
+  if (stopForAuth.includes(to.name)) {
+    console.log('авторизован')
+  }
+
   // запрещаем переходить по этим роутам если авторизованы
   if (storeAuth.auth && stopForAuth.includes(to.name)) {
     console.log(444)
