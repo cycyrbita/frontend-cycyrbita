@@ -10,7 +10,6 @@
             >
                 <span class="p-input-icon-right"> <i
                     class="pi pi-search"
-                    style="font-size: 1.3rem"
                 />
                     <InputText
                         class="ingredients-filter__field"

@@ -1,52 +1,33 @@
 <template>
   <div class="wrapper">
-    <div class="card">
+    <div class="auth-form">
       <div
           class="overlay"
           v-if="isLoading"
       ></div>
-      <div class="heading"><h2>Восстановление пароля</h2></div>
-      <div class="input-group">
-        <input
-            type="text"
-            class="input-field"
-            placeholder="Логин"
-            v-model="email"
-        >
-      </div>
-      <div class="input-group">
-        <input
-            type="password"
-            class="input-field"
-            placeholder="Новый пароль"
-            v-model="password"
-        >
-      </div>
-      <div class="input-group">
-        <input
-            type="password"
-            class="input-field"
-            placeholder="Новый пароль"
-            v-model="passwordRepeat"
-        >
-      </div>
-      <div class="input-group">
-        <small style="color: red"><p>{{ message }}</p></small>
-      </div>
-      <div
-          class="input-group"
-          @click="recoveryPassword"
+      <h2 class="auth-form__heading">Восстановление пароля</h2>
+      <input
+          type="text"
+          class="auth-form__input"
+          placeholder="Логин"
+          v-model="email"
       >
-        <button>Восстановить</button>
-      </div>
-      <div class="input-group row">
-        <div class="row">
-          <router-link to="/login" class="form__link">Авторизоваться</router-link>
-        </div>
-        <div class="row">
-          <router-link to="/registration" class="form__link form__link_color">Регистрация</router-link>
-        </div>
-      </div>
+      <input
+          type="password"
+          class="auth-form__input"
+          placeholder="Новый пароль"
+          v-model="password"
+      >
+      <input
+          type="password"
+          class="auth-form__input"
+          placeholder="Новый пароль"
+          v-model="passwordRepeat"
+      >
+      <p v-if="message" class="auth-form__text">{{ message }}</p>
+      <button @click="recoveryPassword" class="auth-form__btn">Восстановить</button>
+      <router-link to="/login" class="auth-form__link">Авторизоваться</router-link>
+      <router-link to="/registration" class="auth-form__link auth-form__link_color">Регистрация</router-link>
     </div>
   </div>
 

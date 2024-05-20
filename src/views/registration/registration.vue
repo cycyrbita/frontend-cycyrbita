@@ -1,80 +1,59 @@
 <template>
   <div class="wrapper">
-    <div class="card">
+    <div class="auth-form">
       <div
-        class="overlay"
-        v-if="isLoading"
+          class="overlay"
+          v-if="isLoading"
       ></div>
-      <div class="heading"><h2>Регистрация</h2></div>
-      <div class="input-group">
-        <input
+      <h2 class="auth-form__heading">Регистрация</h2>
+      <input
           type="text"
-          class="input-field"
+          class="auth-form__input"
           placeholder="Почта"
           v-model="email"
-        />
-      </div>
-      <div class="input-group">
-        <input
+      />
+      <input
           type="text"
-          class="input-field"
+          class="auth-form__input"
           placeholder="Пароль"
           v-model="password"
-        />
-      </div>
-      <div class="input-group">
-        <small style="color: red"
-          ><p>{{ message }}</p></small
-        >
-      </div>
-      <div
-        class="input-group"
-        @click="registration"
-      >
-        <button>Зарегистрироваться</button>
-      </div>
-      <div class="input-group row">
-        <div class="row">
-          <router-link
-            to="/login"
-            class="form__link form__link_color"
-            >Авторизоваться</router-link
-          >
-        </div>
-      </div>
+      />
+      <p v-if="message" class="auth-form__text">{{ message }}</p>
+      <button @click="registration" class="auth-form__btn">Зарегистрироваться</button>
+      <router-link to="/login" class="auth-form__link auth-form__link_color">Авторизоваться</router-link>
     </div>
   </div>
 </template>
 
 <script setup>
-  import router from "@/router";
-  import {ref} from "vue";
-  import useFetch from "@/composables/useFetch";
+import router from "@/router";
+import { ref } from "vue";
+import useFetch from "@/composables/useFetch";
 
-  const isLoading = ref(false)
-  const email = ref('')
-  const password = ref('')
-  const message = ref('')
+const isLoading = ref(false)
+const email = ref('')
+const password = ref('')
+const message = ref('')
 
-  const registration = async () => {
-    try {
-			// индикатор загрузки
-      isLoading.value = true
-			// запрос
-      const res = await useFetch.post('registration', {email: email.value, password: password.value})
-			// ковертируем данные
-			const json = await res.json()
-			// если все успешно
-			console.log(res.status)
-      if(res.status === 200) router.push('/login')
-			// текст ошибки
-			message.value = json.message
-    } catch (e) {
-      throw e
-    } finally {
-      isLoading.value = false
-    }
+const registration = async () => {
+  try {
+    // индикатор загрузки
+    isLoading.value = true
+    // запрос
+    const res = await useFetch.post('registration', { email: email.value, password: password.value })
+    // ковертируем данные
+    const json = await res.json()
+    // если все успешно
+    console.log(res.status)
+    if (res.status === 200) router.push('/login')
+    // текст ошибки
+    message.value = json.message
+  } catch (e) {
+    throw e
+  } finally {
+    isLoading.value = false
   }
+}
 </script>
 
 <style lang="scss">

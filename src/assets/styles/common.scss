@@ -30,10 +30,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-div {
-  width: 100%;
-}
-
 body, p {
   margin: 0;
 }
@@ -49,4 +45,28 @@ body, p {
   width: 100%;
   height: 100%;
   opacity: .6;
+}
+
+.custom-checkbox {
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $background_light;
+  width: 17px;
+  height: 17px;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
+input[type=checkbox]:checked ~ .custom-checkbox {
+  background-color: $dark;
+}
+
+input[type=checkbox]:checked ~ .custom-checkbox::before {
+  content: "\f00c";
+  color: $white;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  display: inline-block;
 }

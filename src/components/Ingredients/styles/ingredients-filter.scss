@@ -31,7 +31,10 @@
   }
 
   &__search {
+    width: 100%;
+    max-width: 650px;
     .pi-search {
+      transform: translateY(-50%);
       margin-right: 1rem;
 
       @media (max-width: 575px) {
@@ -64,6 +67,8 @@
    }
 
   &__field {
+    width: 100%;
+    display: block;
     background-color: $white;
     box-shadow: 0 4px 6px rgba(163, 161, 255, 0.16);
     border-radius: 70px;

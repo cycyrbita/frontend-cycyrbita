@@ -1,16 +1,16 @@
 <template>
   <header  class="header">
     <div class="container">
-      <nav class="nav">
-        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/" class="nav__link">Главная</router-link>
-        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/ingredients" class="nav__link">Ингредиенты</router-link>
-        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/new_promo" class="nav__link">Новые промо</router-link>
-        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/clean" class="nav__link">Чистые</router-link>
-        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/avatars" class="nav__link">Аватарки</router-link>
-        <router-link v-if="storeUser.user.role === 'role.admin'" to="/users" class="nav__link">Пользователи</router-link>
-        <router-link v-if="!storeAuth.auth" to="/login" class="nav__link">Войти</router-link>
-        <router-link v-if="!storeAuth.auth" to="/registration" class="nav__link">Регистрация</router-link>
-        <button v-if="storeAuth.auth" class="nav__link nav__login" @click.prevent="logout">Выйти</button>
+      <nav class="header__nav">
+        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/" class="header__link">Главная</router-link>
+        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/ingredients" class="header__link">Ингредиенты</router-link>
+        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/new_promo" class="header__link">Новые промо</router-link>
+        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/clean" class="header__link">Чистые</router-link>
+        <router-link v-if="storeAuth.auth && storeUser.user.role !== 'role.default'" to="/avatars" class="header__link">Аватарки</router-link>
+        <router-link v-if="storeUser.user.role === 'role.admin'" to="/users" class="header__link">Пользователи</router-link>
+        <router-link v-if="!storeAuth.auth" to="/login" class="header__link">Войти</router-link>
+        <router-link v-if="!storeAuth.auth" to="/registration" class="header__link">Регистрация</router-link>
+        <button v-if="storeAuth.auth" class="header__link header__login" @click.prevent="logout">Выйти</button>
       </nav>
     </div>
   </header>
@@ -43,6 +43,6 @@ const logout = async () => {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 @import "@/components/Header/styles/header.scss";
 </style>

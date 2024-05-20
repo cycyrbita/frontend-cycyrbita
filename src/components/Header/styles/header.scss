@@ -1,7 +1,7 @@
 .header {
   background-color: $dark;
 
-  .nav {
+  &__nav {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -10,32 +10,32 @@
     padding: 25px 0;
     overflow: hidden;
     list-style-type: none;
+  }
 
-   &__link {
-      color: white;
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 24px;
-      text-align: center;
-      text-decoration: none;
-      display: block;
-      background-color: transparent;
-      cursor: pointer;
-      padding-bottom: 5px;
-      border: 0;
+  &__link {
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    background-color: transparent;
+    cursor: pointer;
+    padding-bottom: 5px;
+    border: 0;
 
-     &.active {
-       color: $main_light;
-       border-bottom: 3px solid $main_light;
-     }
+    &.active {
+      color: $main_light;
+      border-bottom: 3px solid $main_light;
     }
+  }
 
-    &__login {
-      margin-left: auto;
-      padding: 8px 25px;
-      border-radius: 20px;
-      border: 1px solid $white;
-    }
+  &__login {
+    margin-left: auto;
+    padding: 8px 25px;
+    border-radius: 20px;
+    border: 1px solid $white;
   }
 
   /* Change the link color to #111 (black) on hover */
