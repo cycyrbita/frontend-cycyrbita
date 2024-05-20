@@ -52,17 +52,17 @@ router.beforeResolve((to, from, next) => {
     return next({ name: 'face' })
   }
 
-  // проверка middleware
-  if (!to.meta.middleware) {
-    console.log(222)
-    throw new Error('на странице нету middleware')
-  }
-
-  // проверка роли
-  if (!to.meta.middleware.includes(storeUser.user.role)) {
-    console.log(333)
-    throw new Error('у юзера нет ролей')
-  }
+  // // проверка middleware
+  // if (!to.meta.middleware) {
+  //   console.log(222)
+  //   throw new Error('на странице нету middleware')
+  // }
+  //
+  // // проверка роли
+  // if (!to.meta.middleware.includes(storeUser.user.role)) {
+  //   console.log(333)
+  //   throw new Error('у юзера нет ролей')
+  // }
 
   console.log(storeAuth.auth)
   console.log(stopForAuth.includes(to.name))
