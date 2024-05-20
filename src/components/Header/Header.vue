@@ -45,6 +45,7 @@
           >Войти</router-link
         >
         <router-link
+          v-if="!storeAuth.auth"
           to="/registration"
           class="header__link"
           >Регистрация</router-link
