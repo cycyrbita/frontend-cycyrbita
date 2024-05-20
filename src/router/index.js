@@ -42,9 +42,9 @@ const router = createRouter({
 
 const stopForAuth = ['login', 'face', 'registration', 'recovery-password', 'add-recovery-password-link']
 
-router.beforeResolve((to, from, next) => {
-  const storeAuth = useAuthStore()
-  const storeUser = useUserStore()
+router.beforeResolve(async (to, from, next) => {
+  const storeAuth = await useAuthStore()
+  const storeUser = await useUserStore()
 
   // редирект, если не авторизирован
   if (!storeAuth.auth && !stopForAuth.includes(to.name)) {
@@ -52,17 +52,17 @@ router.beforeResolve((to, from, next) => {
     return next({ name: 'face' })
   }
 
-  // // проверка middleware
-  // if (!to.meta.middleware) {
-  //   console.log(222)
-  //   throw new Error('на странице нету middleware')
-  // }
-  //
-  // // проверка роли
-  // if (!to.meta.middleware.includes(storeUser.user.role)) {
-  //   console.log(333)
-  //   throw new Error('у юзера нет ролей')
-  // }
+  // проверка middleware
+  if (!to.meta.middleware) {
+    console.log(222)
+    throw new Error('на странице нету middleware')
+  }
+
+  // проверка роли
+  if (!to.meta.middleware.includes(storeUser.user.role)) {
+    console.log(333)
+    throw new Error('у юзера нет ролей')
+  }
 
   console.log(storeAuth.auth)
   console.log(stopForAuth.includes(to.name))
