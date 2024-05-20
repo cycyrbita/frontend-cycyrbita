@@ -34,29 +34,37 @@ const routes = [
   ...face
 ]
 
-const stopForAuthViews = ['login', 'registration', 'recovery-password', 'face']
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   linkActiveClass: 'active',
 })
 
-router.beforeResolve(to => {
+const stopForAuth = ['login', 'face', 'registration', 'recovery-password', 'add-recovery-password-link']
+
+router.beforeResolve((to, from, next) => {
   const storeAuth = useAuthStore()
   const storeUser = useUserStore()
 
-  if (to.meta.middleware) {
-    if (storeAuth.auth) {
-      // проверка роли
-      if (!to.meta.middleware.includes(storeUser.user.role)) return false
-
-      // запрещаем переходить по этим роутам если авторизованы
-      if (stopForAuthViews.includes(to.name) ) return { name: 'home' }
-    }
-    // если требует авторизации
-    if (to.meta.middleware.includes('auth') && !storeAuth.auth) return { name: 'face' }
+  // проверка middleware
+  if (!to.meta.middleware) {
+    next()
+    throw new Error('на странице нету middleware')
   }
+
+  // проверка роли
+  if (!to.meta.middleware.includes(storeUser.user.role)) {
+    next()
+    throw new Error('у юзера нет ролей')
+  }
+
+  // редирект, если не авторизирован
+  if (!storeAuth.auth && !stopForAuth.includes(to.name)) return next({ name: 'face' })
+
+  // запрещаем переходить по этим роутам если авторизованы
+  if (storeAuth.auth && stopForAuth.includes(to.name)) return next({ name: 'home' })
+
+  next()
 })
 
 export default router
