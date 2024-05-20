@@ -31,7 +31,7 @@ const routes = [
   ...new_promo,
   ...clean,
   ...avatars,
-  ...face
+  ...face,
 ]
 
 const router = createRouter({
@@ -47,16 +47,28 @@ router.beforeResolve((to, from, next) => {
   const storeUser = useUserStore()
 
   // редирект, если не авторизирован
-  if (!storeAuth.auth && !stopForAuth.includes(to.name)) return next({ name: 'face' })
+  if (!storeAuth.auth && !stopForAuth.includes(to.name)) {
+    console.log(111)
+    return next({ name: 'face' })
+  }
 
   // проверка middleware
-  if (!to.meta.middleware) throw new Error('на странице нету middleware')
+  if (!to.meta.middleware) {
+    console.log(222)
+    throw new Error('на странице нету middleware')
+  }
 
   // проверка роли
-  if (!to.meta.middleware.includes(storeUser.user.role)) throw new Error('у юзера нет ролей')
+  if (!to.meta.middleware.includes(storeUser.user.role)) {
+    console.log(333)
+    throw new Error('у юзера нет ролей')
+  }
 
   // запрещаем переходить по этим роутам если авторизованы
-  if (storeAuth.auth && stopForAuth.includes(to.name)) return next({ name: 'home' })
+  if (storeAuth.auth && stopForAuth.includes(to.name)) {
+    console.log(444)
+    return next({ name: 'home' })
+  }
 
   next()
 })
