@@ -46,20 +46,14 @@ router.beforeResolve((to, from, next) => {
   const storeAuth = useAuthStore()
   const storeUser = useUserStore()
 
-  // проверка middleware
-  if (!to.meta.middleware) {
-    next()
-    throw new Error('на странице нету middleware')
-  }
-
-  // проверка роли
-  if (!to.meta.middleware.includes(storeUser.user.role)) {
-    next()
-    throw new Error('у юзера нет ролей')
-  }
-
   // редирект, если не авторизирован
   if (!storeAuth.auth && !stopForAuth.includes(to.name)) return next({ name: 'face' })
+
+  // проверка middleware
+  if (!to.meta.middleware) throw new Error('на странице нету middleware')
+
+  // проверка роли
+  if (!to.meta.middleware.includes(storeUser.user.role)) throw new Error('у юзера нет ролей')
 
   // запрещаем переходить по этим роутам если авторизованы
   if (storeAuth.auth && stopForAuth.includes(to.name)) return next({ name: 'home' })
