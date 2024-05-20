@@ -42,7 +42,7 @@ const router = createRouter({
 
 const stopForAuth = ['login', 'face', 'registration', 'recovery-password', 'add-recovery-password-link']
 
-router.beforeResolve((to, from, next) => {
+router.beforeEach((to, from, next) => {
   const storeAuth = useAuthStore()
   const storeUser = useUserStore()
 
