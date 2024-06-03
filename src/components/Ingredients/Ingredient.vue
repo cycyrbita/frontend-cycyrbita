@@ -57,6 +57,7 @@
             :readonly="!edit"
             v-model="ingredient.names[0].name"
             placeholder="Название"
+            :title="ingredient.names[0].name"
           />
         </span>
         <div v-if="ingredient.names[0].name.trim() === ''"><small class="ingredient__error">Введите название</small></div>
@@ -112,6 +113,7 @@
               :readonly="!edit"
               v-model="name.name"
               placeholder="Название"
+              :title="name.name"
             />
           </span>
         </div>
@@ -147,7 +149,7 @@
             :readonly="!edit"
             v-model="description.description"
             autoResize
-            rows="5"
+            rows="9"
             cols="30"
             placeholder="Описание"
           />
@@ -232,7 +234,12 @@
             invalidFileLimitMessage="Максимальное количество картинок 10"
           >
             <template #empty>
-              <p>Перетащите файл в эту область.</p>
+              <svg viewBox="0 0 58 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M28.4562 10H16.6036V19.5592H1V54H47.6175C52.7967 54 57 49.7458 57 44.4923V28.5054" stroke="#9DAEE7" stroke-width="2" stroke-miterlimit="10" />
+                <path d="M29 45C34.5228 45 39 40.7467 39 35.5C39 30.2533 34.5228 26 29 26C23.4772 26 19 30.2533 19 35.5C19 40.7467 23.4772 45 29 45Z" stroke="#9DAEE7" stroke-width="2" stroke-miterlimit="10" />
+                <path d="M47 0V22" stroke="#9DAEE7" stroke-width="2" stroke-miterlimit="10" />
+                <path d="M57 12L47.0028 22L37 12" stroke="#9DAEE7" stroke-width="2" stroke-miterlimit="10" />
+              </svg>
             </template>
           </FileUpload>
         </Transition>

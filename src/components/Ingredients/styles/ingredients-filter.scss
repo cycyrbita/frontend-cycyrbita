@@ -101,6 +101,8 @@
     }
 
     .p-dropdown-label {
+      font-weight: 700;
+      text-transform: uppercase;
       padding: 0;
       color: $white;
     }
@@ -136,7 +138,9 @@
         padding-bottom:0;
 
         .p-dropdown-item {
+          font-weight: 700;
           color: $white;
+          padding: 10px 0 10px 30px;
 
           .p-checkbox-box {
             background: transparent;
@@ -144,7 +148,7 @@
           }
           
           &:hover {
-            background-color: $main;
+            background-color: $main_light;
           }
 
           &.p-highlight {
