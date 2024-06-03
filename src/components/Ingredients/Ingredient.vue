@@ -233,14 +233,7 @@
             :fileLimit="10"
             invalidFileLimitMessage="Максимальное количество картинок 10"
           >
-            <template #empty>
-              <svg viewBox="0 0 58 55" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M28.4562 10H16.6036V19.5592H1V54H47.6175C52.7967 54 57 49.7458 57 44.4923V28.5054" stroke="#9DAEE7" stroke-width="2" stroke-miterlimit="10" />
-                <path d="M29 45C34.5228 45 39 40.7467 39 35.5C39 30.2533 34.5228 26 29 26C23.4772 26 19 30.2533 19 35.5C19 40.7467 23.4772 45 29 45Z" stroke="#9DAEE7" stroke-width="2" stroke-miterlimit="10" />
-                <path d="M47 0V22" stroke="#9DAEE7" stroke-width="2" stroke-miterlimit="10" />
-                <path d="M57 12L47.0028 22L37 12" stroke="#9DAEE7" stroke-width="2" stroke-miterlimit="10" />
-              </svg>
-            </template>
+            <template #empty></template>
           </FileUpload>
         </Transition>
       </div>
