@@ -30,3 +30,5 @@ src/assets/img/ingredients
 
 .env.production
 .env
+
+*storybook.log
