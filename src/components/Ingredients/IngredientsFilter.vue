@@ -31,7 +31,7 @@
                     @change="$emit('paginationCount')"
                     showClear
                     scrollHeight="700px"
-                    placeholder="Тематики"
+                    placeholder="Тематика"
                     class="ingredients-filter__select"
                     panelClass="ingredients-filter__select-panel"
                 />
