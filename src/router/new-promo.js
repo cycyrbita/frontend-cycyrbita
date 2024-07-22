@@ -11,10 +11,6 @@ export default [
         name: 'new-promo',
         component: () => import('@/views/new-promo/new-promo.vue'),
       },
-      {
-        path: '/:pathMatch(.*)*',
-        component: '',
-      }
     ],
   },
 ]
