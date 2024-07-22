@@ -8,9 +8,13 @@ export default [
     children: [
       {
         path: '',
-        name: 'new_promo',
-        component: () => import('@/views/new_promo/new_promo.vue'),
+        name: 'new-promo',
+        component: () => import('@/views/new-promo/new-promo.vue'),
       },
+      {
+        path: '/:pathMatch(.*)*',
+        component: '',
+      }
     ],
   },
 ]

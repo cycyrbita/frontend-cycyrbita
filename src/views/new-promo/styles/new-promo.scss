@@ -1,0 +1,54 @@
+.promo {
+  padding-top: 60px;
+
+  &__card {
+    background: $white;
+    width: 100%;
+    max-width: 525px;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 4px 0 rgba(163, 161, 255, 0.16);
+  }
+
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  &__title {
+    color: $dark;
+    font-size: 25px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  &__btn {
+    color: $white;
+    text-align: center;
+    width: 100%;
+    max-width: 150px;
+    padding: 8px;
+    border-radius: 30px;
+    cursor: pointer;
+
+    &_lend {
+      background: $main;
+    }
+
+    &_prelend {
+      background: $main_light;
+    }
+  }
+}

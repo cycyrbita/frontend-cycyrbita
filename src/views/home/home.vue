@@ -16,7 +16,7 @@ const storeUser = useUserStore()
 
 const viewsList = [
   { link: '/ingredients', value: 'Ингредиенты' },
-  { link: '/new_promo', value: 'Новые промо' },
+  { link: '/new-promo', value: 'Новые промо' },
   { link: '/clean', value: 'Чистые' },
   { link: '/avatars', value: 'Аватарки' }
 ]
