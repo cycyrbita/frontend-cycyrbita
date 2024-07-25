@@ -21,7 +21,7 @@ import { ref, defineProps, defineEmits } from 'vue'
 
 const props = defineProps({ promo: String, link: String})
 const emits = defineEmits(['hidePromo'])
-const path = import.meta.env.VITE_CLIENT_PROMO_PATH
+const path = `${import.meta.env.VITE_API_URL_DEV}new_promo/`
 
 </script>
 
