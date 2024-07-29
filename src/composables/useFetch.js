@@ -70,6 +70,8 @@ class useFetch {
         storeAuth.auth = false
         storeUser.user = { role: 'role.default' }
 
+        if (url === 'refresh') return res
+
         // запрос на обновление токена
         const response = await this.get('refresh')
         const json = await response.json()
