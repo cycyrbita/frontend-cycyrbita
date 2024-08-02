@@ -6,7 +6,7 @@
     <div class="promo__card">
       <div class="promo__card-container container">
         <img class="promo__img"
-             :src="`${path}${promo}/${link}/screenshot.png`"
+             :src="`${path}${promo}/${link}/screenshot.jpg`"
              alt="screenshot"
         >
         <a target="_blank"  class="promo__link" :href="`${path}${promo}/${link}/`">Открыть в новой вкладке</a>

@@ -12,7 +12,7 @@
               v-for="lend of item.lends"
               :key="lend"
               @click="selectPromo(item.title, lend)"
-          >{{ lend }}
+          >{{ formatName(lend, item.title) }}
           </div>
         </div>
         <div class="promo__list">
@@ -20,7 +20,15 @@
                v-for="prelend of item.prelends"
                :key="prelend"
                @click="selectPromo(item.title, prelend)"
-          >{{ prelend }}
+          >{{ formatName(prelend, item.title) }}
+          </div>
+        </div>
+        <div class="promo__list">
+          <div class="promo__btn promo__btn_sites"
+               v-for="site of item.sites"
+               :key="site"
+               @click="selectPromo(item.title, site)"
+          >{{ formatName(site, item.title) }}
           </div>
         </div>
         <NewPromoCard
@@ -50,6 +58,10 @@ const selectPromo = (title, link) => {
 const hidePromo = () => {
   targetPromo.value = null
   targetLink.value = null
+}
+
+const formatName = (fullName, deletePart) => {
+  return fullName.replace(deletePart, ' ').replaceAll('_', ' ')
 }
 
 onMounted(store.getNewPromo)

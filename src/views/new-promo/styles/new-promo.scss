@@ -23,7 +23,6 @@
     font-size: 25px;
     font-weight: 700;
     text-align: center;
-    text-transform: uppercase;
     margin-bottom: 20px;
   }
 
@@ -49,6 +48,10 @@
 
     &_prelend {
       background: $main_light;
+    }
+
+    &_sites {
+      background: $grey;
     }
   }
 }
