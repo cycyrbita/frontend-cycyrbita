@@ -2,9 +2,6 @@ export default [
   {
     path: '/add-recovery-password-link',
     component: () => import('@/layouts/default.vue'),
-    meta: {
-      middleware: ['role.admin', 'role.cycyrbit', 'role.default'],
-    },
     children: [
       {
         path: '/add-recovery-password-link',

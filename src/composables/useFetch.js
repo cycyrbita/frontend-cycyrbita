@@ -32,7 +32,6 @@ class useFetch {
       // проверяем авторизован или нет
       if (res.status === 401) {
         storeAuth.auth = false
-        storeUser.user = { role: 'role.default' }
 
         // запрос на обновление токена
         const response = await this.get('refresh')
@@ -68,7 +67,6 @@ class useFetch {
       // проверяем авторизован или нет
       if (res.status === 401) {
         storeAuth.auth = false
-        storeUser.user = { role: 'role.default' }
 
         if (url === 'refresh') return res
 
@@ -107,7 +105,6 @@ class useFetch {
       // проверяем авторизован или нет
       if (res.status === 401) {
         storeAuth.auth = false
-        storeUser.user = { role: 'role.default' }
 
         // запрос на обновление токена
         const response = await this.get('refresh')

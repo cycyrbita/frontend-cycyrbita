@@ -3,7 +3,8 @@ export default [
     path: '/about',
     component: () => import('@/layouts/default.vue'),
     meta: {
-      middleware: ['auth', 'role.admin', 'role.cycyrbit'],
+      permissions: ['about'],
+      middleware: ['authorized'],
     },
     children: [
       {

@@ -12,11 +12,9 @@ import users from '@/router/users'
 import ingredients from '@/router/ingredients'
 import error_404 from '@/router/404'
 import error_500 from '@/router/500'
-import new_promo from '@/router/new_promo'
+import new_promo from '@/router/new-promo'
 import clean from '@/router/clean'
 import avatars from '@/router/avatars'
-import face from '@/router/face'
-import useFetch from '@/composables/useFetch'
 
 const routes = [
   ...home,
@@ -32,37 +30,7 @@ const routes = [
   ...new_promo,
   ...clean,
   ...avatars,
-  ...face,
 ]
-
-let storeAuth = null
-let storeUser = null
-let count = 0
-
-const authorisation = async () => {
-  try {
-    const res = await useFetch.get('refresh')
-    const json = await res.json()
-
-    // если токен обновился
-    if (res.status === 200) {
-      // устанавливаем token
-      localStorage.setItem('accessTokenCycyrbita', json.accessToken)
-      // переключаем флаг авторизации
-      storeAuth.auth = true
-      // передаем пользователя
-      storeUser.user = json.user
-    } else {
-      // переключаем флаг авторизации
-      storeAuth.auth = false
-      // передаем дефолтного пользователя
-      storeUser.user = { role: 'role.default' }
-    }
-    count++
-  } catch (e) {
-    console.log(e)
-  }
-}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -70,25 +38,28 @@ const router = createRouter({
   linkActiveClass: 'active',
 })
 
-const stopForAuth = ['login', 'face', 'registration', 'recovery-password', 'add-recovery-password-link']
+const stopForAuth = ['login', 'registration', 'recovery-password', 'add-recovery-password-link']
 
 router.beforeResolve(async (to, from, next) => {
-  storeAuth = useAuthStore()
-  storeUser = useUserStore()
+  const storeAuth = useAuthStore()
+  const storeUser = useUserStore()
 
-  if (!count) await authorisation()
+  // не авторизован
+  if (!storeAuth.auth) {
+    // если в роуте есть authorized или есть доступы
+    if (to?.meta?.middleware?.includes('authorized') || to?.meta?.permissions?.length) return next(false)
+  }
 
-  // редирект, если не авторизирован
-  if (!storeAuth.auth && !stopForAuth.includes(to.name)) return next({ name: 'face' })
+  // авторизован
+  if (storeAuth.auth) {
+    // // запрещаем переходить по этим роутам если авторизованы
+    if (stopForAuth.includes(to.name)) return next('home')
 
-  // проверка middleware
-  if (!to.meta.middleware) throw new Error('на странице нету middleware')
-
-  // проверка роли
-  if (!to.meta.middleware.includes(storeUser.user.role)) throw new Error('у юзера нет ролей')
-
-  // запрещаем переходить по этим роутам если авторизованы
-  if (storeAuth.auth && stopForAuth.includes(to.name)) return next({ name: 'home' })
+    // проверяем есть ли доступы у пользователя к этой странице
+    if (storeUser?.user?.permissions?.length && to?.meta?.permissions?.length) {
+      if (!storeUser?.user?.permissions?.some(el => to?.meta?.permissions?.includes(el.name))) return next(false)
+    }
+  }
 
   next()
 })

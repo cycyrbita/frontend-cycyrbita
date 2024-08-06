@@ -3,7 +3,8 @@ export default [
     path: '/new_promo',
     component: () => import('@/layouts/default.vue'),
     meta: {
-      middleware: ['auth', 'role.admin', 'role.cycyrbit'],
+      permissions: ['new-promo'],
+      middleware: ['authorized'],
     },
     children: [
       {
