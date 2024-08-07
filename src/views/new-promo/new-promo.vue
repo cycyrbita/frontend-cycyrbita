@@ -31,12 +31,13 @@
           >{{ formatName(site, item.title) }}
           </div>
         </div>
-        <NewPromoCard
-            :promo="targetPromo"
-            :link="targetLink"
-            @hidePromo="hidePromo"
-        />
       </div>
+      <NewPromoCard
+          v-if="targetPromo.title"
+          :promo="targetPromo"
+          @hidePromo="hidePromo"
+      />
+
     </div>
   </section>
 </template>
@@ -47,17 +48,19 @@ import { useNewPromoStore } from '@/stores/new-promo'
 import NewPromoCard from "@/components/new-promo/new-promo-card.vue";
 
 const store = useNewPromoStore()
-const targetPromo = ref()
-const targetLink = ref()
+const targetPromo = ref({
+  title:'',
+  path: ''
+})
 
 const selectPromo = (title, link) => {
-  targetPromo.value = title
-  targetLink.value = link
+  targetPromo.value.title = title
+  targetPromo.value.path = link
 }
 
 const hidePromo = () => {
-  targetPromo.value = null
-  targetLink.value = null
+  targetPromo.value.title = null
+  targetPromo.value.path = null
 }
 
 const formatName = (fullName, deletePart) => {
