@@ -9,6 +9,7 @@ export default [
     children: [
       {
         path: '',
+        name: 'ingredients',
         component: () => import('@/views/ingredients/ingredients.vue'),
       },
     ],

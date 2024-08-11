@@ -8,31 +8,31 @@
           >Главная</router-link
         >
         <router-link
-          v-if="storeAuth.auth"
+          v-if="storeAuth.auth && checkPermissions('ingredients')"
           to="/ingredients"
           class="header__link"
           >Ингредиенты</router-link
         >
         <router-link
-          v-if="storeAuth.auth"
+          v-if="storeAuth.auth && checkPermissions('new-promo')"
           to="/new_promo"
           class="header__link"
           >Новые промо</router-link
         >
         <router-link
-          v-if="storeAuth.auth"
+          v-if="storeAuth.auth && checkPermissions('clean')"
           to="/clean"
           class="header__link"
           >Чистые</router-link
         >
         <router-link
-          v-if="storeAuth.auth"
+          v-if="storeAuth.auth && checkPermissions('avatars')"
           to="/avatars"
           class="header__link"
           >Аватарки</router-link
         >
         <router-link
-          v-if="storeAuth.auth"
+          v-if="storeAuth.auth && checkPermissions('users')"
           to="/users"
           class="header__link"
           >Пользователи</router-link
@@ -66,6 +66,7 @@
   import router from '@/router'
   import useFetch from '@/composables/useFetch'
   import { useUserStore } from '@/stores/user'
+  import checkPermissions from '@/composables/useCheckPermissions'
 
   const storeAuth = useAuthStore()
   const storeUser = useUserStore()

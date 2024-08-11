@@ -1,27 +1,3 @@
-.users {
-  position: relative;
-}
-ul {
-  display: block;
-  background-color: transparent;
-
-  li {
-    display: block;
-    float: none;
-  }
-
-  b {
-    font-weight: bold;
-  }
-}
-
-.users-list {
-  &__body {
-    padding-top: 15px;
-    padding-bottom: 15px;
-
-    & + .users-list__body {
-      border-top: 1px solid #dbdbdb;
-    }
-  }
+.asd {
+  background-color: #fff;
 }

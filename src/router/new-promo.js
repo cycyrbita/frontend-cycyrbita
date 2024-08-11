@@ -9,7 +9,7 @@ export default [
     children: [
       {
         path: '',
-        name: 'new_promo',
+        name: 'new-promo',
         component: () => import('@/views/new_promo/new_promo.vue'),
       },
     ],

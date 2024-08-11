@@ -56,8 +56,8 @@ router.beforeResolve(async (to, from, next) => {
     if (stopForAuth.includes(to.name)) return next('home')
 
     // проверяем есть ли доступы у пользователя к этой странице
-    if (storeUser?.user?.permissions?.length && to?.meta?.permissions?.length) {
-      if (!storeUser?.user?.permissions?.some(el => to?.meta?.permissions?.includes(el.name))) return next(false)
+    if (to?.meta?.permissions?.length) {
+      if (!storeUser?.user?.permissions?.some(el => to?.meta?.permissions?.includes(el.name))) return next('home')
     }
   }
 
