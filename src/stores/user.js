@@ -29,10 +29,6 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  if (localStorage.getItem('user')) {
-    user.value = JSON.parse(localStorage.getItem('user'))
-  }
-
   watch(
     () => user.value,
     state => {
