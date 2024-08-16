@@ -16,6 +16,11 @@ export const useUserStore = defineStore('user', () => {
   const getUser = async () => {
     if (storeAuth.auth) {
       try {
+        if (!!localStorage.getItem('user')) {
+          user.value = JSON.parse(localStorage.getItem('user'))
+        } else {
+          await useFetch.get('refresh')
+        }
         const res = await useFetch.post('user', { email: user.value.email })
         const json = await res.json()
         if (res.status === 200) {
@@ -32,7 +37,9 @@ export const useUserStore = defineStore('user', () => {
   watch(
     () => user.value,
     state => {
+      localStorage.setItem('user', JSON.stringify(user.value))
       if (!!route?.name && !!user.value?.permissions) {
+        if (!route?.meta?.permissions?.includes(route.name)) return
         if (!user.value.permissions?.some(el => el.name === route.name) && !stopForAuth.includes(route.name)) router.push('home')
       }
     },

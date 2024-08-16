@@ -78,7 +78,7 @@
         localStorage.removeItem('accessTokenCycyrbita')
         // переключаем флаг авторизации
         storeAuth.auth = false
-        storeUser.user = {}
+        storeUser.user = undefined
         // редиректим
         await router.push('/login')
       }
