@@ -19,7 +19,12 @@ export const useUserStore = defineStore('user', () => {
         if (!!localStorage.getItem('user')) {
           user.value = JSON.parse(localStorage.getItem('user'))
         } else {
-          await useFetch.get('refresh')
+          const res = await useFetch.get('refresh')
+          const json = await res.json()
+          // устанавливаем token
+          localStorage.setItem('accessTokenCycyrbita', json.accessToken)
+          storeAuth.auth = true
+          user.value = json.user
         }
         const res = await useFetch.post('user', { email: user.value.email })
         const json = await res.json()

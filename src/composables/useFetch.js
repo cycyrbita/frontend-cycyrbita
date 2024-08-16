@@ -65,24 +65,12 @@ class useFetch {
     try {
       const res = await fetch(`${VITE_API_URL}api/${url}`, headers)
 
-      if (url === 'refresh') {
-        if (res.status === 401) {
-          storeAuth.auth = false
-          storeUser.user = undefined
-          return res
-        }
-        if (res.status === 200) {
-          const json = await res.json()
-          storeAuth.auth = true
-          storeUser.user = json.user
-          return res
-        }
-      }
-
       // проверяем авторизован или нет
       if (res.status === 401) {
         storeAuth.auth = false
         storeUser.user = undefined
+
+        if (url === 'refresh') return res
 
         // запрос на обновление токена
         const response = await this.get('refresh')
