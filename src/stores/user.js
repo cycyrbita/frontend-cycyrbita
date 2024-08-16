@@ -42,7 +42,11 @@ export const useUserStore = defineStore('user', () => {
   watch(
     () => user.value,
     state => {
-      localStorage.setItem('user', JSON.stringify(user.value))
+      if (auth.value) {
+        localStorage.setItem('auth', JSON.stringify(state))
+      } else {
+        localStorage.removeItem('user')
+      }
       if (!!route?.name && !!user.value?.permissions) {
         if (!route?.meta?.permissions?.includes(route.name)) return
         if (!user.value.permissions?.some(el => el.name === route.name) && !stopForAuth.includes(route.name)) router.push('home')
