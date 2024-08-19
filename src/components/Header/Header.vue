@@ -14,6 +14,12 @@
           >Ингредиенты</router-link
         >
         <router-link
+          v-if="storeAuth.auth && checkPermissions('permissions')"
+          to="/permissions"
+          class="header__link"
+          >Доступы</router-link
+        >
+        <router-link
           v-if="storeAuth.auth && checkPermissions('new-promo')"
           to="/new_promo"
           class="header__link"
