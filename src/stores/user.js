@@ -39,6 +39,10 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
+  const getUsers = async () => await useFetch.get('users')
+  const updateUser = async user => await useFetch.post('update-user', user)
+  const deleteUser = async user => await useFetch.post('delete-user', user)
+
   watch(
     () => user.value,
     state => {
@@ -58,5 +62,8 @@ export const useUserStore = defineStore('user', () => {
   return {
     user,
     getUser,
+    getUsers,
+    updateUser,
+    deleteUser,
   }
 })

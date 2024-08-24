@@ -16,6 +16,7 @@ import new_promo from '@/router/new-promo'
 import clean from '@/router/clean'
 import avatars from '@/router/avatars'
 import permissions from '@/router/permissions'
+import roles from '@/router/roles'
 
 const routes = [
   ...home,
@@ -32,6 +33,7 @@ const routes = [
   ...clean,
   ...avatars,
   ...permissions,
+  ...roles,
 ]
 
 const router = createRouter({

@@ -2,23 +2,27 @@
   <div class="roles">
     <ul>
       <li v-for="element in permissions">
-        {{ element.name }}
-        <span @click="deletePermissions(element)">х</span>
+        <input
+          v-model="element.name"
+          type="text"
+        />
+        <button @click="setPermission(element)">save</button>
+        <button @click="deletePermission(element)">delete</button>
       </li>
     </ul>
     <input
       v-model="permission.name"
       type="text"
     />
-    <button @click="setPermissions">Добавить доступ</button>
+    <button @click="setPermission(permission)">Добавить доступ</button>
   </div>
 </template>
 
 <script setup>
   import { onMounted, ref } from 'vue'
-  import { usePermissionsStore } from '@/stores/permissions'
+  import { useRolesStore } from '@/stores/roles'
 
-  const store = usePermissionsStore()
+  const store = useRolesStore()
   const permission = ref({ name: '' })
   const permissions = ref()
 
@@ -31,18 +35,21 @@
     }
   }
 
-  const setPermissions = async () => {
+  const setPermission = async element => {
     try {
-      const res = await store.setPermissions(permission.value)
-      if (res.status === 200) await getPermissions()
+      const res = await store.setPermission(element)
+      if (res.status === 200) {
+        await getPermissions()
+        permission.value.name = ''
+      }
     } catch (error) {
       console.log(error)
     }
   }
 
-  const deletePermissions = async permission => {
+  const deletePermission = async permission => {
     try {
-      const res = await store.deletePermissions(permission)
+      const res = await store.deletePermission(permission)
       if (res.status === 200) await getPermissions()
     } catch (error) {
       console.log(error)
