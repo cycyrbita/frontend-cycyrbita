@@ -1,15 +1,80 @@
-hr {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-input {
-  display: block;
-  margin-bottom: 10px;
-}
-
 .users {
   &__body {
     display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+  }
+}
+
+.card-user {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  box-shadow: 0 4px 6px rgba(163, 161, 255, 0.16);
+  padding: 15px;
+  border-radius: 5px;
+
+  &__email {
+    font-weight: 200;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__description {
+    font-weight: 200;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__date-create {
+    font-weight: 200;
+  }
+
+  &__date-update {
+    font-weight: 200;
+  }
+
+  &__update {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 15px;
+    border-top: 1px solid #dbdbdb;
+    margin-top: 15px;
+    padding-top: 15px;
+  }
+
+  &__info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+  }
+
+  &__roles {
+    flex-grow: 1;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 200;
+    margin-bottom: 5px;
+  }
+
+  &__field {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    border: 0;
+    border-radius: 5px;
+  }
+
+  &__checkbox {
+    margin-right: 5px;
   }
 }
