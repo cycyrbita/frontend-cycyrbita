@@ -78,63 +78,6 @@
       </div>
     </div>
   </div>
-
-  <!--    <div v-for="user in users">-->
-  <!--      <div class="users__body">-->
-  <!--        <div class="users__info">-->
-  <!--          <p>{{ user.email }}</p>-->
-  <!--          <label>-->
-  <!--            <span>Ник</span>-->
-  <!--            <input-->
-  <!--              v-model="user.nickName"-->
-  <!--              type="text"-->
-  <!--            />-->
-  <!--          </label>-->
-  <!--          <label>-->
-  <!--            <span>Имя</span>-->
-  <!--            <input-->
-  <!--              v-model="user.firstName"-->
-  <!--              type="text"-->
-  <!--            />-->
-  <!--          </label>-->
-  <!--          <label>-->
-  <!--            <span>Фамилия</span>-->
-  <!--            <input-->
-  <!--              v-model="user.lastName"-->
-  <!--              type="text"-->
-  <!--            />-->
-  <!--          </label>-->
-  <!--          <label>-->
-  <!--            <span>Возраст</span>-->
-  <!--            <input-->
-  <!--              v-model="user.age"-->
-  <!--              type="text"-->
-  <!--            />-->
-  <!--          </label>-->
-  <!--          <label>-->
-  <!--            <span>Блокировка аккаунта</span>-->
-  <!--            <input-->
-  <!--              v-model="user.accountDeleted"-->
-  <!--              type="checkbox"-->
-  <!--            />-->
-  <!--          </label>-->
-  <!--        </div>-->
-  <!--        <div class="users__roles">-->
-  <!--          <label v-for="elem in roles">-->
-  <!--            <span>{{ elem.name }}</span>-->
-  <!--            <input-->
-  <!--              v-model="user.roles"-->
-  <!--              :value="elem"-->
-  <!--              type="checkbox"-->
-  <!--            />-->
-  <!--          </label>-->
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--      <button @click="updateUser(user)">save</button>-->
-  <!--      <button @click="deleteUser(user)">delete</button>-->
-  <!--    </div>-->
-  <!--    <hr />-->
-  <!--  </div>-->
 </template>
 
 <script setup>
