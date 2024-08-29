@@ -2,7 +2,7 @@
   <section class="promo">
     <div class="promo__container container">
       <div class="promo__card"
-           v-for="item of store.list"
+           v-for="item of store.list.promo"
            :key="item._id"
       >
         <h2 class="promo__title">{{ item.title }}</h2>
@@ -11,7 +11,7 @@
               class="promo__btn promo__btn_lend"
               v-for="lend of item.lends"
               :key="lend"
-              @click="selectPromo(item.title, lend)"
+              @click="store.selectPromo(item._id, item.title, lend)"
           >{{ formatName(lend, item.title) }}
           </div>
         </div>
@@ -19,7 +19,7 @@
           <div class="promo__btn promo__btn_prelend"
                v-for="prelend of item.prelends"
                :key="prelend"
-               @click="selectPromo(item.title, prelend)"
+               @click="store.selectPromo(item._id, item.title, prelend)"
           >{{ formatName(prelend, item.title) }}
           </div>
         </div>
@@ -27,46 +27,25 @@
           <div class="promo__btn promo__btn_sites"
                v-for="site of item.sites"
                :key="site"
-               @click="selectPromo(item.title, site)"
+               @click="store.selectPromo(item._id, item.title, site)"
           >{{ formatName(site, item.title) }}
           </div>
         </div>
       </div>
-      <NewPromoCard
-          v-if="targetPromo.title"
-          :promo="targetPromo"
-          @hidePromo="hidePromo"
-      />
-
+      <NewPromoCard v-if="store.targetPromo.title"/>
+      <NewPromoAdd/>
     </div>
   </section>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { useNewPromoStore } from '@/stores/new-promo'
 import NewPromoCard from "@/components/new-promo/new-promo-card.vue";
+import NewPromoAdd from "@/components/new-promo/new-promo-add.vue";
 
 const store = useNewPromoStore()
-const targetPromo = ref({
-  title:'',
-  path: ''
-})
-
-const selectPromo = (title, link) => {
-  targetPromo.value.title = title
-  targetPromo.value.path = link
-}
-
-const hidePromo = () => {
-  targetPromo.value.title = null
-  targetPromo.value.path = null
-}
-
-const formatName = (fullName, deletePart) => {
-  return fullName.replace(deletePart, ' ').replaceAll('_', ' ')
-}
-
+const formatName = (fullName, deletePart) => fullName.replaceAll('_', ' ').replace(deletePart, '')
 onMounted(store.getNewPromo)
 </script>
 

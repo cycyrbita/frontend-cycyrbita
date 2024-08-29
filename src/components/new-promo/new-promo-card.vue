@@ -1,11 +1,14 @@
 <template>
-  <div v-if="promo"
-       class="promo__modal"
-       @click="$emit('hidePromo')"
+  <div class="promo__modal"
+       @click="hidePromo"
+       ref="modal"
   >
     <div class="promo__card">
       <div class="promo__card-container container">
         <img class="promo__img"
+             width="1441"
+             height="1080"
+             loading="lazy"
              :src="`${promoPath}screenshot.jpg`"
              alt="screenshot"
         >
@@ -18,6 +21,9 @@
             :href="apiPath"
             class="promo__btn"
         >Скачать</a>
+        <button class="btn"
+                @click.prevent="deletePromo"
+        >Удалить</button>
       </div>
     </div>
   </div>
@@ -26,15 +32,22 @@
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue'
 import useFetch from '@/composables/useFetch'
+import { useNewPromoStore } from "@/stores/new-promo";
 
-const props = defineProps({ promo: Object })
-const emits = defineEmits(['hidePromo'])
+const store = useNewPromoStore()
 const url = import.meta.env.MODE === 'production' ? import.meta.env.VITE_API_URL_PROD : import.meta.env.VITE_API_URL_DEV
 const path = `${url}new_promo/`
-const promo = props.promo.title
-const link = props.promo.path
+const promo = store.targetPromo.title
+const link = store.targetPromo.link
 const promoPath = `${path}${promo}/${link}/`
 const apiPath = `${url}api/new-promo/download-new-promo/?promo=${promo}&link=${link}`
+const modal = ref(null)
+const hidePromo = (e) => e.target === modal.value ? store.hidePromo() : undefined
+const deletePromo = async () => {
+  await store.deletePromo(store.targetPromo)
+  await store.getNewPromo()
+  store.hidePromo()
+}
 
 </script>
 
