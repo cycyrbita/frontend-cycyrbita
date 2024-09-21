@@ -1,0 +1,74 @@
+.permissions {
+  padding-top: 60px;
+
+  &__body {
+    width: 100%;
+    max-width: 588px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  &__row {
+    display: flex;
+    column-gap: 15px;
+
+    & + & {
+      margin-top: 6px;
+
+      @media(max-width: 768px) {
+        margin-top: 30px;
+      }
+    }
+
+    @media(max-width: 768px) {
+      flex-wrap: wrap;
+      row-gap: 10px
+    }
+  }
+
+  &__col {
+    flex-grow: 1;
+
+    &:first-child {
+      width: 232px;
+      flex-grow: 0;
+
+      @media(max-width: 768px) {
+        width: 100%;
+      }
+    }
+  }
+
+  &__field {
+    width: 100%;
+    height: 52px;
+    border: 1px solid #15133D;
+    border-radius: 30px;
+    padding: 16px 25px;
+    font-size: 20px;
+    background-color: transparent;
+  }
+
+  &__button {
+    height: 52px;
+    border: 1px solid #5C71BC;
+    border-radius: 30px;
+    padding: 16px 25px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #5C71BC;
+    width: 100%;
+    cursor: pointer;
+
+    &--danger {
+      border-color: #F2297E;
+      color: #F2297E;
+      background-color: transparent;
+    }
+
+    &:hover {
+      opacity: .9;
+    }
+  }
+}
