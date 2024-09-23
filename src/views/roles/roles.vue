@@ -1,44 +1,58 @@
 <template>
-  <div class="roles">
-    <ul>
-      <li v-for="element in roles">
-        <div class="role">
-          <div class="role__left">
-            <input
-              v-model="element.name"
-              type="text"
-            />
-            <button @click="setRole(element)">save</button>
-            <button @click="deleteRole(element)">delete</button>
-          </div>
-          <div class="role__right">
-            <div v-for="permission in permissions">
-              <label>
-                <input
-                  v-model="element.permissions"
-                  :value="permission"
-                  type="checkbox"
-                />
-                <span>{{ permission.name }}</span>
-              </label>
-            </div>
-            <hr />
-          </div>
-        </div>
-      </li>
-      <hr />
-    </ul>
-    <input
-      v-model="role.name"
-      type="text"
-    />
-    <button @click="setRole(role)">Добавить роль</button>
-  </div>
+	<div class="roles">
+		<div class="container">
+			<div class="roles__body">
+				<div class="roles__row">
+					<div class="roles__col roles__col--create-field">
+						<input
+								v-model="role.name"
+								type="text"
+								class="roles__field roles__field--white"
+								placeholder="Добавить роль"
+						/>
+					</div>
+					<div class="roles__col roles__col--create">
+						<button class="roles__button" @click="setRole(role)">
+							Добавить роль
+						</button>
+					</div>
+				</div>
+				<div class="roles__row" v-for="(element, index) in roles">
+					<div class="roles__index">{{ ++index }}.</div>
+					<div class="roles__col roles__col--first">
+						<input type="text" class="roles__field" v-model="element.name">
+					</div>
+					<div class="roles__col">
+						<button class="roles__button roles__button--save" @click="setRole(element)">Сохранить</button>
+					</div>
+					<div class="roles__col">
+						<button class="roles__button roles__button--delete roles__button--danger" @click="deleteRole(element)">Удалить</button>
+					</div>
+					<div class="roles__col roles__col--last">
+						<Transition name="bounce">
+							<MultiSelect
+									v-model="element.permissions"
+									class="roles__permissions"
+									panelClass="roles__permissions-panel"
+									:maxSelectedLabels="1"
+									:options="permissions"
+									optionLabel="name"
+									scrollHeight="700px"
+									:showToggleAll="false"
+									placeholder="Доступы"
+							/>
+						</Transition>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script setup>
   import { onMounted, ref } from 'vue'
   import { useRolesStore } from '@/stores/roles'
+  import MultiSelect from "primevue/multiselect";
 
   const store = useRolesStore()
   const role = ref({ name: '' })
@@ -92,13 +106,5 @@
 </script>
 
 <style lang="scss">
-  hr {
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-
-  .role {
-    display: flex;
-    justify-content: space-between;
-  }
+	@import "@/views/roles/styles/roles.scss";
 </style>
