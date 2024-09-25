@@ -10,7 +10,7 @@ export default [
       {
         path: '',
         name: 'new-promo',
-        component: () => import('@/views/new_promo/new_promo.vue'),
+        component: () => import('@/views/new-promo/new-promo.vue'),
       },
     ],
   },
