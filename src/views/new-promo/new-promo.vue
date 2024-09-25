@@ -2,7 +2,7 @@
   <section class="promo">
     <div class="promo__container container">
       <div class="promo__card"
-           v-for="item of store.list.promo"
+           v-for="item of store.list"
            :key="item._id"
       >
         <h2 class="promo__title">{{ item.title }}</h2>

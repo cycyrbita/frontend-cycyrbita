@@ -1,65 +1,109 @@
 <template>
+  <Toast />
   <div class="users">
     <div class="container">
-      <div
-          class="overlay"
-          v-if="isLoading"
-      ></div>
-      <div class="users__box">
-        <h2>Список пользователей</h2>
-        <button @click="getUsers">Показать список пользователей</button>
-        <label>
-          <p>Показать удаленных пользователей</p>
-          <input type="checkbox" v-model="showDeletedUsers">
-        </label>
-        <div
-            v-for="user in users"
-            class="users-list"
-        >
+      <div class="users__body">
+        <div class="users__list">
           <div
-              class="users-list__body"
-              v-if="(user._id !== storeUser.user.id) && (showDeletedUsers || !user.accountDeleted)"
+            class="users-card"
+            v-for="user in users"
+            :key="user._id"
           >
-            <ul>
-              <li><b>Id:</b> {{ user._id }}</li>
-              <li><b>Ник:</b> {{ user.nickName }}</li>
-              <li><b>Имя:</b> {{ user.firstName }}</li>
-              <li><b>Фамилия:</b> {{ user.lastName }}</li>
-              <li><b>Возраст:</b> {{ user.age }}</li>
-              <li><b>Аватарка:</b> {{ user.avatarImg }}</li>
-              <li><b>Почта:</b> {{ user.email }}</li>
-              <li><b>Пароль:</b> {{ user.password }}</li>
-              <li><b>Роль:</b> {{ user.role }}
-                <select @change="editRole(user._id, $event.target.value)">
-                  <option :value="user.role">{{ user.role }}</option>
-                  <option value="role.admin">role.admin</option>
-                  <option value="role.cycyrbit">role.cycyrbit</option>
-                  <option value="role.default">role.default</option>
-                </select>
-              </li>
-              <li><b>Активирован аккаунт:</b> {{ user.isActivated }}</li>
-              <li><b>Активационная ссылка:</b> {{ user.activationLink }}</li>
-              <li><b>Флаг для восстановления пароля:</b> {{ user.isRecoveryPassword }}</li>
-              <li><b>Список редактируемы страниц:</b> {{ user.edits }}</li>
-              <li><b>Последняя активность:</b> {{ user.lastActivityAt }}</li>
-              <li><b>Дата созданя:</b> {{ user.createdAt }}</li>
-              <li><b>Дата последнего обновления:</b> {{ user.updatedAt }}</li>
-              <li><b>Удален аккаунт или нет:</b> {{ user.accountDeleted }}</li>
-            </ul>
-            <button
-                v-if="!user.accountDeleted"
-                class="users-list__button"
-                @click="deleteUser(user._id, user.email)"
-            >
-              Удалить пользователя
-            </button>
-            <button
-                v-if="user.accountDeleted"
-                class="users-list__button"
-                @click="restoreUser(user._id, user.email)"
-            >
-              Восстановить пользователя
-            </button>
+            <div class="users-card__header">
+              <div class="users-card__name">{{ user.firstName }}</div>
+              <div class="users-card__mail">{{ user.email }}</div>
+            </div>
+            <div class="users-card__roles">
+              <div
+                class="users-card__role"
+                v-for="role in user.roles"
+                :key="role._id"
+              >
+                {{ role.name }}
+              </div>
+            </div>
+            <div class="users-card__line"></div>
+            <div class="users-card__body">
+              <label
+                for=""
+                class="users-card__label"
+              >
+                <span class="users-card__label-name">Псевдоним</span>
+                <input
+                  type="text"
+                  class="users-card__input"
+                  v-model="user.nickName"
+                />
+              </label>
+              <label
+                for=""
+                class="users-card__label"
+              >
+                <span class="users-card__label-name">E-mail</span>
+                <input
+                  type="text"
+                  class="users-card__input"
+                  v-model="user.email"
+                />
+              </label>
+              <label
+                for=""
+                class="users-card__label"
+              >
+                <span class="users-card__label-name">Пароль</span>
+                <input
+                  type="text"
+                  class="users-card__input"
+                  v-model="user.newPassword"
+                />
+              </label>
+              <label
+                for=""
+                class="users-card__label"
+              >
+                <Transition name="bounce">
+                  <MultiSelect
+                    v-model="user.roles"
+                    :options="roles"
+                    class="users-card__select"
+                    panelClass="users-card__select-panel"
+                    :maxSelectedLabels="1"
+                    optionLabel="name"
+                    scrollHeight="700px"
+                    :showToggleAll="false"
+                    placeholder="Роли"
+                  />
+                </Transition>
+              </label>
+            </div>
+            <div class="users-card__block">
+              <Checkbox
+                v-model="user.accountDeleted"
+                :binary="true"
+                :inputId="`${user._id}-user-block`"
+                class="users-card__block-input"
+              />
+              <label
+                :for="`${user._id}-user-block`"
+                class="users-card__block-label"
+              >
+                <span class="users-card__block-label-name">Блокировка Аккаунта</span>
+              </label>
+            </div>
+            <div class="users-card__buttons">
+              <button
+                @click="updateUser(user)"
+                class="users-card__button users-card__button--save"
+              >
+                Сохранить
+              </button>
+              <button
+                @click="deleteUser(user)"
+                class="users-card__button users-card__button--danger"
+              >
+                Удалить
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -68,53 +112,71 @@
 </template>
 
 <script setup>
-  import {ref} from "vue";
-  import useFetch from "@/composables/useFetch";
-	import {useUserStore} from "@/stores/user";
+  import { onBeforeMount, ref } from 'vue'
+  import { useUserStore } from '@/stores/user'
+  import { useRolesStore } from '@/stores/roles'
+  import MultiSelect from 'primevue/multiselect'
+  import Checkbox from 'primevue/checkbox'
+  import Toast from 'primevue/toast'
+  import { useToast } from 'primevue/usetoast'
 
-	const users = ref()
-	const storeUser = useUserStore()
-	const isLoading = ref(false)
-	const showDeletedUsers = ref(false)
+  const toast = useToast()
+
+  const store = useUserStore()
+  const store_roles = useRolesStore()
+
+  const users = ref()
+  const roles = ref()
+
+  const statusCode = (detail = 'Успешно', severity = 'success', life = 3000) => toast.add({ severity: severity, detail: detail, life: life })
 
   const getUsers = async () => {
     try {
-      const res = await useFetch.post('users', {role: storeUser.user.role}, false, true)
-      const json = await res.json()
-      if(res.status === 200) users.value = json
+      const res = await store.getUsers()
+      if (res.status === 200) users.value = await res.json()
     } catch (e) {
-      throw e
+      console.log(e)
     }
   }
 
-	const deleteUser = async (id, email) => {
-		try {
-			const res = await useFetch.delete('delete-user', {id: id, email, role: storeUser.user.role}, false, true)
-			if(res.status === 200) await getUsers()
-		} catch (e) {
-			throw e
-		}
-	}
+  const updateUser = async user => {
+    try {
+      user.permissions = user.roles
+        .map(el => el.permissions)
+        .flat()
+        .filter((el, i, arr) => i === arr.findIndex(el2 => el2.name === el.name))
+      await store.updateUser(user)
+      statusCode('Пользователь обновлен')
+    } catch (e) {
+      statusCode('Ошибка', 'error')
+      console.log(e)
+    }
+  }
 
-	const restoreUser = async (id, email) => {
-		try {
-			const res = await useFetch.post('restore-user', {id: id, email, role: storeUser.user.role}, false, true)
-			if(res.status === 200) await getUsers()
-		} catch (e) {
-			throw e
-		}
-	}
+  const deleteUser = async user => {
+    try {
+      const res = await store.deleteUser(user)
+      if (res.status === 200) await getUsers()
+      statusCode('Пользователь удален')
+    } catch (e) {
+      statusCode('Ошибка', 'error')
+      console.log(e)
+    }
+  }
 
-	const editRole = async (id, editRole) => {
-		try {
-			const res = await useFetch.post('edit-role', {id: id, editRole, role: storeUser.user.role}, false, true)
-			if(res.status === 200) await getUsers()
-		} catch (e) {
-			throw e
-		}
-	}
+  const getRoles = async () => {
+    try {
+      const res = await store_roles.getRoles()
+      if (res.status === 200) roles.value = await res.json()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  onBeforeMount(getUsers)
+  onBeforeMount(getRoles)
 </script>
 
-<style scoped>
-@import "/src/views/users/styles/users.scss";
+<style>
+  @import '/src/views/users/styles/users.scss';
 </style>

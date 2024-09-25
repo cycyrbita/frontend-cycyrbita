@@ -1,16 +1,16 @@
 export default [
   {
-    path: '/about',
+    path: '/roles',
     component: () => import('@/layouts/default.vue'),
     meta: {
-      permissions: ['about'],
+      permissions: ['roles'],
       middleware: ['authorized'],
     },
     children: [
       {
         path: '',
-        name: 'about',
-        component: () => import('@/views/about/about.vue'),
+        name: 'roles',
+        component: () => import('@/views/roles/roles.vue'),
       },
     ],
   },

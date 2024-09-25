@@ -3,37 +3,48 @@
     <div class="container">
       <nav class="header__nav">
         <router-link
-          v-if="storeAuth.auth && storeUser.user.role !== 'role.default'"
           to="/"
           class="header__link"
           >Главная</router-link
         >
         <router-link
-          v-if="storeAuth.auth && storeUser.user.role !== 'role.default'"
+          v-if="storeAuth.auth && checkPermissions('ingredients')"
           to="/ingredients"
           class="header__link"
           >Ингредиенты</router-link
         >
         <router-link
-          v-if="storeAuth.auth && storeUser.user.role !== 'role.default'"
+          v-if="storeAuth.auth && checkPermissions('permissions')"
+          to="/permissions"
+          class="header__link"
+          >Доступы</router-link
+        >
+        <router-link
+          v-if="storeAuth.auth && checkPermissions('roles')"
+          to="/roles"
+          class="header__link"
+          >Роли</router-link
+        >
+        <router-link
+          v-if="storeAuth.auth && checkPermissions('new-promo')"
           to="/new_promo"
           class="header__link"
           >Новые промо</router-link
         >
         <router-link
-          v-if="storeAuth.auth && storeUser.user.role !== 'role.default'"
+          v-if="storeAuth.auth && checkPermissions('clean')"
           to="/clean"
           class="header__link"
           >Чистые</router-link
         >
         <router-link
-          v-if="storeAuth.auth && storeUser.user.role !== 'role.default'"
+          v-if="storeAuth.auth && checkPermissions('avatars')"
           to="/avatars"
           class="header__link"
           >Аватарки</router-link
         >
         <router-link
-          v-if="storeUser.user.role === 'role.admin'"
+          v-if="storeAuth.auth && checkPermissions('users')"
           to="/users"
           class="header__link"
           >Пользователи</router-link
@@ -64,9 +75,10 @@
 
 <script setup>
   import { useAuthStore } from '@/stores/auth'
-  import { useUserStore } from '@/stores/user'
   import router from '@/router'
   import useFetch from '@/composables/useFetch'
+  import { useUserStore } from '@/stores/user'
+  import checkPermissions from '@/composables/useCheckPermissions'
 
   const storeAuth = useAuthStore()
   const storeUser = useUserStore()
@@ -78,10 +90,9 @@
         localStorage.removeItem('accessTokenCycyrbita')
         // переключаем флаг авторизации
         storeAuth.auth = false
-        // передаем дефолтного пользователя
-        storeUser.user = { role: 'role.default' }
+        storeUser.user = undefined
         // редиректим
-        router.push('/login')
+        await router.push('/login')
       }
     } catch (e) {
       throw e

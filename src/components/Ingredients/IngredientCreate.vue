@@ -247,7 +247,7 @@
       }
 
       formData.append('ingredient', JSON.stringify(ingredient.value))
-      const res = await useFetch.post('ingredients/create-ingredient', null, headers, true)
+      const res = await useFetch.post('ingredients/create-ingredient', null, headers)
       emit('updateIngredients')
       emit('toastIngredientCreate')
       store.modalCreateVisible = false

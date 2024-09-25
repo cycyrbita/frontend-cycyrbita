@@ -57,6 +57,7 @@
             :readonly="!edit"
             v-model="ingredient.names[0].name"
             placeholder="Название"
+            :title="ingredient.names[0].name"
           />
         </span>
         <div v-if="ingredient.names[0].name.trim() === ''"><small class="ingredient__error">Введите название</small></div>
@@ -112,6 +113,7 @@
               :readonly="!edit"
               v-model="name.name"
               placeholder="Название"
+              :title="name.name"
             />
           </span>
         </div>
@@ -147,7 +149,7 @@
             :readonly="!edit"
             v-model="description.description"
             autoResize
-            rows="5"
+            rows="9"
             cols="30"
             placeholder="Описание"
           />
@@ -231,9 +233,7 @@
             :fileLimit="10"
             invalidFileLimitMessage="Максимальное количество картинок 10"
           >
-            <template #empty>
-              <p>Перетащите файл в эту область.</p>
-            </template>
+            <template #empty></template>
           </FileUpload>
         </Transition>
       </div>

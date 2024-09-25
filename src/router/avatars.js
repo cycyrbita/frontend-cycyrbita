@@ -3,7 +3,8 @@ export default [
     path: '/avatars',
     component: () => import('@/layouts/default.vue'),
     meta: {
-      middleware: ['auth', 'role.admin', 'role.cycyrbit'],
+      permissions: ['avatars'],
+      middleware: ['authorized'],
     },
     children: [
       {

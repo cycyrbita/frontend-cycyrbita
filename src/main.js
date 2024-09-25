@@ -3,7 +3,6 @@ import 'primevue/resources/themes/lara-light-teal/theme.css'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
 
-
 import { createApp } from 'vue'
 import PrimeVue from 'primevue/config'
 import { createPinia } from 'pinia'
@@ -20,8 +19,8 @@ app.use(router)
 app.use(PrimeVue, { ripple: true })
 app.use(ToastService)
 app.use(VueClipboard, {
-    autoSetContainer: true,
-    appendToBody: true,
+  autoSetContainer: true,
+  appendToBody: true,
 })
 
 app.mount('#app')
