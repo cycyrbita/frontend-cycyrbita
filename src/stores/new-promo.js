@@ -10,6 +10,8 @@ export const useNewPromoStore = defineStore('new-promo', () => {
     title: '',
     link: ''
   })
+  const serverStatus = ref(null)
+
   //methods
   const getNewPromo = async () => {
     try {
@@ -30,35 +32,93 @@ export const useNewPromoStore = defineStore('new-promo', () => {
     targetPromo.title = null
     targetPromo.link = null
   }
-  const uploadArchive = async (title, file, isNewPromo) => {
+
+  const updateNewPromo = async (title, isNewPromo, archiveName) => {
     try {
       const formData = new FormData()
-      formData.append('title', title)
-      formData.append('archive', file)
-      formData.append('isNewPromo', isNewPromo)
 
-      const headers = {
+      formData.append('title', title)
+      formData.append('isNewPromo', isNewPromo)
+      formData.append('archiveName', archiveName)
+
+      const header = {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessTokenCycyrbita')}`,
-        },
         body: formData,
         credentials: 'include',
       }
-      await useFetch.post('new-promo/upload-new-promo', null, headers, true)
+
+      const res = await useFetch.post('new-promo/update-new-promo', null, header, true)
+      const status = await res.status
+      serverStatus.value = await res.json()
       await getNewPromo()
+      return {
+        status: status, message: serverStatus.value
+      }
     }
     catch (e) {
       console.log(e)
     }
   }
+  const uploadArchive = async (title, isNewPromo, file, archiveName) => {
+    try {
+      const formData = new FormData()
+
+      formData.append('title', title)
+      formData.append('archiveName', archiveName)
+      formData.append('isNewPromo', isNewPromo)
+      formData.append('archive', file)
+
+      const header = {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      }
+
+      const res = await useFetch.post('new-promo/upload-archive', null, header, true)
+      const status = await res.status
+      serverStatus.value = await res.json()
+      if (status !== 200) {
+        throw new Error()
+      }
+      return {
+        status: status, message: serverStatus.value
+      }
+    }
+    catch (e) {
+      throw { status: 400, message: `${serverStatus.value}`}
+    }
+  }
+  const createScreenShot = async (title, archiveName) => {
+    try {
+      const formData = new FormData()
+
+      formData.append('title', title)
+      formData.append('archiveName', archiveName)
+
+      const header = {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      }
+
+      const res = await useFetch.post('new-promo/create-screenshot', null, header, true)
+      const status = await res.status
+      serverStatus.value = await res.json()
+      return {
+        status: status, message: serverStatus.value
+      }
+    }
+    catch (e) {
+      console.log('ошибка', e)
+    }
+  }
+
   const deletePromo = async (promo) => {
     try {
       const headers = {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('accessTokenCycyrbita')}`,
         },
         body: JSON.stringify(promo),
         credentials: 'include',
@@ -74,11 +134,14 @@ export const useNewPromoStore = defineStore('new-promo', () => {
 
   return {
     list,
+    serverStatus,
     targetPromo,
     getNewPromo,
     selectPromo,
     hidePromo,
+    updateNewPromo,
     uploadArchive,
+    createScreenShot,
     deletePromo
   }
 })

@@ -88,7 +88,7 @@ import { useNewPromoStore } from '@/stores/new-promo'
 import Dropdown from 'primevue/dropdown'
 
 const store = useNewPromoStore()
-const emit = defineEmits(['paginationCount'])
+const emit = defineEmits(['paginationCount', 'updateServerStatus'])
 const input = ref(null)
 const inputFile = ref(null)
 const titleLocal = ref(null)
@@ -133,6 +133,8 @@ const addNewPromoTitle = () => {
   titleLocal.value = ''
 }
 const uploadArchive = async (title, file) => {
+  const archiveName = file.name.replace('.zip', '')
+
   if (!file || !title) {
     isError.value = errors.inputEmpty
     return
@@ -141,12 +143,34 @@ const uploadArchive = async (title, file) => {
     isError.value = errors.nameWrong
     return
   }
-  await store.uploadArchive(title, file, visibleFlags.isNewPromo)
-  isError.value = null
+
+// requests
+// send archive
+  try {
+    await store.uploadArchive(title, visibleFlags.isNewPromo, file, archiveName)
+    emit('updateServerStatus')
+  }
+  catch (e) {
+    isError.value = e.message
+    inputFile.value = ''
+    currentFileName.value = ''
+    return
+  }
+
+  // update database
+  await store.updateNewPromo(title, visibleFlags.isNewPromo, archiveName)
+  emit('updateServerStatus')
   hideAddPromo()
+  isError.value = null
+  currentFileName.value = ''
   titleLocal.value = ''
   inputFile.value = ''
   visibleFlags.isNewPromo = false
+
+  // create screenshot
+  await store.createScreenShot(title, archiveName)
+  emit('updateServerStatus')
+
 }
 </script>
 
