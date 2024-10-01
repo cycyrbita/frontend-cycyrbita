@@ -4,6 +4,7 @@ import useFetch from '@/composables/useFetch'
 
 export const useNewPromoStore = defineStore('new-promo', () => {
   //store
+  const visibleDeleted = ref(false)
   const list = ref([])
   const targetPromo = reactive({
     id: '',
@@ -125,6 +126,7 @@ export const useNewPromoStore = defineStore('new-promo', () => {
       }
       await useFetch.delete('new-promo/delete-new-promo', null, headers, true)
       await getNewPromo()
+      visibleDeleted.value = false
     }
     catch (e) {
       console.log(e)
@@ -133,6 +135,7 @@ export const useNewPromoStore = defineStore('new-promo', () => {
   }
 
   return {
+    visibleDeleted,
     list,
     serverStatus,
     targetPromo,

@@ -17,13 +17,16 @@
            :href="promoPath"
         >Открыть в новой вкладке
         </a>
-        <a
-            :href="apiPath"
-            class="promo__btn"
-        >Скачать</a>
-        <button class="btn"
-                @click.prevent="deletePromo"
-        >Удалить</button>
+        <div class="promo__row">
+          <a
+              :href="apiPath"
+              class="promo__btn"
+          >Скачать</a>
+          <button class="promo__btn"
+                  @click.prevent="deletePromo"
+          >Удалить
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -43,12 +46,7 @@ const promoPath = `${path}${promo}/${link}/`
 const apiPath = `${url}api/new-promo/download-new-promo/?promo=${promo}&link=${link}`
 const modal = ref(null)
 const hidePromo = (e) => e.target === modal.value ? store.hidePromo() : undefined
-const deletePromo = async () => {
-  await store.deletePromo(store.targetPromo)
-  await store.getNewPromo()
-  store.hidePromo()
-}
-
+const deletePromo = async () => store.visibleDeleted = true
 </script>
 
 <style scoped
