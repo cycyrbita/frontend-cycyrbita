@@ -118,6 +118,7 @@
       border: none;
       color: $grey;
       text-overflow: ellipsis;
+      background-color: #fff;
 
       &.p-inputtext:enabled:focus {
         box-shadow: 0 0 0 0.2rem #9ba8d5;
@@ -336,6 +337,8 @@
       border: 0;
       padding: 15px 50px 15px 30px;
       border-radius: 15px;
+      background-color: #fff;
+      resize: none;
 
       &.p-inputtext:enabled:hover {
         box-shadow: none;
