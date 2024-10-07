@@ -4,6 +4,8 @@ import dotenv from 'dotenv'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
+import vuetify from 'vite-plugin-vuetify'
+
 dotenv.config()
 
 export default defineConfig({
@@ -14,19 +16,24 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    vuetify({
+      styles: {
+        configFile: 'src/assets/styles/vuetify.scss',
+      },
+    }),
   ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       '~': fileURLToPath(new URL('./node_modules', import.meta.url)),
-    }
+    },
   },
   css: {
     devSourcemap: true,
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "@/assets/styles/colors.scss";`
-      }
-    }
-  }
+        additionalData: `@import "@/assets/styles/colors.scss";`,
+      },
+    },
+  },
 })
