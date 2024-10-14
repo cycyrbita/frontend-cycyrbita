@@ -8,7 +8,7 @@
   .pi-copy {
     right: 5px;
     padding: 5px;
-    top: 20px;
+    top: 13px;
     cursor: pointer;
 
     &:hover {
@@ -112,6 +112,7 @@
       padding: 15px 30px 15px;
       border-radius: 30px;
       border: none;
+      background-color: #fff;
 
       &.p-inputtext:enabled:focus {
         box-shadow: 0 0 0 0.2rem #9ba8d5;
@@ -330,6 +331,8 @@
       border: 0;
       padding: 15px 30px 15px;
       border-radius: 15px;
+      background-color: #fff;
+      resize: none;
 
       &.p-inputtext:enabled:hover {
         border-color: $main;
@@ -342,7 +345,7 @@
 
     .pi-copy {
       position: absolute;
-      top: 15px;
+      top: 12px;
       right: 13px;
     }
   }
