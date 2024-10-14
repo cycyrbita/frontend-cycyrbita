@@ -32,6 +32,7 @@ export const useNewPromoStore = defineStore('new-promo', () => {
     targetPromo.id = null
     targetPromo.title = null
     targetPromo.link = null
+    visibleDeleted.value = false
   }
 
   const updateNewPromo = async (title, isNewPromo, archiveName) => {

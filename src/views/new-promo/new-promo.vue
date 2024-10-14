@@ -83,7 +83,6 @@ const deletePromo = async () => {
   await store.deletePromo(store.targetPromo)
   await store.getNewPromo()
   store.hidePromo()
-  store.visibleDeleted.value = false
 }
 onMounted(store.getNewPromo)
 </script>
