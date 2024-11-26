@@ -49,8 +49,6 @@ const hidePromo = (e) => e.target === modal.value ? store.hidePromo() : undefine
 const deletePromo = async () => store.visibleDeleted = true
 </script>
 
-<style scoped
-       lang="scss"
->
-@import "@/components/new-promo/styles/new-promo-card.scss";
+<style lang="scss">
+@use "@/components/new-promo/styles/new-promo-card.scss" as *;
 </style>

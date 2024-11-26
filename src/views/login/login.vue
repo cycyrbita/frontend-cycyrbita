@@ -92,5 +92,5 @@
 </script>
 
 <style lang="scss">
-  @import '@/views/login/styles/login.scss';
+  @use '@/views/login/styles/login.scss' as *;
 </style>

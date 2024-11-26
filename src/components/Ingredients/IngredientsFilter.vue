@@ -86,5 +86,5 @@
 </script>
 
 <style lang="scss">
-  @import '@/components/Ingredients/styles/ingredients-filter.scss';
+  @use '@/components/Ingredients/styles/ingredients-filter.scss' as *;
 </style>

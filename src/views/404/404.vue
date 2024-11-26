@@ -13,6 +13,6 @@
   </div>
 </template>
 
-<style scoped>
-  @import '/src/views/404/styles/404.scss';
+<style lang="scss">
+  @use '@/views/404/styles/404.scss' as *;
 </style>

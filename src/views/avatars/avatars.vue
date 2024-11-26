@@ -6,6 +6,6 @@
   </section>
 </template>
 
-<style scoped lang="scss">
-@import "@/views/avatars/styles/avatars.scss";
+<style  lang="scss">
+@use "@/views/avatars/styles/avatars.scss" as *;
 </style>

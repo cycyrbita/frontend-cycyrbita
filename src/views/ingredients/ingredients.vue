@@ -131,5 +131,5 @@
 </script>
 
 <style lang="scss">
-  @import '@/views/ingredients/styles/ingredients.scss';
+  @use '@/views/ingredients/styles/ingredients.scss' as *;
 </style>

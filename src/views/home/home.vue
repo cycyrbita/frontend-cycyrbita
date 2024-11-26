@@ -40,6 +40,6 @@
   })
 </script>
 
-<style scoped lang="scss">
-  @import '@/views/home/styles/home.scss';
+<style  lang="scss">
+  @use '@/views/home/styles/home.scss' as *;
 </style>

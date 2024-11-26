@@ -87,8 +87,6 @@ const deletePromo = async () => {
 onMounted(store.getNewPromo)
 </script>
 
-<style scoped
-       lang="scss"
->
-@import "@/views/new-promo/styles/new-promo.scss";
+<style lang="scss">
+@use "@/views/new-promo/styles/new-promo.scss" as *;
 </style>

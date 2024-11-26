@@ -32,8 +32,9 @@ export default defineConfig({
     devSourcemap: true,
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "@/assets/styles/colors.scss";`,
-      },
-    },
+        additionalData: `@use "@/assets/styles/main.scss" as *;`,
+        api: 'modern-compiler'
+      }
+    }
   },
 })

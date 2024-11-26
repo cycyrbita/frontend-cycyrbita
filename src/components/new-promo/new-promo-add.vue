@@ -175,7 +175,7 @@ const uploadArchive = async (title, file) => {
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/button.scss";
-@import "@/components/new-promo/styles/new-promo-card.scss";
-@import "@/components/new-promo/styles/new-promo-add.scss";
+@use "@/assets/styles/button.scss" as *;
+@use "@/components/new-promo/styles/new-promo-card.scss" as *;
+@use "@/components/new-promo/styles/new-promo-add.scss" as *;
 </style>

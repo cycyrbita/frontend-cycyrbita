@@ -44,6 +44,6 @@ const recoveryPassword = async () => {
 }
 </script>
 
-<style scoped>
-@import '/src/views/add-recovery-password-link/styles/add-recovery-password-link.scss';
+<style lang="scss">
+@use '@/views/add-recovery-password-link/styles/add-recovery-password-link.scss' as *;
 </style>

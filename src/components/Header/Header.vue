@@ -101,5 +101,5 @@
 </script>
 
 <style lang="scss">
-  @import '@/components/Header/styles/header.scss';
+  @use '@/components/Header/styles/header.scss' as *;
 </style>

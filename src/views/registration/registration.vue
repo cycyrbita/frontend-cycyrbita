@@ -70,5 +70,5 @@
 </script>
 
 <style lang="scss">
-  @import '/src/views/registration/styles/registration.scss';
+  @use '@/views/registration/styles/registration.scss' as *;
 </style>

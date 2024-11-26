@@ -138,5 +138,5 @@
 </script>
 
 <style lang="scss">
-  @import '@/views/roles/styles/roles.scss';
+  @use '@/views/roles/styles/roles.scss' as *;
 </style>

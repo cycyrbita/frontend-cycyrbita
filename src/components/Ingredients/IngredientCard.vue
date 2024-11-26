@@ -180,5 +180,5 @@ ${VITE_CLIENT_URL + VITE_IMAGE_PATH + '/ingredients/' + props.ingredient.images[
 </script>
 
 <style lang="scss">
-  @import '@/components/Ingredients/styles/ingredient-card.scss';
+  @use '@/components/Ingredients/styles/ingredient-card.scss' as *;
 </style>

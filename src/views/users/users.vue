@@ -177,6 +177,6 @@
   onBeforeMount(getRoles)
 </script>
 
-<style>
-  @import '/src/views/users/styles/users.scss';
+<style lang="scss">
+  @use '@/views/users/styles/users.scss' as *;
 </style>

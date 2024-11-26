@@ -106,5 +106,5 @@
 </script>
 
 <style lang="scss">
-  @import '@/views/permissions/styles/permissions.scss';
+  @use '@/views/permissions/styles/permissions.scss' as *;
 </style>

@@ -14,6 +14,6 @@
   </div>
 </template>
 
-<style scoped>
-  @import '/src/views/500/styles/500.scss';
+<style lang="scss">
+  @use '@/views/500/styles/500.scss' as *;
 </style>

@@ -61,5 +61,5 @@ const recoveryPassword = async () => {
 </script>
 
 <style lang="scss">
-@import "/src/views/recovery-password/styles/recovery-password.scss";
+@use "@/views/recovery-password/styles/recovery-password.scss" as *;
 </style>

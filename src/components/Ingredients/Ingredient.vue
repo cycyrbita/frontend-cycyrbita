@@ -426,5 +426,5 @@ ${VITE_CLIENT_URL + VITE_IMAGE_PATH + '/ingredients/' + ingredient.value.images[
 </script>
 
 <style lang="scss">
-  @import '@/components/Ingredients/styles/ingredient.scss';
+  @use '@/components/Ingredients/styles/ingredient.scss' as *;
 </style>

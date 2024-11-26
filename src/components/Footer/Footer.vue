@@ -8,6 +8,6 @@ export default {
 }
 </script>
 
-<style>
-@import "@/components/Footer/styles/footer.scss";
+<style lang="scss">
+@use "@/components/Footer/styles/footer.scss" as *;
 </style>

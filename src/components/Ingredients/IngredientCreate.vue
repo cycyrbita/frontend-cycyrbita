@@ -269,5 +269,5 @@
 </script>
 
 <style lang="scss">
-  @import '@/components/Ingredients/styles/ingredient-create.scss';
+  @use '@/components/Ingredients/styles/ingredient-create.scss' as *;
 </style>
