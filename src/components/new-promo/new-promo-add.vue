@@ -1,6 +1,6 @@
 <template>
   <div
-      class="promo__add"
+      class="promo__add "
       @click="showAddPromo"
   >+
   </div>
@@ -9,7 +9,7 @@
        ref="modal"
        @click="hideAddPromo"
   >
-    <div class="promo__card">
+    <div class="promo__card promo__card-item">
       <div class="promo__card-container container">
         <form class="promo__add-form"
               enctype="multipart/form-data"

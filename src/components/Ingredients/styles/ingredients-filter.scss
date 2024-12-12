@@ -58,6 +58,17 @@
     }
   }
 
+  &__search span {
+    position: relative;
+  }
+
+  &__search i {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
    &__elem {
       &-last {
         margin-left: auto;

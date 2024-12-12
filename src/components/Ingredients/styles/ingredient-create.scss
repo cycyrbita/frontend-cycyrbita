@@ -8,9 +8,11 @@
   padding: 40px;
 
   .pi-copy {
-    right: 5px;
+    position: absolute;
+    right: 20px;
     padding: 5px;
-    top: 13px;
+    top: 50%;
+    transform: translateY(-50%);
     cursor: pointer;
 
     &:hover {
@@ -122,6 +124,7 @@
     }
 
     & > span {
+      position: relative;
       width: 100%;
     }
   }
@@ -330,18 +333,15 @@
 
     .p-inputtextarea {
       width: 100%;
-      border: 0;
+      border: 0.2rem solid #fff;
       padding: 15px 30px 15px;
       border-radius: 15px;
       background-color: #fff;
       resize: none;
 
-      &.p-inputtext:enabled:hover {
-        border-color: $main;
-      }
-
       &.p-inputtext:enabled:focus {
-        box-shadow: 0 0 0 0.2rem #9ba8d5;
+        border-color: #9ba8d5;
+        box-shadow: none;
       }
     }
 

@@ -3,7 +3,7 @@
        @click="hidePromo"
        ref="modal"
   >
-    <div class="promo__card">
+    <div class="promo__card promo__card-item">
       <div class="promo__card-container container">
         <img class="promo__img"
              width="1441"
@@ -17,16 +17,14 @@
            :href="promoPath"
         >Открыть в новой вкладке
         </a>
-        <div class="promo__row">
           <a
               :href="apiPath"
-              class="promo__btn"
+              class="promo__link promo__link_pink"
           >Скачать</a>
-          <button class="promo__btn"
+          <button class="promo__link promo__link_red"
                   @click.prevent="deletePromo"
           >Удалить
           </button>
-        </div>
       </div>
     </div>
   </div>

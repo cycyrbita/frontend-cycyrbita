@@ -57,6 +57,11 @@
       &:hover {
         background: $dark;
       }
+
+      &:not(.p-highlight):not(.p-disabled).p-focus {
+        background: $dark;
+      }
+
     }
 
     .p-dropdown-items-wrapper {
