@@ -4,6 +4,7 @@
        ref="modal"
   >
     <div class="promo__card promo__card-item">
+      <h2 class="promo__name">{{link.replaceAll('_', ' ')}}</h2>
       <div class="promo__card-container container">
         <img class="promo__img"
              width="1441"
