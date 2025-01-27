@@ -57,6 +57,7 @@
                    name="archive"
                    placeholder="lal"
                    required
+                   multiple
             >
             <label for="promo__add-file-default"
                    class="promo__add-input promo__add-file"
@@ -67,10 +68,13 @@
           <p class="promo__add-error"
              v-if="isError"
           >{{ isError }}</p>
-          <p class="promo__add-info"
-             v-if="currentFileName"
-          >{{ currentFileName }}</p>
-          <button @click.prevent="uploadArchive(titleLocal, inputFile.files[0])"
+          <div class="promo__add-info"
+               v-if="resultArrayToSend.length !== 0"
+               v-for="item of resultArrayToSend"
+          >
+            <p>{{ item.name }}</p>
+          </div>
+          <button @click.prevent="sendArchive"
                   class="btn promo__add-file"
           >загрузить
           </button>
@@ -92,34 +96,48 @@ const emit = defineEmits(['paginationCount', 'updateServerStatus'])
 const input = ref(null)
 const inputFile = ref(null)
 const titleLocal = ref(null)
-const currentFileName = ref(null)
+const resultArrayToSend = ref([])
 const visibleFlags = reactive({
   isAddPromo: false,
   isNewPromo: false,
 })
 const isError = ref(null)
-const errors = {
-  fileError: 'Только zip архив',
-  nameWrong: 'Название архива должно содержать название промо',
-  inputEmpty: 'Выберите промо и прикрепите архив',
-}
+const uniq = ref(new Set())
 const showAddPromo = () => visibleFlags.isAddPromo = true
+
+const resetInput = (err = undefined) => {
+  isError.value = err
+  inputFile.value = ''
+  resultArrayToSend.value.length = 0
+  uniq.value.clear()
+  return err
+}
+
 const checkFiles = (inputFile) => {
-  if (inputFile.files.length > 1) {
-    inputFile.value = ''
+  const list = Array.from(inputFile.files)
+
+  for (let i = 0; i < list.length; i++) {
+    //check zip ext
+    if (!list[i].type.includes('zip')) {
+      return resetInput('Только zip архив')
+    }
+
+    //check valid name
+    if (titleLocal.value && !list[i].name.includes(titleLocal.value)) {
+      return resetInput('Название архива должно содержать название промо')
+    }
+
+    //check double name
+    if (uniq.value.has(list[i].name)) {
+      return resetInput('вы добавили 2 архива с одинаковым названием')
+    }
+    uniq.value.add(list[i].name)
   }
 
-  if (!inputFile.files[0]) {
-    return
-  }
-  if (!inputFile.files[0].type.includes('zip')) {
-    isError.value = errors.fileError
-    inputFile.value = ''
-    return
-  }
-  currentFileName.value = inputFile.files[0].name
+  list.forEach(item => resultArrayToSend.value.push(item))
   isError.value = null
 }
+
 const hideAddPromo = (e) => {
   if (e) {
     e.target === e.currentTarget ? visibleFlags.isAddPromo = false : undefined
@@ -127,50 +145,73 @@ const hideAddPromo = (e) => {
   }
   visibleFlags.isAddPromo = false
 }
+
 const selectPromo = () => emit('paginationCount')
+
 const addNewPromoTitle = () => {
   visibleFlags.isNewPromo = !visibleFlags.isNewPromo
   titleLocal.value = ''
 }
-const uploadArchive = async (title, file) => {
-  const archiveName = file.name.replace('.zip', '')
 
-  if (!file || !title) {
-    isError.value = errors.inputEmpty
-    return
+const isErrorBeforeSend = (list, title) => {
+  //check empty
+  if (!title || list.length === 0) {
+    return isError.value = 'Выберите промо или прикрепите архив'
   }
-  if (!file.name.includes(title)) {
-    isError.value = errors.nameWrong
-    return
+
+  for (let i = 0; i < list.length; i++) {
+    //check valid name
+    if (titleLocal.value && !list[i].name.includes(titleLocal.value)) {
+      return isError.value = resetInput('Название архива должно содержать название промо')
+    }
+  }
+  return isError.value = null
+}
+
+const sendArchive = async () => {
+  const list = resultArrayToSend.value
+  const title = titleLocal.value
+  console.log(title)
+  console.log(list)
+  isErrorBeforeSend(list, title)
+  if (isError.value) {
+    return resetInput(isError.value)
+  }
+  for (let i = 0; i < list.length; i++) {
+    list[i].archiveName = list[i].name.replace('.zip', '')
   }
 
 // requests
 // send archive
-  try {
-    await store.uploadArchive(title, visibleFlags.isNewPromo, file, archiveName)
-    emit('updateServerStatus')
-  }
-  catch (e) {
-    isError.value = e.message
-    inputFile.value = ''
-    currentFileName.value = ''
-    return
-  }
+  for (let i = 0; i < list.length; i++) {
+    try {
+      await store.uploadArchive(title, visibleFlags.isNewPromo, list[i], list[i].archiveName, i + 1, list.length)
+      emit('updateServerStatus')
 
-  // update database
-  await store.updateNewPromo(title, visibleFlags.isNewPromo, archiveName)
-  emit('updateServerStatus')
-  hideAddPromo()
-  isError.value = null
-  currentFileName.value = ''
-  titleLocal.value = ''
-  inputFile.value = ''
-  visibleFlags.isNewPromo = false
+      // update database
+      await store.updateNewPromo(title, visibleFlags.isNewPromo, list[i].archiveName, i + 1, list.length)
+      emit('updateServerStatus')
+      hideAddPromo()
+      visibleFlags.isNewPromo = false
+
+    }
+    catch (e) {
+      resetInput(e.message)
+    }
+  }
 
   // create screenshot
-  await store.createScreenShot(title, archiveName)
-  emit('updateServerStatus')
-
+  for (let i = 0; i < list.length; i++) {
+    try {
+      await store.createScreenShot(title, list[i].archiveName, i + 1, list.length)
+      emit('updateServerStatus')
+    }
+    catch (e) {
+      resetInput(e.message)
+    }
+  }
+  resetInput()
+  titleLocal.value = ''
 }
 </script>
 

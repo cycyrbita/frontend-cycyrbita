@@ -35,84 +35,90 @@ export const useNewPromoStore = defineStore('new-promo', () => {
     visibleDeleted.value = false
   }
 
-  const updateNewPromo = async (title, isNewPromo, archiveName) => {
-    try {
-      const formData = new FormData()
+  const updateNewPromo = async (title, isNewPromo, archiveName, count, total) => {
+        try {
+          const formData = new FormData()
 
-      formData.append('title', title)
-      formData.append('isNewPromo', isNewPromo)
-      formData.append('archiveName', archiveName)
+          formData.append('title', title)
+          formData.append('isNewPromo', isNewPromo)
+          formData.append('archiveName', archiveName)
+          formData.append('count', count)
+          formData.append('total', total)
 
-      const header = {
-        method: 'POST',
-        body: formData,
-        credentials: 'include',
-      }
+          const header = {
+            method: 'POST',
+            body: formData,
+            credentials: 'include',
+          }
 
-      const res = await useFetch.post('new-promo/update-new-promo', null, header, true)
-      const status = await res.status
-      serverStatus.value = await res.json()
-      await getNewPromo()
-      return {
-        status: status, message: serverStatus.value
-      }
-    }
-    catch (e) {
-      console.log(e)
-    }
+          const res = await useFetch.post('new-promo/update-new-promo', null, header, true)
+          const status = await res.status
+          serverStatus.value = await res.json()
+          await getNewPromo()
+          return {
+            status: status, message: serverStatus.value
+          }
+        }
+        catch (e) {
+          console.log(e)
+        }
   }
-  const uploadArchive = async (title, isNewPromo, file, archiveName) => {
-    try {
-      const formData = new FormData()
+  const uploadArchive = async (title, isNewPromo, file, archiveName, count, total) => {
+        try {
+          const formData = new FormData()
 
-      formData.append('title', title)
-      formData.append('archiveName', archiveName)
-      formData.append('isNewPromo', isNewPromo)
-      formData.append('archive', file)
+          formData.append('title', title)
+          formData.append('archiveName', archiveName)
+          formData.append('isNewPromo', isNewPromo)
+          formData.append('archive', file)
+          formData.append('count', count)
+          formData.append('total', total)
 
-      const header = {
-        method: 'POST',
-        body: formData,
-        credentials: 'include',
-      }
+          const header = {
+            method: 'POST',
+            body: formData,
+            credentials: 'include',
+          }
 
-      const res = await useFetch.post('new-promo/upload-archive', null, header, true)
-      const status = await res.status
-      serverStatus.value = await res.json()
-      if (status !== 200) {
-        throw new Error()
-      }
-      return {
-        status: status, message: serverStatus.value
-      }
-    }
-    catch (e) {
-      throw { status: 400, message: `${serverStatus.value}`}
-    }
+          const res = await useFetch.post('new-promo/upload-archive', null, header, true)
+          const status = await res.status
+          serverStatus.value = await res.json()
+          if (status !== 200) {
+            throw new Error()
+          }
+          return {
+            status: status, message: serverStatus.value
+          }
+        }
+        catch (e) {
+          throw { status: 400, message: `${serverStatus.value}`}
+        }
   }
-  const createScreenShot = async (title, archiveName) => {
-    try {
-      const formData = new FormData()
+  const createScreenShot = async (title, archiveName, count, total) => {
+        try {
+          const formData = new FormData()
 
-      formData.append('title', title)
-      formData.append('archiveName', archiveName)
+          formData.append('title', title)
+          formData.append('archiveName', archiveName)
+          formData.append('count', count)
+          formData.append('total', total)
 
-      const header = {
-        method: 'POST',
-        body: formData,
-        credentials: 'include',
-      }
+          const header = {
+            method: 'POST',
+            body: formData,
+            credentials: 'include',
+          }
 
-      const res = await useFetch.post('new-promo/create-screenshot', null, header, true)
-      const status = await res.status
-      serverStatus.value = await res.json()
-      return {
-        status: status, message: serverStatus.value
-      }
-    }
-    catch (e) {
-      console.log('ошибка', e)
-    }
+          const res = await useFetch.post('new-promo/create-screenshot', null, header, true)
+          const status = await res.status
+          serverStatus.value = await res.json()
+          return {
+            status: status, message: serverStatus.value
+          }
+        }
+        catch (e) {
+          console.log('ошибка', e)
+        }
   }
 
   const deletePromo = async (promo) => {
