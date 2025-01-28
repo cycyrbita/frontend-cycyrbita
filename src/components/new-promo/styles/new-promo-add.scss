@@ -1,21 +1,29 @@
 @use '@/assets/styles/colors' as *;
 
 .promo__add {
-  color: $white;
+  color: $main;
   font-size: 24px;
   line-height: 1;
-  position: fixed;
-  right: 15px;
-  bottom: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: $main;
-  width: 50px;
+  background: none;
+  width: 40px;
   aspect-ratio: 1 / 1;
   cursor: pointer;
+  border: 1px solid $main;
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+
+  &_fix {
+    background: $main;
+    color: $white;
+    border: none;
+    width: 50px;
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+  }
 
   &-form {
     display: flex;
@@ -23,28 +31,11 @@
     gap: 10px;
   }
 
-  &-select {
+  &-promo {
     color: $white;
-    font-size: 16px;
-    text-indent: 10px;
-    display: flex;
-    align-items: center;
-    background: $main;
+    text-align: center;
     width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 20px;
-    outline: none;
-    margin: 0;
-
-
-    span, svg, li {
-      color: $white;
-    }
-
-    svg {
-      position: static;
-    }
+    margin-bottom: 10px;
   }
 
   &-select-panel {
@@ -84,8 +75,8 @@
   }
 
   &-file {
-    font-size: 16px;
     color: $white;
+    font-size: 16px;
     text-align: center;
     display: block;
     background: $main;
@@ -96,6 +87,24 @@
     &-default {
       display: none;
     }
+  }
+
+  &-file-item {
+    width: 100%;
+  }
+
+  &-reset {
+    color: $main;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    max-width: 50px;
+    aspect-ratio: 1 / 1;
+    padding: 5px;
+    transform: rotate(45deg);
+    border: 1px solid $main;
+    border-radius: 50%;
   }
 
   &-row {
@@ -129,9 +138,10 @@
   &-error {
     color: $warning;
   }
+
   &-info {
     color: grey;
-    font-size: 12px;
     font-family: 'Monospace', monospace;
+    font-size: 12px;
   }
 }

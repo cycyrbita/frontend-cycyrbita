@@ -30,7 +30,13 @@
            v-for="item of store.list.promo"
            :key="item._id"
       >
-        <h2 class="promo__title">{{ item.title }}</h2>
+        <div class="promo__header">
+          <h2 class="promo__title">{{ item.title }}</h2>
+          <NewPromoAdd
+              :title="item.title"
+              @updateServerStatus="updateServerStatus"
+          />
+        </div>
         <div class="promo__list">
           <div
               class="promo__btn promo__btn_lend"
@@ -59,6 +65,7 @@
       </div>
       <NewPromoCard v-if="store.targetPromo.title"/>
       <NewPromoAdd
+          :isNewPromo="true"
           @updateServerStatus="updateServerStatus"
       />
     </div>
@@ -66,7 +73,7 @@
 </template>
 
 <script setup>
-import { onMounted, watch } from 'vue'
+import { onMounted } from 'vue'
 import { useNewPromoStore } from '@/stores/new-promo'
 import NewPromoCard from "@/components/new-promo/new-promo-card.vue";
 import NewPromoAdd from "@/components/new-promo/new-promo-add.vue";

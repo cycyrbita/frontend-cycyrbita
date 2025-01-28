@@ -1,7 +1,8 @@
 <template>
   <div
-      class="promo__add "
+      :class="{promo__add: true, promo__add_fix: props.isNewPromo }"
       @click="showAddPromo"
+      title="Добавить архив"
   >+
   </div>
   <div v-if="visibleFlags.isAddPromo"
@@ -15,19 +16,12 @@
               enctype="multipart/form-data"
         >
           <div class="promo__add-row">
-            <Dropdown
-                v-if="!visibleFlags.isNewPromo"
-                v-model="titleLocal"
-                :options="store.list.promoTitle"
-                optionLabel="title"
-                optionValue="title"
-                @change="selectPromo"
-                showClear
-                scrollHeight="700px"
-                placeholder="Промо"
-                class="promo__add-select"
-                panelClass="promo__add-select-panel"
-            />
+            <p
+                v-if="props.title"
+                class="promo__add-promo"
+            >
+              Добавить в {{ props.title }}
+            </p>
             <InputText
                 v-else
                 v-model="titleLocal"
@@ -35,35 +29,32 @@
                 name="title"
                 placeholder="Название промо"
             />
+          </div>
+          <div class="promo__add-row">
+            <div class="promo__add-file-item">
+              <input type="file"
+                     id="promo__add-file-default"
+                     @change="checkFiles"
+                     ref="inputFile"
+                     class="promo__add-file-default"
+                     name="archive"
+                     placeholder="lal"
+                     multiple
+              >
+              <label for="promo__add-file-default"
+                     class="promo__add-input promo__add-file"
+              >
+                выберите архив
+              </label>
+            </div>
             <button
-                @click.prevent="addNewPromoTitle"
-                :title="visibleFlags.isNewPromo ? 'выбрать из существующих' : 'добавить новое промо'"
-                :class="{
-                  btn: true,
-                  'promo__add-btn': true,
-                  'promo__add-new': !visibleFlags.isNewPromo,
-                  'promo__add-old': visibleFlags.isNewPromo
-              }"
+                v-if="hasFile"
+                class="btn promo__add-reset"
+                @click.prevent="resetInput()"
+                title="Сбросить архивы"
             >
               +
             </button>
-          </div>
-          <div class="promo__add-file">
-            <input type="file"
-                   id="promo__add-file-default"
-                   @change="checkFiles(inputFile)"
-                   ref="inputFile"
-                   class="promo__add-file-default"
-                   name="archive"
-                   placeholder="lal"
-                   required
-                   multiple
-            >
-            <label for="promo__add-file-default"
-                   class="promo__add-input promo__add-file"
-            >
-              выберите архив
-            </label>
           </div>
           <p class="promo__add-error"
              v-if="isError"
@@ -76,6 +67,7 @@
           </div>
           <button @click.prevent="sendArchive"
                   class="btn promo__add-file"
+                  v-if="hasFile"
           >загрузить
           </button>
         </form>
@@ -89,33 +81,40 @@
 import { ref, defineEmits, reactive } from 'vue'
 import InputText from 'primevue/inputtext'
 import { useNewPromoStore } from '@/stores/new-promo'
-import Dropdown from 'primevue/dropdown'
 
 const store = useNewPromoStore()
-const emit = defineEmits(['paginationCount', 'updateServerStatus'])
+const emit = defineEmits(['updateServerStatus'])
+const props = defineProps({
+  title: String,
+  isNewPromo: Boolean
+})
+
 const input = ref(null)
 const inputFile = ref(null)
+const hasFile = ref(false)
 const titleLocal = ref(null)
 const resultArrayToSend = ref([])
 const visibleFlags = reactive({
   isAddPromo: false,
-  isNewPromo: false,
+  isNewPromo: props.isNewPromo,
 })
 const isError = ref(null)
 const uniq = ref(new Set())
 const showAddPromo = () => visibleFlags.isAddPromo = true
-
+titleLocal.value = props.title
 const resetInput = (err = undefined) => {
   isError.value = err
-  inputFile.value = ''
+  if (inputFile.value) {
+    inputFile.value.value = null
+  }
+  hasFile.value = false
   resultArrayToSend.value.length = 0
   uniq.value.clear()
   return err
 }
 
-const checkFiles = (inputFile) => {
-  console.log('lal')
-  const list = Array.from(inputFile.files)
+const checkFiles = () => {
+  const list = Array.from(inputFile.value.files)
 
   for (let i = 0; i < list.length; i++) {
     //check zip ext
@@ -137,6 +136,7 @@ const checkFiles = (inputFile) => {
 
   list.forEach(item => resultArrayToSend.value.push(item))
   isError.value = null
+  hasFile.value = inputFile.value.files.length > 0
 }
 
 const hideAddPromo = (e) => {
@@ -145,13 +145,6 @@ const hideAddPromo = (e) => {
     return
   }
   visibleFlags.isAddPromo = false
-}
-
-const selectPromo = () => emit('paginationCount')
-
-const addNewPromoTitle = () => {
-  visibleFlags.isNewPromo = !visibleFlags.isNewPromo
-  titleLocal.value = ''
 }
 
 const isErrorBeforeSend = (list, title) => {
@@ -190,27 +183,25 @@ const sendArchive = async () => {
       // update database
       await store.updateNewPromo(title, visibleFlags.isNewPromo, list[i].archiveName, i + 1, list.length)
       emit('updateServerStatus')
+      visibleFlags.isNewPromo = false
     }
     hideAddPromo()
-    visibleFlags.isNewPromo = false
   }
   catch (e) {
     return resetInput(e.message)
   }
-  console.log('lal')
   // create screenshot
   try {
     for (let i = 0; i < list.length; i++) {
-      console.log('kek')
       await store.createScreenShot(title, list[i].archiveName, i + 1, list.length)
       emit('updateServerStatus')
     }
     resetInput()
-    titleLocal.value = ''
   }
   catch (e) {
     return resetInput(e.message)
   }
+  visibleFlags.isNewPromo = props.isNewPromo
 }
 </script>
 

@@ -32,8 +32,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue'
-import useFetch from '@/composables/useFetch'
+import { ref } from 'vue'
 import { useNewPromoStore } from "@/stores/new-promo";
 
 const store = useNewPromoStore()
