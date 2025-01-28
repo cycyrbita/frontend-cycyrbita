@@ -52,7 +52,7 @@ export const useNewPromoStore = defineStore('new-promo', () => {
           }
 
           const res = await useFetch.post('new-promo/update-new-promo', null, header, true)
-          const status = await res.status
+          const status = res.status
           serverStatus.value = await res.json()
           await getNewPromo()
           return {
@@ -81,17 +81,17 @@ export const useNewPromoStore = defineStore('new-promo', () => {
           }
 
           const res = await useFetch.post('new-promo/upload-archive', null, header, true)
-          const status = await res.status
+          const status = res.status
           serverStatus.value = await res.json()
           if (status !== 200) {
-            throw new Error()
+            throw new Error(res.message)
           }
           return {
             status: status, message: serverStatus.value
           }
         }
         catch (e) {
-          throw { status: 400, message: `${serverStatus.value}`}
+          throw { message: `${serverStatus.value}`}
         }
   }
   const createScreenShot = async (title, archiveName, count, total) => {
@@ -110,7 +110,7 @@ export const useNewPromoStore = defineStore('new-promo', () => {
           }
 
           const res = await useFetch.post('new-promo/create-screenshot', null, header, true)
-          const status = await res.status
+          const status = res.status
           serverStatus.value = await res.json()
           return {
             status: status, message: serverStatus.value

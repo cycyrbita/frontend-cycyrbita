@@ -114,6 +114,7 @@ const resetInput = (err = undefined) => {
 }
 
 const checkFiles = (inputFile) => {
+  console.log('lal')
   const list = Array.from(inputFile.files)
 
   for (let i = 0; i < list.length; i++) {
@@ -171,8 +172,6 @@ const isErrorBeforeSend = (list, title) => {
 const sendArchive = async () => {
   const list = resultArrayToSend.value
   const title = titleLocal.value
-  console.log(title)
-  console.log(list)
   isErrorBeforeSend(list, title)
   if (isError.value) {
     return resetInput(isError.value)
@@ -183,35 +182,35 @@ const sendArchive = async () => {
 
 // requests
 // send archive
-  for (let i = 0; i < list.length; i++) {
-    try {
+  try {
+    for (let i = 0; i < list.length; i++) {
       await store.uploadArchive(title, visibleFlags.isNewPromo, list[i], list[i].archiveName, i + 1, list.length)
       emit('updateServerStatus')
 
       // update database
       await store.updateNewPromo(title, visibleFlags.isNewPromo, list[i].archiveName, i + 1, list.length)
       emit('updateServerStatus')
-      hideAddPromo()
-      visibleFlags.isNewPromo = false
-
     }
-    catch (e) {
-      resetInput(e.message)
-    }
+    hideAddPromo()
+    visibleFlags.isNewPromo = false
   }
-
+  catch (e) {
+    return resetInput(e.message)
+  }
+  console.log('lal')
   // create screenshot
-  for (let i = 0; i < list.length; i++) {
-    try {
+  try {
+    for (let i = 0; i < list.length; i++) {
+      console.log('kek')
       await store.createScreenShot(title, list[i].archiveName, i + 1, list.length)
       emit('updateServerStatus')
     }
-    catch (e) {
-      resetInput(e.message)
-    }
+    resetInput()
+    titleLocal.value = ''
   }
-  resetInput()
-  titleLocal.value = ''
+  catch (e) {
+    return resetInput(e.message)
+  }
 }
 </script>
 
